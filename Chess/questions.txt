@@ -1,0 +1,52 @@
+Question: Chess programs usually come with a book of standard opening move sequences, which
+list accepted opening moves and responses to opponents’ moves, for the first dozen or so moves of
+the game. Although you are not required to support this, discuss how you would implement a book
+of standard openings if required.
+
+Answer:
+	Create a CMove class with the following fields:
+		* Original coordinates of chess piece that was moved
+		* New coordinate of chess piece that was moved
+		* Chess piece that was captured (if any)
+		* Castling flag
+		* Capture en passant flag
+	
+	Create a History class with:
+		* A stack of CMove objects as a private field within
+		* An undo Method that pops a move off the stack and reverses the last move on the board
+
+-After every move, a corresponding CMove object will be pushed onto the History object's stack
+-If the user indicates they want an undo (presumambly through typing a command "undo") the
+	History object's undo method will respond appropriately.
+-If no moves have been made, undo does nothing
+-Last moved piece will return to its prior position
+-If the last move was a castling move, logic for moving the king and rook back to their
+	appropriate postions is run
+-If the last move was a capturing move, the piece that was removed is replaced at the spot the
+	moved piece is returning from
+-If the last move was an en passant capture, special logic for replacing the captured pawn is 
+	run
+
+Question: How would you implement a feature that would allow a player to undo his/her last
+move? What about an unlimited number of undos?
+
+Answer:
+	Create a CMove class with the following fields:
+		* Original coordinate of chess piece that was moved
+		* New coordinate of chess piece that was moved
+		* Chess piece that was captured (if any)
+		* Castling flag
+		* Capture en passant flag
+		
+	Then, create a stack of CMove objects as a private field inside Board object.
+	After each legal chess move, the Board creates a CMove object and pushes it into the stack.
+		* In the event of a castling move, the chess piece that was move will be the King
+	
+	To execute an undo (Board method), a CMove will be popped from the stack. The chess piece that was moved will be moved back to its original coordinate using the information in the CMove object. In addition, captured chess pieces will be readded into the Board, taking into account capture en passant. For castling moves, the Board will also reposition the Rook by determining the direction of the castling via the before/after coordinates of the King.
+	
+	
+Question: Variations on chess abound. For example, four-handed chess is a variant that is played
+by four players (search for it!). Outline the changes that would be necessary to make your program
+into a four-handed chess game.
+
+Answer:
