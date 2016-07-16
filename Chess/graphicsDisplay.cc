@@ -4,14 +4,21 @@
 
 using namespace std;
 
-void GraphicsDisplay::notify(Cell &c) {
-	int sqrY = leftPad + cellSize * c.getRow() + c.getRow();
-	int sqrX = topPad + cellSize * c.getCol() + c.getCol();
-	if (c.getState()) { // make square black
-		screen->fillRectangle(sqrX, sqrY, cellSize, cellSize, Xwindow::Black);
+void GraphicsDisplay::notifyBoard(ChessPiece &cp, Posn src, Posn dst) {
+	drawPiece(cp);
+}
+
+void GraphicsDisplay::drawPiece(ChessPiece &cp) {
+
+}
+
+void GraphicsDisplay::drawColourSqr(int r, int c) {
+	char colour = getCellColor(r, c);
+	if (colour == 'B') {
+		screen->fillRectangle(leftPad + cellSize * i + i , topPad + j * cellSize + j, cellSize, cellSize, Xwindow::Black);	
 	}
-	else {  // make square white
-		screen->fillRectangle(sqrX, sqrY, cellSize, cellSize, Xwindow::White);
+	else {
+		screen->fillRectangle(leftPad + cellSize * i + i , topPad + j * cellSize + j, cellSize, cellSize, Xwindow::White);		
 	}
 }
 
@@ -32,11 +39,7 @@ void GraphicsDisplay::setDimensions(int dim) {
 
 	for (int i = 0; i < dimension; i++) {
 		for (int j = 0; j < dimension; j++) {
-			screen->fillRectangle(leftPad + cellSize * i + i , topPad + j * cellSize + j, cellSize, cellSize, Xwindow::White);	
+			drawColourSqr(i, j);
 		}
 	}
-}
-
-SubscriptionType GraphicsDisplay::subType() { 
-	return SubscriptionType::All;
 }

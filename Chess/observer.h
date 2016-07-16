@@ -1,13 +1,14 @@
 #ifndef _OBSERVER_H_
 #define _OBSERVER_H_
-class Cell;
 
-enum class SubscriptionType { All, SwitchOnly };
+class ChessPiece;
+class Posn;
 
 class Observer {
  public:
-  virtual void notify(Cell &c) = 0;  // c is the Cell that called the notify method
-  virtual SubscriptionType subType() = 0;
+  virtual void notifyBoard(ChessPiece &cpm, Posn src, Posn dst) = 0; 
+  virtual void notifyInfoMsg(String msg) = 0;
+  char getCellColour(int r, int c);
   virtual ~Observer() = default;
 };
 #endif

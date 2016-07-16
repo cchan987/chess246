@@ -4,32 +4,28 @@
 #include "cell.h"
 using namespace std;
 
-TextDisplay::TextDisplay(int n): gridSize{n} {
+TextDisplay::TextDisplay(int n = 8): gridSize{n} {
 	for (int i = 0; i < n; i++) {
 		vector<char> v;
 		for (int j = 0; j < n; j++) {
-			v.emplace_back('_');
+			char colour = getCellColour(i, j);
+			v.emplace_back(colour);
 		}
 		theDisplay.emplace_back(v);
 	}
 }
 
-void TextDisplay::notify(Cell &c) {
-	int r = c.getRow();
-	int col = c.getCol();
-	if (theDisplay[r][col] == '_') {
-		theDisplay[r][col] = 'X';
-	}
-	else {
-		theDisplay[r][col] = '_';
-	}
+void TextDisplay::notifyBoard(ChessPiece &cp, Posn src, Posn dst) {
+	int srcR = src.getRow();
+	int srcC = src.getCol();
+	theDisplay[srcR][srcC] = getCellColour(srcR, srcC);
+
+	int dstR = dst.getRow();
+	int dstC = dst.getCol();
+	theDisplay[srcR][srcC] = cp.getPieceType();
 }
 
 TextDisplay::~TextDisplay() {}
-
-SubscriptionType TextDisplay::subType() {
-  return SubscriptionType::All;
-}
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
 	for (auto v: td.theDisplay) {

@@ -10,10 +10,8 @@ class TextDisplay: public Observer {
   const int gridSize;
  public:
   TextDisplay(int n);
-
-  void notify(Cell &c) override;
-  SubscriptionType subType() override;
-
+  void notifyBoard(ChessPiece &cp, Posn src, Posn dst) override; 
+  void notifyInfoMsg(String msg) override;
   ~TextDisplay();
 
   friend std::ostream &operator<<(std::ostream &out, const TextDisplay &td);
