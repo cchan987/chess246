@@ -1,11 +1,21 @@
 #include "window.h"
 #include "graphicsDisplay.h"
-#include "cell.h"
 
 using namespace std;
 
 void GraphicsDisplay::notifyBoard(ChessPiece &cp, Posn src, Posn dst) {
+	drawColourSqr(src.getRow(), src.getCol());
+	drawColourSqr(dst.getRow(), dst.getCol());
 	drawPiece(cp);
+}
+
+void GraphicsDisplay::notifyInfoMsg(String msg) {
+	clearInfoBox();
+	screen->drawString(stringXcord, stringYcord, msg);
+}
+
+void GraphicsDisplay::clearInfoBox() {
+	screen->fillRectangle(stringXcord, stringYcord, 100, 20);
 }
 
 void GraphicsDisplay::drawPiece(ChessPiece &cp) {
