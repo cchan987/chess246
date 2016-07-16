@@ -22,7 +22,11 @@ void TextDisplay::notifyBoard(ChessPiece &cp, Posn src, Posn dst) {
 
 	int dstR = dst.getRow();
 	int dstC = dst.getCol();
-	theDisplay[srcR][srcC] = cp.getPieceType();
+	char piece = cp.getPieceType();
+	if (cp.getColour() == 'W') {
+		piece = tolower(piece);
+	}
+	theDisplay[srcR][srcC] = piece;
 }
 
 void notifyInfoMsg(String msg) {
