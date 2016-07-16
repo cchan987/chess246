@@ -15,7 +15,7 @@ void GraphicsDisplay::notifyInfoMsg(String msg) {
 }
 
 void GraphicsDisplay::clearInfoBox() {
-	screen->fillRectangle(stringXcord, stringYcord, 100, 20);
+	screen->fillRectangle(stringXcord, stringYcord, 100, 20, Xwindow::Blue);
 }
 
 void GraphicsDisplay::drawPiece(ChessPiece &cp) {

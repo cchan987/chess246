@@ -8,6 +8,7 @@ class Cell;
 class TextDisplay: public Observer {
   std::vector<std::vector<char>> theDisplay;
   const int gridSize;
+  string infoMsg = "";
  public:
   TextDisplay(int n);
   void notifyBoard(ChessPiece &cp, Posn src, Posn dst) override; 

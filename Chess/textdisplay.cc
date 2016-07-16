@@ -25,6 +25,10 @@ void TextDisplay::notifyBoard(ChessPiece &cp, Posn src, Posn dst) {
 	theDisplay[srcR][srcC] = cp.getPieceType();
 }
 
+void notifyInfoMsg(String msg) {
+	infoMsg = msg;
+}
+
 TextDisplay::~TextDisplay() {}
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
@@ -34,5 +38,6 @@ ostream &operator<<(ostream &out, const TextDisplay &td) {
 		}
 		cout << endl;
 	}
+	cout << infoMsg << endl;
 	return out;
 }
