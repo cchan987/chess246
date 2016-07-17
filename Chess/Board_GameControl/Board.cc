@@ -8,6 +8,10 @@ using namespace std;
 
 Board::Board(){}
 
+
+
+
+
 void Board::checkLegalMove(Posn p, ChessPiece cp){
 
 }
