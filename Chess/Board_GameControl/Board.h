@@ -16,21 +16,25 @@
 class Board{
 public:
 
-	Vector boardSize;
+	vector<vector<ChessPiece *>> theBoard;
 
+	ChessPiece *getPieceByPosn(Posn p)
 	Observer observer;
 	TextDisplay textDisplay;
 	GraphDisplay graphDisplay;
-
-	checkLegalMove(Posn p, ChessPiece cp);
-	moveChess(Posn p1, Posn p2);
-	isInCheck(ChessPiece cp);
+	vector<Move> getAllLegalMovesByColour(char colour);
+	vector<ChessPiece *> getAllPiecesByColour(char colour);
+	bool isACapturingMove(Move m);
+	bool isACheckingMove(Move m);
+	bool checkLegalMove(Posn p, ChessPiece cp); // Will be passed a move and return true if legal
+	void moveChess(Posn p1, Posn p2); // Will be handed a legal move and execute it
+	bool isInCheck(ChessPiece cp);
 	
-	isGameOver();
-	checkMate();
-	staleMate();
+	bool isGameOver();
+	bool checkMate();
+	bool staleMate();
 
-	notifyBoard(Posn p, ChessPiece cp);
-	notifyInfoMsg(std::string s);
+	void notifyBoard(Posn p, ChessPiece cp);
+	void notifyInfoMsg(std::string s);
 	
 };

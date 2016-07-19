@@ -8,6 +8,48 @@ using namespace std;
 
 Board::Board(){}
 
+ChessPiece *Board::getPieceByPosn(Posn p) {
+	int dstRow = moveDst.getRow();
+	int dstCol = moveDst.getCol();
+	return theBoard[dstRow][dstCol];
+}
+
+// m must be a legal move, therefore m will not have a destination
+// that is occupied by a friendly piece, Will return true if an 
+// opposing piece is in the destination square (including king)
+bool Board::isACapturingMove(Move m) {
+	Posn moveDst = m.getDestination();
+	ChessPiece *dst = getPieceByPosn(moveDst);
+	if (dst) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+// m must be a legal move, therefore m will not have a destination
+// that is occupied by a friendly piece
+bool Board::isACheckingMove(Move m) {
+	Posn moveDst = m.getDestination();
+	ChessPiece *thePiece = m.getPiece();
+	vector<Move> futureMoves = getLegalMovesByPiece(thePiece);
+	for (int i = 0; i < futureMoves.size(); ++i) {
+		Move thisMove = futureMoves[i];
+		if (isACapturingMove(thisMove)) {
+			ChessPiece *threatenedPiece = getPieceByPosn(thisMove.getDestination());
+			if (threatenedPiece.getPieceType() == "K") {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+vector<Move> getLegalMovesByPiece(ChessPiece *thePiece) {
+	thePiece->getMoves();
+}
+
 vector<Move> Board::getAllLegalMovesByColour(char colour) {
 	vector<Move> allLegalMoves;
 	vector<ChessPiece *> thePieces = getAllLegalPiecesByColour(colour);
@@ -44,7 +86,7 @@ void Board::moveChess(Posn p1, Posn p2){
 
 }
 
-void isInCheck(ChessPiece cp){
+void isInCheck(char colour){
 
 }
 

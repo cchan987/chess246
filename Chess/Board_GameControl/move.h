@@ -6,8 +6,10 @@ class Posn;
 
 class Move{
 	ChessPiece *Piece;
-	Posn src;
 	Posn dst;
+public:
+	ChessPiece *getPiece();
+	Posn getDestination();
 };
 
 #endif

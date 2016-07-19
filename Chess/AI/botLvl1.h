@@ -4,9 +4,10 @@
 #include "abstractAI.h"
 
 class Board;
+class Move;
 
 class BotLvl1: public AbstractAI{
-	void getMove(Board &b) override;
+	Move getMove(Board &b) override;
 };
 
 #endif
