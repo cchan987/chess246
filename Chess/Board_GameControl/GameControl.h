@@ -30,3 +30,5 @@ class GameControl
 	int blackScoreCount;
 
 };
+
+#endif
