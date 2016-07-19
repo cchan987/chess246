@@ -1,29 +1,32 @@
 #ifndef __GAMECONTROL_H__
 #define __GAMECONTROL_H__
 
+#include <vector>
 #include <iostream>
+#include <sstream>
 #include <string>
 
+#include <Board.h>
 
-class GameControl;
 
-class GameControl{
-private:
-	int scoreCount;
-	//int countTurn;
-	char whoseTurn;
+class GameControl
+{
+	public:
 
-public:
-	gameMode();
-	setupBoard();
+	void switchOn();
+	void selectGameMode();
+	void getNextMove();
+	void alternateTurn();
+	void printScore();
+	void startGame();
+	void isGameOver();
+	void checkMate();
+	void staleMate();
+	void resign();
+	void endGame();
 
-	startGame();
-	initBoard();
+	private:
+	int whiteScoreCount;
+	int blackScoreCount;
 
-	alternateTurn();
-	resign();
-
-	endGame();
-	printScore();
-			
 };

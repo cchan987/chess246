@@ -1,23 +1,23 @@
 #ifndef __BOARD_H__
 #define __BOARD_H__
 
-#include <iostream>
 #include <vector>
-#include <string>
+#include <iostream>
+#include <sstream>
 
-#include "GameControl.h"
+#include <ChessPiece.h>
+#include <TextDisplay.h>
+#include <GraphDisplay.h>
 
-#include "ChessPiece.h"
 
-#include "Observer.h"
-#include "TextDisplay.h"
-#include "GraphDisplay.h"
-
-class Board{
-public:
-
+class Board
+{
+	public:
+	Board();	
+	~Board();
 	vector<vector<ChessPiece *>> theBoard;
-
+	void setupBoard();
+	void printBoard(vector<vector<char> > );
 	ChessPiece *getPieceByPosn(Posn p)
 	Observer observer;
 	TextDisplay textDisplay;
@@ -38,3 +38,4 @@ public:
 	void notifyInfoMsg(std::string s);
 	
 };
+
