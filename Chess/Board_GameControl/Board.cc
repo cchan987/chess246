@@ -1,19 +1,43 @@
 #include <iostream>
 #include <string>
 #include <vector>
-
-#include <Board.h>
+#include "move.h"
+#include "Board.h"
 
 using namespace std;
 
 Board::Board(){}
 
+vector<Move> Board::getAllLegalMovesByColour(char colour) {
+	vector<Move> allLegalMoves;
+	vector<ChessPiece *> thePieces = getAllLegalPiecesByColour(colour);
+	for (int i = 0; i < thePieces.size(); ++i) {
+		ChessPiece *currentPiece = thePieces[i];
+		vector<Move> currentPieceMoves = currentPiece->getPossibleMoves();
+		for (int i = 0; i < currentPieceMoves; ++i) {
+			if (checkLegalMove(currentPieceMoves[i], currentPiece)) {
+				allLegalMoves.emplace_back(currentPieceMoves[i]);
+			}
+		}
+	}
+	return allLegalMoves;
+}
 
+vector<ChessPiece *> Board::getAllPiecesByColour(char colour) {
+	vector<ChessPiece *> pieceVector;
+	for (int i = 0; i < theBoard.size(); i++) {
+		for (int j = 0; j < theBoard[i].size(); j++) {
+			ChessPiece *current_piece = theBoard[i][j];
+			if (current_piece && current_piece->getColour() == colour) {
+				pieceVector.emplace_back(current_piece);
+			}
+		}
+	}
+	return pieceVector;
+}
 
-
-
-void Board::checkLegalMove(Posn p, ChessPiece cp){
-
+//Checks if a given chesspiece can move to a given position
+bool Board::checkLegalMove(Move m, ChessPiece cp){  
 }
 
 void Board::moveChess(Posn p1, Posn p2){

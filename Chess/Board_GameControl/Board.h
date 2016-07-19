@@ -5,17 +5,13 @@
 #include <vector>
 #include <string>
 
-#include “GameControl.h”
+#include "GameControl.h"
 
-#include “ChessPiece.h”
+#include "ChessPiece.h"
 
-#include “Observer.h”
-#include “TextDisplay.h”
-#include “GraphDisplay.h”
-
-
-
-class Board;
+#include "Observer.h"
+#include "TextDisplay.h"
+#include "GraphDisplay.h"
 
 class Board{
 public:
