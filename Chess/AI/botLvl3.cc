@@ -10,7 +10,8 @@ vector<ChessPiece *> BotLvl3::getMyThreatenedPieces(Board &b) {
 
 vector<Posn> BotLvl3::getSquaresThreatenedByOpponent(Board &b) {
 	char opponent = (allegiance == "W")?"B":"W";
-	vector<Move> opponentgetAllLegalMovesByColour(opponent);
+	vector<Move> opponentPossibleMoves = getAllPossibleMovesByColour(opponent);
+	
 }
 
 vector<Move> BotLvl3::getCapturingandCheckingMoves(Board &b) {
@@ -25,9 +26,10 @@ vector<Move> BotLvl3::getCapturingandCheckingMoves(Board &b) {
 }
 
 
+
 //Does the piece that is being moved end up in a position that allows it to be captured
 bool BotLvl3::isMoveSafe(Move m) {
-	
+
 }
 
 Move BotLvl3::getMove(Board &b) {

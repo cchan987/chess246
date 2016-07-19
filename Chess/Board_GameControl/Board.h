@@ -27,7 +27,12 @@ class Board
 	vector<ChessPiece *> getAllPiecesByColour(char colour);
 	bool isACapturingMove(Move m);
 	bool isACheckingMove(Move m);
-	bool checkLegalMove(Move m); // Will be passed a possible move and return true if legal
+
+	// Will be passed a possible move and return true if legal
+	// A legal move is a possible move that:
+	// -doesn't put your own king in check,
+	// -doesn't capture your own piece
+	bool checkLegalMove(Move m); 
 	void moveChess(Move m); // Will be handed a legal move and execute it
 	bool isInCheck(ChessPiece cp);
 	
