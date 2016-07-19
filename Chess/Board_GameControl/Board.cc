@@ -89,30 +89,25 @@ Board::Board()
     }
 
   //initalize player's chess piece
-  //p = pawns
-  //n = knights
-  //b = bishops
-  //r = rooks
-  //q = queens
-  //k = king
-  for(int i = 0; i<iRow; ++i){ board[6][i] = 'p'; }
+
+  for(int i = 0; i<iRow; ++i){ board[6][i] = new Pawn(‘B’, Posn(6, i)); }
   board[7][0] = new Rook('B', Posn(7, 0));
   board[7][1] = new Knight('B', Posn(7, 0));
-  board[7][2] = 'b';
-  board[7][3] = 'k';
-  board[7][4] = 'q';
-  board[7][5] = 'b';
-  board[7][6] = 'n';
-  board[7][7] = 'r';
-  for(int i = 0; i<iCol; ++i){ board[1][i] = 'P';}
-  board[0][0] = 'R';
-  board[0][1] = 'N';
-  board[0][2] = 'B';
-  board[0][3] = 'K';
-  board[0][4] = 'Q';
-  board[0][5] = 'B';
-  board[0][6] = 'N';
-  board[0][7] = 'R';
+  board[7][2] = new Bishop(‘B’, Posn(7, 2));
+  board[7][3] = new King(‘B’, Posn(7, 3));
+  board[7][4] = new Queen(‘B’, Posn(7, 4));
+  board[7][5] = new Bishop(‘B’, Posn(7, 5));
+  board[7][6] = new Knight(‘B’, Posn(7, 6));
+  board[7][7] = new Rook(‘B’, Posn(7, 7));
+  for(int i = 0; i<iCol; ++i){ board[1][i] = new Pawn(‘W’, Posn(1, i));}
+  board[0][0] = new Rook(‘W’, Posn(0, 0));
+  board[0][1] = new Knight(‘W’, Posn(0, 1));
+  board[0][2] = new Bishop(‘W’, Posn(0, 2));
+  board[0][3] = new King(‘W’, Posn(0, 3));
+  board[0][4] = new Queen(‘W’, Posn(0, 4));
+  board[0][5] = new Bishop(‘W’, Posn(0, 5));
+  board[0][6] = new Knight(‘W’, Posn(0, 6));
+  board[0][7] = new Rook(‘W’, Posn(0, 7));
 
   theBoard = board;
 }
