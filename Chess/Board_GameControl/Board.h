@@ -17,9 +17,9 @@ class Board
 	~Board();
 	vector<vector<ChessPiece *>> theBoard;
 	void setupBoard();
-	void printBoard(vector<vector<char> > );
+	void printBoard();
 	ChessPiece *getPieceByPosn(Posn p)
-	Observer observer;
+	vector<Observer *> observerList;
 	TextDisplay textDisplay;
 	GraphDisplay graphDisplay;
 	//vector<Move> getAllLegalMovesByColour(char colour);
