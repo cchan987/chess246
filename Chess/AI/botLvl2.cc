@@ -1,8 +1,10 @@
 #include "botLvl2.h"
 #include "move.h"
+#include "Board.h"
 
 using namespace std;
-vector<Move> getCapturingandCheckingMoves(Board &b) {
+
+vector<Move> BotLvl2::getCapturingandCheckingMoves(Board &b) {
 	vector<Move> availableMoves = b.getAllLegalMovesByColour(allegiance);
 	vector<Move> filteredMoves;
 	for (int i = 0; i < availableMoves.size(); ++i) {
@@ -13,13 +15,13 @@ vector<Move> getCapturingandCheckingMoves(Board &b) {
 	return filteredMoves;
 }
 
-Move randomLegalMove(Board &b) {
+Move BotLvl2::randomLegalMove(Board &b) {
 	vector<Move> legal_moves = b.getAllLegalMovesByColour(allegiance);
 	int randNum = rand() % legal_moves.size();
 	return legal_moves[randNum];
 }
 
-Move getMove(Board &b) {
+Move BotLvl2::getMove(Board &b) {
 	vector<Move> applicableMoves = getCapturingandCheckingMoves(b);
 	if (applicableMoves.size() > 0) {
 		int randNum = rand() % applicableMoves.size();
