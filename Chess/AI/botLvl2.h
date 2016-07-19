@@ -8,7 +8,7 @@ class Board;
 
 class BotLvl2: public AbstractAI{
 	vector<Move> getCapturingandCheckingMoves(vector<Move> availableMoves);
-	Move getMove(Board &b)
+	Move getMove(Board &b) override;
 
 };
 
