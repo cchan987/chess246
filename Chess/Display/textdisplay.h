@@ -11,7 +11,7 @@ class TextDisplay: public Observer {
   string infoMsg = "";
  public:
   TextDisplay(int n);
-  void notifyBoard(ChessPiece &cp, Posn src, Posn dst) override; 
+  void notifyBoard(ChessPiece *cp, Posn dst) override; 
   void notifyInfoMsg(String msg) override;
   ~TextDisplay();
 

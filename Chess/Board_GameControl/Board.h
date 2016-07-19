@@ -15,13 +15,16 @@ class Board
 	public:
 	Board();	
 	~Board();
+	void placePiece();
+	void removePiece(ChessPiece *piece);
+
 	vector<vector<ChessPiece *>> theBoard;
 	void setupBoard();
 	void printBoard();
 	ChessPiece *getPieceByPosn(Posn p)
 	vector<Observer *> observerList;
-	TextDisplay textDisplay;
-	GraphDisplay graphDisplay;
+	TextDisplay *td;
+	GraphDisplay *graphDisplay;
 	//vector<Move> getAllLegalMovesByColour(char colour);
 	vector<Move> getAllPossibleMovesByColour(char colour);
 	vector<ChessPiece *> getAllPiecesByColour(char colour);
@@ -33,7 +36,7 @@ class Board
 	// -doesn't put your own king in check,
 	// -doesn't capture your own piece
 	bool checkLegalMove(Move m); 
-	void moveChess(Move m); // Will be handed a legal move and execute it
+	void executeMove(Move m); // Will be handed a legal move and execute it
 	bool isInCheck(ChessPiece cp);
 	
 	bool isGameOver();

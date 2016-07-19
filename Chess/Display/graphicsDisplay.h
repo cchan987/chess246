@@ -20,7 +20,7 @@ public:
 	~GraphicsDisplay();
 	void setDimensions(int dim);
 	void clearScreen();
-	void notifyBoard(ChessPiece &cp, Posn src, Posn dst) override; 
+	void notifyBoard(ChessPiece *cp, Posn dst) override; 
 	void notifyInfoMsg(String msg) override;
 };
 

@@ -70,6 +70,8 @@ vector<Move> getAllPossibleMovesByColour(char colour) {
 
 Board::Board()
 {
+	td = new TextDisplay();
+	observerList.emplace_back(td);
   //ctor
   
   int iRow = 8;
@@ -112,6 +114,30 @@ Board::Board()
   theBoard = board;
 }
 
+void Board::removePiece(ChessPiece *piece) {
+	posn src = piece->getLocation();
+	theBoard[src.getRow(), src.getCol()] = nullptr;
+	notifyBoard(src, nullptr);
+	delete piece;
+}
+
+void Board::placePiece() {
+	
+}
+
+void Board::executeMove(Move m) {
+	ChessPiece *thePiece = m.getPiece();
+	Posn src = thePiece->getLocation();
+	Posn dst = m.getDestination();
+	ChessPiece *otherPiece = getPieceByPosn(dst);
+	if (otherPiece) {
+		removePiece(otherPiece);
+	}
+	piece.setLocation(dst);
+	theBoard[dst.getRow(), dst.getCol()] = piece;
+	notifyBoard(dst, thePiece);
+}
+
 Board::~Board()
 {
   int iRow = 8;
@@ -122,6 +148,7 @@ Board::~Board()
       gameBoard[i][j] = 0;
     }
   }
+  delete td;
 }
   
 
@@ -208,13 +235,12 @@ Board::checkLegalMove(Posn p, ChessPiece cp){
 
 }
 
-Board::moveChess(Posn p1, Posn p2){
-
-}
-
-
-Board::notifyBoard(Posn p, ChessPiece cp){
-
+// Sends out notifications whenever the board is changed
+// ChessPiece could be a nullptr, Position p has been set to the value of piece
+Board::notifyBoard(Posn p, ChessPiece *piece) {
+	for (int i = 0; i < observerList.size(); ++i) {
+		observerList[i].notify(piece, p);
+	}
 }
 
 Board::notifyInfoMsg(String s){

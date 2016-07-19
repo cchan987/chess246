@@ -15,7 +15,7 @@ TextDisplay::TextDisplay(int n = 8): gridSize{n} {
 	}
 }
 
-void TextDisplay::notifyBoard(ChessPiece &cp, Posn src, Posn dst) {
+void TextDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
 	int srcR = src.getRow();
 	int srcC = src.getCol();
 	theDisplay[srcR][srcC] = getCellColour(srcR, srcC);
