@@ -8,8 +8,6 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-
 ChessPiece *Board::getPieceByPosn(Posn p) {
 	int dstRow = moveDst.getRow();
 	int dstCol = moveDst.getCol();
@@ -48,23 +46,26 @@ bool Board::isACheckingMove(Move m) {
 	return false;
 }
 
-vector<Move> getLegalMovesByPiece(ChessPiece *thePiece) {
-	thePiece->getMoves();
-}
-
 vector<Move> Board::getAllLegalMovesByColour(char colour) {
 	vector<Move> allLegalMoves;
-	vector<ChessPiece *> thePieces = getAllLegalPiecesByColour(colour);
-	for (int i = 0; i < thePieces.size(); ++i) {
-		ChessPiece *currentPiece = thePieces[i];
-		vector<Move> currentPieceMoves = currentPiece->getPossibleMoves();
-		for (int i = 0; i < currentPieceMoves; ++i) {
-			if (checkLegalMove(currentPieceMoves[i], currentPiece)) {
+	vector <Move> currentPieceMoves = getAllPossibleMovesByColour(colour);
+		for (int i = 0; i < currentPieceMoves.size(); ++i) {
+			if (checkLegalMove(currentMove)) {
 				allLegalMoves.emplace_back(currentPieceMoves[i]);
 			}
 		}
 	}
 	return allLegalMoves;
+}
+
+vector<Move> getAllPossibleMovesByColour(char colour) {
+	vector<Move> allPossibleMoves;
+	vector<ChessPiece *> thePieces = getAllPiecesByColour(colour);
+	for (int i = 0; i < thePieces.size(); ++i) {
+		ChessPiece *currentPiece = thePieces[i];
+		vector<Move> currentPieceMoves = currentPiece->getPossibleMoves();
+	}
+	return allPossibleMoves;
 }
 
 Board::Board()
@@ -112,9 +113,8 @@ Board::Board()
   board[0][5] = 'B';
   board[0][6] = 'N';
   board[0][7] = 'R';
->>>>>>> origin/master
 
-  gameBoard = board;
+  theBoard = board;
 }
 
 Board::~Board()
@@ -123,7 +123,7 @@ Board::~Board()
   int iCol = 8;
   for (int i = 0; i < iRow; ++i){
     for(int j = 0; i < iCol; ++j){
-      delete gameBoard[i][j];
+      delete theBoard[i][j];
       gameBoard[i][j] = 0;
     }
   }
@@ -205,12 +205,8 @@ Board::printBoard(vector<vector<char> > board){
   for (int i=0; i<xaxis.size(); i++){ cout <<xaxis[i]+1;}
   cout << endl;
 
->>>>>>> origin/master
-
 }
 
-
-//=======================================================
 
 
 Board::checkLegalMove(Posn p, ChessPiece cp){
