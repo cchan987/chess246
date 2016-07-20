@@ -16,17 +16,18 @@ TextDisplay::TextDisplay(int n = 8): gridSize{n} {
 }
 
 void TextDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
-	int srcR = src.getRow();
-	int srcC = src.getCol();
-	theDisplay[srcR][srcC] = getCellColour(srcR, srcC);
-
-	int dstR = dst.getRow();
-	int dstC = dst.getCol();
-	char piece = cp.getPieceType();
-	if (cp.getColour() == 'W') {
-		piece = tolower(piece);
+	if (cp) {
+		char piece = cp.getPieceType();
+		if (cp.getColour() == 'W') {
+			piece = tolower(piece);
+		}
+		theDisplay[srcR][srcC] = piece;		
 	}
-	theDisplay[srcR][srcC] = piece;
+	else {
+		int dstR = dst.getRow();
+		int dstC = dst.getCol();
+		theDisplay[dstR][dstC] = getCellColour(dstR, dstC);		
+	}
 }
 
 void notifyInfoMsg(String msg) {
