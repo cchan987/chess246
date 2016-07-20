@@ -117,12 +117,14 @@ Board::Board()
 void Board::removePiece(ChessPiece *piece) {
 	posn src = piece->getLocation();
 	theBoard[src.getRow(), src.getCol()] = nullptr;
-	notifyBoard(src, nullptr);
+	notifyBoard(nullptr, src);
 	delete piece;
 }
 
-void Board::placePiece() {
-	
+void Board::placePiece(ChessPiece *piece) {
+	Posn dst = piece->getLocation();
+	theBoard[dst.getRow(), dst.getCol()] = piece;
+	notifyBoard(piece, dst);
 }
 
 void Board::executeMove(Move m) {
@@ -135,17 +137,17 @@ void Board::executeMove(Move m) {
 	}
 	piece.setLocation(dst);
 	theBoard[dst.getRow(), dst.getCol()] = piece;
-	notifyBoard(dst, thePiece);
+	notifyBoardChange(nullptr, src);
+	notifyBoardChange(thePiece, dst);
 }
 
-Board::~Board()
-{
+Board::~Board() {
   int iRow = 8;
   int iCol = 8;
   for (int i = 0; i < iRow; ++i){
     for(int j = 0; i < iCol; ++j){
       delete theBoard[i][j];
-      gameBoard[i][j] = 0;
+      theBoard[i][j] = nullptr;
     }
   }
   delete td;
@@ -237,12 +239,12 @@ Board::checkLegalMove(Posn p, ChessPiece cp){
 
 // Sends out notifications whenever the board is changed
 // ChessPiece could be a nullptr, Position p has been set to the value of piece
-Board::notifyBoard(Posn p, ChessPiece *piece) {
+Board::notifyBoardChange(ChessPiece *piece, Posn p) {
 	for (int i = 0; i < observerList.size(); ++i) {
-		observerList[i].notify(piece, p);
+		observerList[i].notifyBoard(piece, p);
 	}
 }
 
-Board::notifyInfoMsg(String s){
+Board::notifyInfoMsgChange(String s){
 
 }
