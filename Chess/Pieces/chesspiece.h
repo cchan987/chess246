@@ -1,3 +1,6 @@
+#ifndef ROOK_H
+#define ROOK_H
+
 #include "posn.h"
 #include "move.h"
 
@@ -10,6 +13,7 @@ public:
 	void setColour(char col);
 	Posn getPosition();
 	void setPosition(Posn p);
-	virtual vector<Move> getPossibleMoves(Posn p) = 0;
+	virtual vector<Move> getPossibleMoves() = 0;
 	virtual char getPieceType() = 0;
-}
+};
+#endif
