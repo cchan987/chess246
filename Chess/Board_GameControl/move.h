@@ -10,7 +10,7 @@ class Move{
 	bool isCapturingMove;
 	bool isCastlingMove;
 public:
-	Move(ChessPiece *Piece, Posn dst, bool isCapturingMove, bool isCastlingMove);
+	Move(ChessPiece *Piece, Posn dst, bool isCapturingMove = false, bool isCastlingMove = false);
 	ChessPiece *getPiece() const;
 	Posn getDestination() const;
 };

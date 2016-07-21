@@ -8,13 +8,7 @@
 
 using namespace std;
 
-GameControl::GameControl()
-{
-  //ctor
-  whiteScoreCount = 0;
-  blackScoreCount = 0;
-  
-}
+GameControl::GameControl() : whiteScoreCount{0}, blackScoreCount{0} {}
 
 
 
