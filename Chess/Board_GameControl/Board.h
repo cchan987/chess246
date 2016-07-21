@@ -19,11 +19,11 @@ class Board
 
 	vector<vector<ChessPiece *>> theBoard;
 	void setupBoard();
-	vector<int> posntran(string);
-	bool createChess(string,int,int);
+	vector<int> posntran(std::string s1);
+	bool createChessPiece(std::string s1,int x,int y);
 
 	void printBoard();
-	ChessPiece *getPieceByPosn(Posn p)
+	ChessPiece *getPieceByPosn(Posn p);
 	vector<Observer *> observerList;
 	TextDisplay *td;
 	GraphDisplay *graphDisplay;
