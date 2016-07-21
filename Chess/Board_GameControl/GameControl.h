@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 
-#include <Board.h>
+#include "Board.h"
 
 
 class GameControl

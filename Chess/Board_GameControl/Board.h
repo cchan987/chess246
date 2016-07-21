@@ -5,9 +5,9 @@
 #include <iostream>
 #include <sstream>
 
-#include <ChessPiece.h>
-#include <TextDisplay.h>
-#include <GraphDisplay.h>
+#include "hessPiece.h"
+#include "TextDisplay.h"
+#include "GraphDisplay.h"
 
 
 class Board
