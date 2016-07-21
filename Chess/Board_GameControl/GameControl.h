@@ -19,11 +19,13 @@ class GameControl
 	void alternateTurn();
 	void printScore();
 	void startGame();
+	void startGame2();
 	void isGameOver();
 	void checkMate();
 	void staleMate();
 	void resign();
 	void endGame();
+	int playerAI(string);
 
 	private:
 	int whiteScoreCount;

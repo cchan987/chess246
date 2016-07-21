@@ -1,5 +1,6 @@
 #include "King.h"
 #include <string>
+#include <vector>
 using namespace std;
 
 King::King(char colour, bool hasBeenMoved, Posn *location) : ChessPiece{colour, hasBeenMoved, location} {}
