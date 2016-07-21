@@ -22,6 +22,7 @@ GameControl::GameControl()
 //==========================================================================
 GameControl::switchOn(){
   
+  Board defaultBoard;
   Board currentBoard;
   
   char whoseTurn;
