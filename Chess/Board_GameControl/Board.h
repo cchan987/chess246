@@ -5,7 +5,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "hessPiece.h"
+#include "ChessPiece.h"
 #include "TextDisplay.h"
 #include "GraphDisplay.h"
 
