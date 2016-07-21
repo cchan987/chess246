@@ -91,9 +91,6 @@ Board::Board()
   int iRow = 8;
   int iCol = 8;
   
-  //initalize empty board
-  vector<vector<char> > board;
-  
   for(int i = 0; i < iRow; ++i)
     {
     vector<char>temp;
@@ -101,31 +98,31 @@ Board::Board()
       {
       temp.push_back('-');
       }
-    board.push_back(temp);
+    theBoard.push_back(temp);
     }
 
   //initalize player's chess piece
 
   for(int i = 0; i<iRow; ++i){ board[6][i] = new Pawn(‘B’, Posn(6, i)); }
-  board[7][0] = new Rook('B', Posn(7, 0));
-  board[7][1] = new Knight('B', Posn(7, 0));
-  board[7][2] = new Bishop(‘B’, Posn(7, 2));
-  board[7][3] = new King(‘B’, Posn(7, 3));
-  board[7][4] = new Queen(‘B’, Posn(7, 4));
-  board[7][5] = new Bishop(‘B’, Posn(7, 5));
-  board[7][6] = new Knight(‘B’, Posn(7, 6));
-  board[7][7] = new Rook(‘B’, Posn(7, 7));
+  theBoard[7][0] = new Rook('B', Posn(7, 0));
+  theBoard[7][1] = new Knight('B', Posn(7, 0));
+  theBoard[7][2] = new Bishop(‘B’, Posn(7, 2));
+  theBoard[7][3] = new King(‘B’, Posn(7, 3));
+  theBoard[7][4] = new Queen(‘B’, Posn(7, 4));
+  theBoard[7][5] = new Bishop(‘B’, Posn(7, 5));
+  theBoard[7][6] = new Knight(‘B’, Posn(7, 6));
+  theBoard[7][7] = new Rook(‘B’, Posn(7, 7));
   for(int i = 0; i<iCol; ++i){ board[1][i] = new Pawn(‘W’, Posn(1, i));}
-  board[0][0] = new Rook(‘W’, Posn(0, 0));
-  board[0][1] = new Knight(‘W’, Posn(0, 1));
-  board[0][2] = new Bishop(‘W’, Posn(0, 2));
-  board[0][3] = new King(‘W’, Posn(0, 3));
-  board[0][4] = new Queen(‘W’, Posn(0, 4));
-  board[0][5] = new Bishop(‘W’, Posn(0, 5));
-  board[0][6] = new Knight(‘W’, Posn(0, 6));
-  board[0][7] = new Rook(‘W’, Posn(0, 7));
+  theBoard[0][0] = new Rook(‘W’, Posn(0, 0));
+  theBoard[0][1] = new Knight(‘W’, Posn(0, 1));
+  theBoard[0][2] = new Bishop(‘W’, Posn(0, 2));
+  theBoard[0][3] = new King(‘W’, Posn(0, 3));
+  theBoard[0][4] = new Queen(‘W’, Posn(0, 4));
+  theBoard[0][5] = new Bishop(‘W’, Posn(0, 5));
+  theBoard[0][6] = new Knight(‘W’, Posn(0, 6));
+  theBoard[0][7] = new Rook(‘W’, Posn(0, 7));
 
-  theBoard = board;
+
 }
 
 void Board::removePiece(ChessPiece *piece) {

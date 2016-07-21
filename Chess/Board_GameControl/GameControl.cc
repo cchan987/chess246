@@ -101,7 +101,7 @@ GameControl::switchOn(){
        }
        else{
 	 cout << "enter setup mode" << endl;
-	 setupBoard();      
+	 currentBoard.setupBoard();      
        }
      }
      else if (listOfCommand[0] == "quit"){
