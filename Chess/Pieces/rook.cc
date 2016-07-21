@@ -6,11 +6,11 @@ void Rook::setMoved() {
 	hasBeenMoved = true;
 }
 
-bool Rook::hasBeenMoved() {
+bool Rook::hasBeenMoved() const {
 	return hasBeenMoved;
 }
 
-char Rook::getPieceType() {
+char Rook::getPieceType() const {
 	return 'R';
 }
 
@@ -19,7 +19,7 @@ void Rook::setPosition(Posn p){
 	location = p;
 }
 
-vector<Move> Rook::getPossibleMoves() {
+vector<Move> Rook::getPossibleMoves() const {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
 	int col = location.getCol();

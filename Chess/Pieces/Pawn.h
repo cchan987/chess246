@@ -9,9 +9,9 @@ class Pawn:public ChessPiece{
 	bool hasBeenMoved = false;
 public:
 	void setMoved();
-	bool getHasBeenMoved();
-	char getPieceType() override;	
-	vector<Move> getPossibleMoves(Posn p) override;
+	bool getHasBeenMoved() const;
+	char getPieceType() const override;	
+	vector<Move> getPossibleMoves(Posn p) const override;
 
 };
 

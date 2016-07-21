@@ -2,7 +2,7 @@
 #include "move.h"
 #include "chesspiece.h"
 
-char Knight::getPieceType() {
+char Knight::getPieceType() const {
 	return 'N';
 }
 

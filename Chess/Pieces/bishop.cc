@@ -2,13 +2,12 @@
 #include "move.h"
 #include "chesspiece.h"
 
-char Bishop::getPieceType() {
+char Bishop::getPieceType() const {
 	return 'B';
 }
 
 
-
-vector<Move> Bishop::getPossibleMoves(Board &b) {
+vector<Move> Bishop::getPossibleMoves(Board &b) const {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
 	int col = location.getCol();

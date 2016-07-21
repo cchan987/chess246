@@ -6,8 +6,8 @@ class Move;
 
 class Knight :public ChessPiece {
 public:
-	char getPieceType() override;
-	vector<Move> getPossibleMoves() override;
+	char getPieceType() const override;
+	vector<Move> getPossibleMoves() const override;
 };
 
 #endif
