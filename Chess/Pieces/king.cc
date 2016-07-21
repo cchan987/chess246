@@ -19,15 +19,23 @@ vector<Move> King::getPossibleMoves() {
 	int row = location.getRow();
 	int col = location.getCol();
 
-	PossibleMoves.emplace_back(Move(this, Posn(row + 1, col)));
-	PossibleMoves.emplace_back(Move(this, Posn(row - 1, col)));
-	PossibleMoves.emplace_back(Move(this, Posn(row, col + 1)));
-	PossibleMoves.emplace_back(Move(this, Posn(row, col - 1)));
-
+	if (row < 7) {
+		PossibleMoves.emplace_back(Move(this, Posn(row + 1, col)));
+	}
+	if (row > 0) {
+		PossibleMoves.emplace_back(Move(this, Posn(row - 1, col)));
+	}
+	if (col < 7) {
+		PossibleMoves.emplace_back(Move(this, Posn(row, col + 1)));
+	}
+	if (col > 0 ) {
+		PossibleMoves.emplace_back(Move(this, Posn(row, col - 1)));
+	}
+	
 	if (hasBeenMoved == false) { // Can castle
 		PossibleMoves.emplace_back(Move(this, Posn(row, col + 2)));
 		PossibleMoves.emplace_back(Move(this, Posn(row, col - 2)));
 	}
-	
+
 	return PossibleMoves;
 }
