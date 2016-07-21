@@ -14,7 +14,7 @@ class Board
 {
 	public:
 	Board();	
-	void placePiece();
+	void placePiece(ChessPiece *piece);
 	void removePiece(ChessPiece *piece);
 
 	vector<vector<ChessPiece *>> theBoard;
