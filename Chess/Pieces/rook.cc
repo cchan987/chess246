@@ -26,29 +26,70 @@ vector<Move> Rook::getPossibleMoves() {
 
 	row--; //Doesn't move onto it's own square
 	while (row > -1) { // Find all the rows above that rook can move too
-		PossibleMoves.emplace_back(Move(this, Posn(row, col)));
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
+		if (pieceAtPosn) {
+			if (pieceAtPosn->getColour() != colour) {
+				PossibleMoves.emplace_back(Move(this, currentPosn, true));
+			}
+			break;
+		}
+		else {
+			PossibleMoves.emplace_back(Move(this, currentPosn));
+		}
 		row--;
 	}
 	row = location.getRow(); // Reset the row
 
 	row++; //Doesn't move onto it's own square
 	while (row < 8) { // Find all the rows below that rook can move too
-		PossibleMoves.emplace_back(Move(this, Posn(row, col)));
+		currentPosn = Posn(row, col);
+		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		if (pieceAtPosn) {
+			if (pieceAtPosn->getColour() != colour) {
+				PossibleMoves.emplace_back(Move(this, currentPosn, true));
+			}
+			break;
+		}
+		else {
+			PossibleMoves.emplace_back(Move(this, currentPosn));
+		}
 		row++;
 	}
 	row = location.getRow(); // Reset the row
 
 	col++; //Doesn't move onto it's own square
 	while (col < 8) { // Find all the columns to the right that rook can move too
-		PossibleMoves.emplace_back(Move(this, Posn(row, col)));
+		currentPosn = Posn(row, col);
+		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		if (pieceAtPosn) {
+			if (pieceAtPosn->getColour() != colour) {
+				PossibleMoves.emplace_back(Move(this, currentPosn, true));
+			}
+			break;
+		}
+		else {
+			PossibleMoves.emplace_back(Move(this, currentPosn));
+		}
 		col++;
 	}
 	col = location.getCol(); // Reset the col
 
 	col--; //Doesn't move onto it's own square
 	while (col > -1) {
-		PossibleMoves.emplace_back(Move(this, Posn(row, col)));
-		col++;		
+		currentPosn = Posn(row, col);
+		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		if (pieceAtPosn) {
+			if (pieceAtPosn->getColour() != colour) {
+				PossibleMoves.emplace_back(Move(this, currentPosn, true));
+			}
+			break;
+		}
+		else {
+			PossibleMoves.emplace_back(Move(this, currentPosn));
+		}
+		col--;		
 	}
+	col = location.getCol();
 	return PossibleMoves;
 }
