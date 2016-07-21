@@ -154,7 +154,7 @@ Board::~Board() {
 }
   
 
-Board::setupBoard(){
+void Board::setupBoard(){
 
  bool done = false;
 
@@ -202,7 +202,7 @@ Board::setupBoard(){
 Bool Board::isInCheck(char colour){
 }
 
-Board::printBoard(vector<vector<char> > board){
+void Board::printBoard(vector<vector<char> > board){
   
   //edges
   vector<int>xaxis;
@@ -233,18 +233,18 @@ Board::printBoard(vector<vector<char> > board){
 
 
 
-Board::checkLegalMove(Posn p, ChessPiece cp){
+bool Board::checkLegalMove(Posn p, ChessPiece cp){
 
 }
 
 // Sends out notifications whenever the board is changed
 // ChessPiece could be a nullptr, Position p has been set to the value of piece
-Board::notifyBoardChange(ChessPiece *piece, Posn p) {
+void Board::notifyBoardChange(ChessPiece *piece, Posn p) {
 	for (int i = 0; i < observerList.size(); ++i) {
 		observerList[i].notifyBoard(piece, p);
 	}
 }
 
-Board::notifyInfoMsgChange(String s){
+void Board::notifyInfoMsgChange(String s){
 
 }
