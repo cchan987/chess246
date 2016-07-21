@@ -2,7 +2,7 @@
 #include "chesspiece.h"
 #include "posn.h"
 
-Move::Move(ChessPiece *p, Posn d, bool i) : Piece{p}, dst{d}, isCapturingMove{i} {}
+Move::Move(ChessPiece *Piece, Posn dst, bool isCapturingMove, bool isCastlingMove); : Piece{Piece}, dst{dst}, isCapturingMove{isCapturingMove}, isCastlingMove{isCastlingMove} {}
 
 ChessPiece *Move::getPiece() {
 	return Piece;

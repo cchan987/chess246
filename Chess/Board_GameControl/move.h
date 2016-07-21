@@ -8,8 +8,9 @@ class Move{
 	ChessPiece *Piece;
 	Posn dst;
 	bool isCapturingMove;
+	bool isCastlingMove;
 public:
-	Move(ChessPiece *p, Posn d, bool i);
+	Move(ChessPiece *Piece, Posn dst, bool isCapturingMove, bool isCastlingMove);
 	ChessPiece *getPiece() const;
 	Posn getDestination() const;
 };
