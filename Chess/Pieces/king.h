@@ -1,10 +1,10 @@
-#ifndef ROOK_H
-#define ROOK_H
+#ifndef KING_H
+#define KING_H
 #include "chesspiece.h"
 
 class Move;
 
-class Rook :public ChessPiece {
+class King :public ChessPiece {
 	bool hasBeenMoved = false;
 public:
 	void setMoved();
