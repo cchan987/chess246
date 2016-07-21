@@ -7,6 +7,7 @@ class Posn;
 class Move{
 	ChessPiece *Piece;
 	Posn dst;
+	bool capturingMove;
 public:
 	ChessPiece *getPiece();
 	Posn getDestination();

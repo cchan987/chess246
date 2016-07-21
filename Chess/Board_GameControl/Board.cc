@@ -46,9 +46,9 @@ bool Board::isACheckingMove(Move m) {
 	return false;
 }
 
-vector<Move> Board::getAllLegalMovesByColour(char colour) {
+vector<Move> Board::getAllLegalMovesByColour(char colour, vector<vector<ChessPiece *>> testBoard) {
 	vector<Move> allLegalMoves;
-	vector <Move> currentPieceMoves = getAllPossibleMovesByColour(colour);
+	vector <Move> currentPieceMoves = getAllPossibleMovesByColour(colour, testBoard);
 		for (int i = 0; i < currentPieceMoves.size(); ++i) {
 			if (checkLegalMove(currentMove)) {
 				allLegalMoves.emplace_back(currentPieceMoves[i]);
@@ -58,14 +58,28 @@ vector<Move> Board::getAllLegalMovesByColour(char colour) {
 	return allLegalMoves;
 }
 
-vector<Move> getAllPossibleMovesByColour(char colour) {
+vector<Move> getAllPossibleMovesByColour(char colour, vector<vector<ChessPiece *>> testBoard) {
 	vector<Move> allPossibleMoves;
-	vector<ChessPiece *> thePieces = getAllPiecesByColour(colour);
+	vector<ChessPiece *> thePieces = getAllPiecesByColour(colour, testBoard);
 	for (int i = 0; i < thePieces.size(); ++i) {
 		ChessPiece *currentPiece = thePieces[i];
 		vector<Move> currentPieceMoves = currentPiece->getPossibleMoves();
 	}
 	return allPossibleMoves;
+}
+
+vector<ChessPiece *> getAllPiecesByColour(char colour, vector<vector<ChessPiece *>> testBoard) {
+  vector<ChessPiece *> friendlyPieces;
+  for (int i = 0; i < testBoard.size(); i++) {
+    for (int j = 0; j < testBoard[i].size(); j++) {
+      if (testBoard[i][j]) {
+        if (testBoard[i][j].getColour() == colour) {
+          friendlyPieces.emplace_back(testBoard[i][j]);
+        }
+      }
+    }
+  }
+  return friendlyPieces;
 }
 
 Board::Board()
@@ -125,6 +139,10 @@ void Board::placePiece(ChessPiece *piece) {
 	Posn dst = piece->getLocation();
 	theBoard[dst.getRow(), dst.getCol()] = piece;
 	notifyBoard(piece, dst);
+}
+
+vector<vector<ChessPiece *>> simulateMove() {
+  
 }
 
 void Board::executeMove(Move m) {
@@ -199,7 +217,8 @@ void Board::setupBoard(){
 
 }
 
-Bool Board::isInCheck(char colour){
+Bool Board::isInCheck(char colour, vector<vector<ChessPiece *>> testBoard) {
+
 }
 
 void Board::printBoard(vector<vector<char> > board){

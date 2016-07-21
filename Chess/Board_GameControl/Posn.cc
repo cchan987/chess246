@@ -15,13 +15,6 @@ Posn::Posn(int x, int y)
   col = y;
 }
 
-Posn::~Posn()
-{
-	delete row;
-	delete col;
-}  
-
-
 int Posn::getRow(){
 	return row;
 }
