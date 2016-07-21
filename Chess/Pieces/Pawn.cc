@@ -7,16 +7,16 @@ void Pawn::setMoved() {
 	hasBeenMoved = true;
 }
 
-bool Pawn::hasBeenMoved() {
+bool Pawn::getHasBeenMoved() const {
 	return hasBeenMoved;
 }
 
-char Pawn::getPieceType() {
+char Pawn::getPieceType() const {
 	return ‘P’;
 }
 
 
-vector<Move> Pawn::getPossibleMoves(){
+vector<Move> Pawn::getPossibleMoves() const{
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
 	int col = location.getCol();	

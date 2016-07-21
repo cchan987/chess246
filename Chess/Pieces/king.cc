@@ -6,11 +6,11 @@ void King::setMoved() {
 	hasBeenMoved = true;
 }
 
-bool King::hasBeenMoved() {
+bool King::getHasBeenMoved() const {
 	return hasBeenMoved;
 }
 
-char King::getPieceType() {
+char King::getPieceType() const {
 	return 'K';
 }
 
@@ -19,7 +19,7 @@ void King::setPosition(Posn p){
 	location = p;
 }
 
-vector<Move> King::getPossibleMoves() {
+vector<Move> King::getPossibleMoves() const {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
 	int col = location.getCol();

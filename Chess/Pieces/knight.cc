@@ -2,11 +2,11 @@
 #include "move.h"
 #include "chesspiece.h"
 
-char Knight::getPieceType() {
+char Knight::getPieceType() const {
 	return 'N';
 }
 
-vector<Move> Knight::getPossibleMoves() {
+vector<Move> Knight::getPossibleMoves() const {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
 	int col = location.getCol();

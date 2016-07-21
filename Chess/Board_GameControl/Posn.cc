@@ -13,21 +13,15 @@ Posn::Posn(int x, int y)
   //ctor
   row = x;
   col = y;
-}
-
-Posn::~Posn()
-{
-	delete row;
-	delete col;
 }  
 
 
-int Posn::getRow(){
+int Posn::getRow() const{
 	return row;
 }
 
 
-int Posn::getCol(){
+int Posn::getCol() const{
 	return col;
 }
 

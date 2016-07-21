@@ -7,9 +7,9 @@ class Posn
 {	
 
 public: 
-	Posn(int, int);
-	int getCol();
-	int getRow();
+	Posn(int x, int y);
+	int getCol() const;
+	int getRow() const;
 	void setCol(int );
 	void setRow(int );
 

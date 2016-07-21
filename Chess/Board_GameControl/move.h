@@ -8,8 +8,8 @@ class Move{
 	ChessPiece *Piece;
 	Posn dst;
 public:
-	ChessPiece *getPiece();
-	Posn getDestination();
+	ChessPiece *getPiece() const;
+	Posn getDestination() const;
 };
 
 #endif

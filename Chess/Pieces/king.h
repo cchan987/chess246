@@ -9,9 +9,9 @@ class King :public ChessPiece {
 	bool hasBeenMoved = false;
 public:
 	void setMoved();
-	bool getHasBeenMoved();
-	char getPieceType() override;
-	vector<Move> getPossibleMoves() override;
+	bool getHasBeenMoved() const;
+	char getPieceType() const override;
+	vector<Move> getPossibleMoves() const override;
 	void setPosition(Posn p) override;
 };
 

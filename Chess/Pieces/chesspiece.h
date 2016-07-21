@@ -9,11 +9,11 @@ class ChessPiece {
 	Posn location;
 public:
 	ChessPiece(char c, Posn p);
-	char getColour();
+	char getColour() const;
 	void setColour(char col);
-	Posn getPosition();
+	Posn getPosition() const;
 	virtual void setPosition(Posn p);
-	virtual vector<Move> getPossibleMoves() = 0;
-	virtual char getPieceType() = 0;
+	virtual vector<Move> getPossibleMoves() const = 0;
+	virtual char getPieceType() const = 0;
 };
 #endif
