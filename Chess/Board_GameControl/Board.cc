@@ -103,26 +103,31 @@ Board::Board()
 
   //initalize player's chess piece
 
-  for(int i = 0; i<iRow; ++i){ board[6][i] = new Pawn(‘B’, Posn(6, i)); }
-  theBoard[7][0] = new Rook('B', Posn(7, 0));
-  theBoard[7][1] = new Knight('B', Posn(7, 0));
-  theBoard[7][2] = new Bishop(‘B’, Posn(7, 2));
-  theBoard[7][3] = new King(‘B’, Posn(7, 3));
-  theBoard[7][4] = new Queen(‘B’, Posn(7, 4));
-  theBoard[7][5] = new Bishop(‘B’, Posn(7, 5));
-  theBoard[7][6] = new Knight(‘B’, Posn(7, 6));
-  theBoard[7][7] = new Rook(‘B’, Posn(7, 7));
-  for(int i = 0; i<iCol; ++i){ board[1][i] = new Pawn(‘W’, Posn(1, i));}
-  theBoard[0][0] = new Rook(‘W’, Posn(0, 0));
-  theBoard[0][1] = new Knight(‘W’, Posn(0, 1));
-  theBoard[0][2] = new Bishop(‘W’, Posn(0, 2));
-  theBoard[0][3] = new King(‘W’, Posn(0, 3));
-  theBoard[0][4] = new Queen(‘W’, Posn(0, 4));
-  theBoard[0][5] = new Bishop(‘W’, Posn(0, 5));
-  theBoard[0][6] = new Knight(‘W’, Posn(0, 6));
-  theBoard[0][7] = new Rook(‘W’, Posn(0, 7));
+  for(int i = 0; i<iRow; ++i) { 
+      theBoard[6][i] = new Pawn('W', Posn(6, i)); 
+    }
 
+  theBoard[7][0] = new Rook('W', Posn(7, 0));
+  theBoard[7][1] = new Knight('W', Posn(7, 0));
+  theBoard[7][2] = new Bishop('W' Posn(7, 2));
+  theBoard[7][3] = new Queen('W', Posn(7, 3));
+  theBoard[7][4] = new King('W', Posn(7, 4));
+  theBoard[7][5] = new Bishop('W', Posn(7, 5));
+  theBoard[7][6] = new Knight('W', Posn(7, 6));
+  theBoard[7][7] = new Rook('W', Posn(7, 7));
 
+  for(int i = 0; i<iCol; ++i) { 
+    theBoard[1][i] = new Pawn('B', Posn(1, i));
+  }
+
+  theBoard[0][0] = new Rook('B', Posn(0, 0));
+  theBoard[0][1] = new Knight('B', Posn(0, 1));
+  theBoard[0][2] = new Bishop('B', Posn(0, 2));
+  theBoard[0][3] = new Queen('B', Posn(0, 3));
+  theBoard[0][4] = new King('B', Posn(0, 4));
+  theBoard[0][5] = new Bishop('B', Posn(0, 5));
+  theBoard[0][6] = new Knight('B', Posn(0, 6));
+  theBoard[0][7] = new Rook('B', Posn(0, 7));
 }
 
 void Board::removePiece(ChessPiece *piece) {
@@ -198,69 +203,78 @@ void Board::setupBoard(){
     if (listOfCommand.size() == 0){
       cout << "Please Enter Command" << endl;
     }
+
     else{ 
-      if (listOfCommand[0] == "+"){
-	if (listOfCommand.size() != 3){
-	  cout << "Invalid Setup Command Input; + chessPiece position" << endl;
-	}
-	else{
-	  //do somthing, set piece
-	  piece =  listOfCommand[1];
-	  position = listOfCommand[2];
-	  //setPiece();
-	 if (posntran(position)[1] == -1){
-	   cout << "position error" <<endl;
-	   }
-	else{
-	  bool success = false;
-	  success = createChess(piece,posntran(position)[0],posntran(position)[1]);
-	  if(success != false){cout << "Set piece " << piece << " to " << position  << endl;}
-	   }
-	}
+      if (listOfCommand[0] == "+") { // ADD COMMAND
+      	if (listOfCommand.size() != 3) {
+      	  cout << "Invalid Setup Command Input; + chessPiece position" << endl;
+      	}
+    	  else {
+      	  //do somthing, set piece
+      	  piece =  listOfCommand[1];
+      	  position = listOfCommand[2];
+      	  //setPiece();
+      	  if (posntran(position)[1] == -1) {
+      	   cout << "position error" <<endl;
+      	  }
+    	    else {
+        	  bool success = false;
+        	  success = createChess(piece,posntran(position)[0],posntran(position)[1]);
+    	      if (success != false) { 
+              cout << "Set piece " << piece << " to " << position  << endl;
+            }
+    	    }
+    	  }
       }
-      else if (listOfCommand[0] == "-"){
-	if (listOfCommand.size() != 2){
-	  cout << "Invalid Setup Command Input; - position" << endl;
-	}
-	else{
-	  //do somthing, remove piece
-	  position = listOfCommand[1];
-	  //
-	  if (posntran(position)[1] == -1){
-           cout << "position error" <<endl;
-          }
-       	  else{
-	  delete theBoard[posntran(position)[0]][posntran(position)[1]];
-	  theBoard[posntran(position)[0]][posntran(position)[1]] = nullptr;
-	  cout << "remove piece in " << posntran(position)[0]  << " " << posntran(position)[1] << endl;
-	  }
-	}
+
+      else if (listOfCommand[0] == "-") { // REMOVE COMMAND
+	      if (listOfCommand.size() != 2) {
+	        cout << "Invalid Setup Command Input; - position" << endl;
+	      }
+
+      	else{
+      	  //do somthing, remove piece
+      	  position = listOfCommand[1];
+      	  //
+      	  if (posntran(position)[1] == -1){
+                 cout << "position error" <<endl;
+                }
+             	  else{
+      	  delete theBoard[posntran(position)[0]][posntran(position)[1]];
+      	  theBoard[posntran(position)[0]][posntran(position)[1]] = nullptr;
+      	  cout << "remove piece in " << posntran(position)[0]  << " " << posntran(position)[1] << endl;
+      	  }
+      	}
       }
-      else if (listOfCommand[0] == "done"){
-	//check condition
-	int condition = 1;
 
-	if (condition == 1){
+      //TODO: Check that no ones is in check
+      // Only one king for black and white
+      // No pawns on first and last row
+      else if (listOfCommand[0] == "done") { // DONE COMMAND 
+      	//check condition
+      	int condition = 1;
 
-	  done = true;
-	}
-	else{
-	  
-	  cout << "condition not satisified" << endl;
+      	if (condition == 1){
 
-	  done = false;
-	}
+      	  done = true;
+      	}
+      	else{
+      	  
+      	  cout << "condition not satisified" << endl;
+
+      	  done = false;
+      	}
       }
-      else{
-	cout << "invalid setup input" << endl;
+
+      else { // Bad command , try again
+	      cout << "invalid setup input" << endl;
       }
     }
   }
 }
 
-
+// Translates a string a1 to a coordinate on the board 7,0
 vector<int> Board::posntran(string xy){
-
   string x = xy.substr(0,1);
   string y = xy.substr(1,1);
   string z = xy.substr(2);
@@ -275,26 +289,26 @@ vector<int> Board::posntran(string xy){
   if( z!= "" || xp < 0 || xp > 7 || yp < 0 || yp > 7){
 	xp = -1;
   }
-
   vector<int> posn;
   posn.push_back(yp);
   posn.push_back(xp);
   return posn;
 }
 
+
 bool Board::createChess(string piece, int x, int y){
 	delete theBoard[x][y];
 	theBoard[x][y] = nullptr;
-	if (piece == "r"){cout << 'B' << " Rook in " << x << " " << y << endl; theBoard[x][y] = new Rook('B', Posn(x, y));}
-	else if (piece == "n"){cout << 'B' << " Knight in " << x << " " << y << endl; theBoard[x][y] = new Knight(‘B’, Posn(x, y));}
-	else if (piece == "b"){cout << 'B' << " Bishop in " << x << " " << y << endl; theBoard[x][y] = new Bishop(‘B’, Posn(x, y));}
-	else if (piece == "k"){cout << 'B' << " King in " << x << " " << y << endl; theBoard[x][y] = new King(‘B’, Posn(x, y));}
-	else if (piece == "q"){cout << 'B' << " Queen in " << x << " " << y << endl; theBoard[x][y] = new Queen(‘B’, Posn(x, y));}
-	else if (piece == "R"){cout << 'W' << " Rook in " << x << " " << y << endl; theBoard[x][y] = new Rook(‘W’, Posn(x, y));}
-	else if (piece == "N"){cout << 'W' << " Knight in " << x << " " << y << endl; theBoard[x][y] = new Knight(‘W’, Posn(x, y));}
-	else if (piece == "B"){cout << 'W' << " Bishop in " << x << " " << y << endl; theBoard[x][y] = new Bishop(‘W’, Posn(x, y));}
-	else if (piece == "K"){cout << 'W' << " King in " << x << " " << y << endl; theBoard[x][y] = new King(‘W’, Posn(x, y));}
-	else if (piece == "Q"){cout << 'W' << " Queen in " << x << " " << y << endl; theBoard[x][y] = new Queen(‘W’, Posn(x, y));}
+	if (piece == "r"){cout << 'B' << " Rook in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Rook('B', Posn(x, y)));}
+	else if (piece == "n"){cout << 'B' << " Knight in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Knight('B', Posn(x, y)));}
+	else if (piece == "b"){cout << 'B' << " Bishop in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Bishop('B', Posn(x, y)));}
+	else if (piece == "k"){cout << 'B' << " King in " << x << " " << y << endl; theBoard[x][y] = new King('B', Posn(x, y));}
+	else if (piece == "q"){cout << 'B' << " Queen in " << x << " " << y << endl; theBoard[x][y] = new Queen('B', Posn(x, y));}
+	else if (piece == "R"){cout << 'W' << " Rook in " << x << " " << y << endl; theBoard[x][y] = new Rook('W', Posn(x, y));}
+	else if (piece == "N"){cout << 'W' << " Knight in " << x << " " << y << endl; theBoard[x][y] = new Knight('W', Posn(x, y));}
+	else if (piece == "B"){cout << 'W' << " Bishop in " << x << " " << y << endl; theBoard[x][y] = new Bishop('W', Posn(x, y));}
+	else if (piece == "K"){cout << 'W' << " King in " << x << " " << y << endl; theBoard[x][y] = new King('W', Posn(x, y));}
+	else if (piece == "Q"){cout << 'W' << " Queen in " << x << " " << y << endl; theBoard[x][y] = new Queen('W', Posn(x, y));}
 	else {cout << "chess type error" << endl; return false;}
 	return true;
 }
