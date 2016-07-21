@@ -25,7 +25,7 @@ class GameControl
 	void staleMate();
 	void resign();
 	void endGame();
-	int playerAI(std::string);
+	int playerAI(std::string s1);
 
 	private:
 	int whiteScoreCount;
