@@ -1,10 +1,10 @@
-#ifndef QUEEN_H
-#define QUEEN_H
+#ifndef BISHOP_H
+#define BISHOP_H
 #include "chesspiece.h"
 
 class Move;
 
-class Queen :public ChessPiece {
+class Bishop :public ChessPiece {
 public:
 	char getPieceType() override;
 	vector<Move> getPossibleMoves() override;
