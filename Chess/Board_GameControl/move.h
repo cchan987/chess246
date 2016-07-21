@@ -7,7 +7,9 @@ class Posn;
 class Move{
 	ChessPiece *Piece;
 	Posn dst;
+	bool isCapturingMove;
 public:
+	Move(ChessPiece *p, Posn d, bool i);
 	ChessPiece *getPiece() const;
 	Posn getDestination() const;
 };
