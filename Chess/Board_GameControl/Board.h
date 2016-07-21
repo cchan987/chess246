@@ -14,7 +14,6 @@ class Board
 {
 	public:
 	Board();	
-	~Board();
 	void placePiece();
 	void removePiece(ChessPiece *piece);
 

@@ -22,21 +22,21 @@ Posn::~Posn()
 }  
 
 
-Posn::getRow(){
+int Posn::getRow(){
 	return row;
 }
 
 
-Posn::getCol(){
+int Posn::getCol(){
 	return col;
 }
 
 
-Posn::setRow(int x){
+void Posn::setRow(int x){
 	row = x;
 }
 
 
-Posn::setCol(int y){
+void Posn::setCol(int y){
 	col = y;
 }
