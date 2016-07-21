@@ -156,48 +156,137 @@ Board::~Board() {
 
 void Board::setupBoard(){
 
- bool done = false;
+  bool done = false;
+  
+  while(done != true){
 
-  while(!done){
-    char c;
-    char chessPiece;
-    char x;
-    char y;
-    int x0;
-    int y0;
+    cout << "Command: + / - / done" << endl;
     
-    cerr << "Please edit the Board"<<endl;
-    cin >> c;
-    switch(c){
-      
-    case '+':
-      cin >> chessPiece >> x >> y;
-      //cout << chessPiece <<" " << x << " "<< y << endl;
-      x0 = x - 48;
-      y0 = y - 48;
-      gameBoard[y0-1][x0-1] = chessPiece;
-      printBoard(gameBoard);
-      break;
-      
-    case '-':
-      cin >> x >> y;
-      x0 = x - 48;
-      y0 = y - 48;
-      gameBoard[y0-1][x0-1] = '-';
-      printBoard(gameBoard);
-      break;
-      
-    case 'q':
-      done = true;
-      break;
-      
+    string setup_string;
+    getline(cin,setup_string);
+    istringstream setup_iss(setup_string);
+    string setup_command;
+    int count = 0;
+    vector<string> listOfCommand;
+
+    string piece;
+
+    string position;
+
+
+    
+    while(setup_iss >> setup_command){
+      listOfCommand.push_back(setup_command);
+      ++count;
+    }
+
+    if (listOfCommand.size() == 0){
+      cout << "Please Enter Command" << endl;
+    }
+    else{ 
+      if (listOfCommand[0] == "+"){
+	if (listOfCommand.size() != 3){
+	  cout << "Invalid Setup Command Input; + chessPiece position" << endl;
+	}
+	else{
+	  //do somthing, set piece
+	  piece =  listOfCommand[1];
+	  position = listOfCommand[2];
+	  //setPiece();
+	 if (posntran(position)[1] == -1){
+	   cout << "position error" <<endl;
+	   }
+	else{
+	  bool success = false;
+	  success = createChess(piece,posntran(position)[0],posntran(position)[1]);
+	  if(success != false){cout << "Set piece " << piece << " to " << position  << endl;}
+	   }
+	}
+      }
+      else if (listOfCommand[0] == "-"){
+	if (listOfCommand.size() != 2){
+	  cout << "Invalid Setup Command Input; - position" << endl;
+	}
+	else{
+	  //do somthing, remove piece
+	  position = listOfCommand[1];
+	  //
+	  if (posntran(position)[1] == -1){
+           cout << "position error" <<endl;
+          }
+       	  else{
+	  delete theBoard[posntran(position)[0]][posntran(position)[1]];
+	  theBoard[posntran(position)[0]][posntran(position)[1]] = nullptr;
+	  cout << "remove piece in " << posntran(position)[0]  << " " << posntran(position)[1] << endl;
+	  }
+	}
+      }
+      else if (listOfCommand[0] == "done"){
+	//check condition
+	int condition = 1;
+
+	if (condition == 1){
+
+	  done = true;
+	}
+	else{
+	  
+	  cout << "condition not satisified" << endl;
+
+	  done = false;
+	}
+      }
+      else{
+	cout << "invalid setup input" << endl;
+      }
     }
   }
-
-  
-  gameBoard = board;
-
 }
+
+
+vector<int> Board::posntran(string xy){
+
+  string x = xy.substr(0,1);
+  string y = xy.substr(1,1);
+  string z = xy.substr(2);
+  int xp,yp;
+
+  xp = tolower(x[0]);
+  yp = tolower(y[0]);
+
+  xp = static_cast<int>(xp) - 'a';
+  yp = static_cast<int>(yp) - '0' - 1;
+
+  if( z!= "" || xp < 0 || xp > 7 || yp < 0 || yp > 7){
+	xp = -1;
+  }
+
+  vector<int> posn;
+  posn.push_back(yp);
+  posn.push_back(xp);
+  return posn;
+}
+
+
+bool Board::createChess(string piece, int x, int y){
+	delete theBoard[x][y];
+	theBoard[x][y] = nullptr;
+	if (piece == "r"){cout << 'B' << " Rook in " << x << " " << y << endl; theBoard[x][y] = new Rook('B', Posn(x, y));}
+	else if (piece == "n"){cout << 'B' << " Knight in " << x << " " << y << endl; theBoard[x][y] = new Knight(‘B’, Posn(x, y));}
+	else if (piece == "b"){cout << 'B' << " Bishop in " << x << " " << y << endl; theBoard[x][y] = new Bishop(‘B’, Posn(x, y));}
+	else if (piece == "k"){cout << 'B' << " King in " << x << " " << y << endl; theBoard[x][y] = new King(‘B’, Posn(x, y));}
+	else if (piece == "q"){cout << 'B' << " Queen in " << x << " " << y << endl; theBoard[x][y] = new Queen(‘B’, Posn(x, y));}
+	else if (piece == "R"){cout << 'W' << " Rook in " << x << " " << y << endl; theBoard[x][y] = new Rook(‘W’, Posn(x, y));}
+	else if (piece == "N"){cout << 'W' << " Knight in " << x << " " << y << endl; theBoard[x][y] = new Knight(‘W’, Posn(x, y));}
+	else if (piece == "B"){cout << 'W' << " Bishop in " << x << " " << y << endl; theBoard[x][y] = new Bishop(‘W’, Posn(x, y));}
+	else if (piece == "K"){cout << 'W' << " King in " << x << " " << y << endl; theBoard[x][y] = new King(‘W’, Posn(x, y));}
+	else if (piece == "Q"){cout << 'W' << " Queen in " << x << " " << y << endl; theBoard[x][y] = new Queen(‘W’, Posn(x, y));}
+	else {cout << "chess type error" << endl; return false;}
+	return true;
+}
+
+
+
 
 Bool Board::isInCheck(char colour){
 }

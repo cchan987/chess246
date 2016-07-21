@@ -19,6 +19,9 @@ class Board
 
 	vector<vector<ChessPiece *>> theBoard;
 	void setupBoard();
+	vector<int> posntran(string);
+	bool createChess(string,int,int);
+
 	void printBoard();
 	ChessPiece *getPieceByPosn(Posn p)
 	vector<Observer *> observerList;
