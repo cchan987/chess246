@@ -23,32 +23,32 @@ vector<Move> Pawn::getPossibleMoves(){
 
 	if (colour == ‘W’){
 		if(row-1 > -1 && col+1 < 7){
-		PossibleMoves.emplace_back(this, Posn(row-1, col+1);
+		PossibleMoves.emplace_back(this, Posn(row-1, col+1));
 		}
 		if(row+1 < 8 && col+1 < 7){
-		PossibleMoves.emplace_back(this, Posn(row+1, col+1);
+		PossibleMoves.emplace_back(this, Posn(row+1, col+1));
 		}
 		if(col+1 < 7){
-		PossibleMoves.emplace_back(this, Posn(row, col+1);
+		PossibleMoves.emplace_back(this, Posn(row, col+1));
 		}
 		if(hasBeenMoved == false && col+2 < 7){
-		PossibleMoves.emplace_back(this, Posn(row, col+2);
+		PossibleMoves.emplace_back(this, Posn(row, col+2));
 		}
 	}
 
 
 		if (colour == ‘B’){
 		if(row-1 > -1 && col-1 > 0){
-		PossibleMoves.emplace_back(this, Posn(row-1, col-1);
+		PossibleMoves.emplace_back(this, Posn(row-1, col-1));
 		}
 		if(row+1 < 8 && col-1 > 0){
-		PossibleMoves.emplace_back(this, Posn(row+1, col-1);
+		PossibleMoves.emplace_back(this, Posn(row+1, col-1));
 		}
 		if(col-1 > 0){
-		PossibleMoves.emplace_back(this, Posn(row, col-1);
+		PossibleMoves.emplace_back(this, Posn(row, col-1));
 		}
 		if(hasBeenMoved == false && col-2 > 0){
-		PossibleMoves.emplace_back(this, Posn(row, col-2);
+		PossibleMoves.emplace_back(this, Posn(row, col-2));
 		}
 	}
 

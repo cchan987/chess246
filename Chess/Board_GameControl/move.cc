@@ -3,5 +3,9 @@
 #include "posn.h"
 
 
-ChessPiece *Move::getPiece();
-Posn Move::getDestination();
+ChessPiece *Move::getPiece() {
+	return Piece;
+}
+Posn Move::getDestination() {
+	return dst;
+}
