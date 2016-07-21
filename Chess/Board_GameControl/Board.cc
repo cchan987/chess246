@@ -93,10 +93,10 @@ Board::Board()
   
   for(int i = 0; i < iRow; ++i)
     {
-    vector<char>temp;
+    vector<chessPiece *>temp;
     for(int j = 0; j < iCol; ++j)
       {
-      temp.push_back('-');
+      temp.push_back(nullptr);
       }
     theBoard.push_back(temp);
     }
