@@ -3,6 +3,7 @@
 #include "chesspiece.h"
 
 class Move;
+class Posn;
 
 class Rook :public ChessPiece {
 	bool hasBeenMoved = false;

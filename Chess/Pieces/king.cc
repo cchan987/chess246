@@ -15,7 +15,7 @@ char King::getPieceType() {
 }
 
 void King::setPosition(Posn p){
-	hasBeenMoved();
+	setMoved();
 	location = p;
 }
 

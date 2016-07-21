@@ -15,7 +15,7 @@ char Rook::getPieceType() {
 }
 
 void Rook::setPosition(Posn p){
-	hasBeenMoved();
+	setMoved();
 	location = p;
 }
 
