@@ -11,6 +11,7 @@ public:
 	bool getHasBeenMoved();
 	char getPieceType() override;
 	vector<Move> getPossibleMoves() override;
+	void setPosition(Posn p) override;
 };
 
 #endif

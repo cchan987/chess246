@@ -12,7 +12,7 @@ public:
 	char getColour();
 	void setColour(char col);
 	Posn getPosition();
-	void setPosition(Posn p);
+	virtual void setPosition(Posn p);
 	virtual vector<Move> getPossibleMoves() = 0;
 	virtual char getPieceType() = 0;
 };

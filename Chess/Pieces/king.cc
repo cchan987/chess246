@@ -14,6 +14,11 @@ char King::getPieceType() {
 	return 'K';
 }
 
+void King::setPosition(Posn p){
+	hasBeenMoved();
+	location = p;
+}
+
 vector<Move> King::getPossibleMoves() {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
@@ -31,7 +36,7 @@ vector<Move> King::getPossibleMoves() {
 	if (col > 0 ) {
 		PossibleMoves.emplace_back(Move(this, Posn(row, col - 1)));
 	}
-	
+
 	if (hasBeenMoved == false) { // Can castle
 		PossibleMoves.emplace_back(Move(this, Posn(row, col + 2)));
 		PossibleMoves.emplace_back(Move(this, Posn(row, col - 2)));

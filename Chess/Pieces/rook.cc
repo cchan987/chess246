@@ -14,6 +14,11 @@ char Rook::getPieceType() {
 	return 'R';
 }
 
+void Rook::setPosition(Posn p){
+	hasBeenMoved();
+	location = p;
+}
+
 vector<Move> Rook::getPossibleMoves() {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
