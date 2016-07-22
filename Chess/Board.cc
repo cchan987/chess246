@@ -3,14 +3,20 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include "rook.h"
+#include "knight.h"
+#include "bishop.h"
+#include "queen.h"
+#include "king.h"
+#include "pawn.h"
 
 #include "board.h"
 
 using namespace std;
 
 ChessPiece *Board::getPieceByPosn(Posn p) {
-	int dstRow = moveDst.getRow();
-	int dstCol = moveDst.getCol();
+	int dstRow = p.getRow();
+	int dstCol = p.getCol();
 	return theBoard[dstRow][dstCol];
 }
 
@@ -30,6 +36,7 @@ bool Board::isACapturingMove(Move m) {
 
 // m must be a legal move, therefore m will not have a destination
 // that is occupied by a friendly piece
+/*
 bool Board::isACheckingMove(Move m) {
 	Posn moveDst = m.getDestination();
 	ChessPiece *thePiece = m.getPiece();
@@ -38,7 +45,7 @@ bool Board::isACheckingMove(Move m) {
 		Move thisMove = futureMoves[i];
 		if (isACapturingMove(thisMove)) {
 			ChessPiece *threatenedPiece = getPieceByPosn(thisMove.getDestination());
-			if (threatenedPiece.getPieceType() == "K") {
+			if (threatenedPiece->getPieceType() == "K") {
 				return true;
 			}
 		}
@@ -81,10 +88,11 @@ vector<ChessPiece *> getAllPiecesByColour(char colour, vector<vector<ChessPiece 
   }
   return friendlyPieces;
 }
-
+*/
 Board::Board()
 {
 	td = new TextDisplay();
+  td->setDimensions(8);
 	observerList.emplace_back(td);
   //ctor
   
@@ -93,73 +101,73 @@ Board::Board()
   
   for(int i = 0; i < iRow; ++i)
     {
-    vector<chessPiece *>temp;
+    vector<ChessPiece *>temp;
     for(int j = 0; j < iCol; ++j)
       {
-      temp.push_back(nullptr);
+      temp.emplace_back(nullptr);
       }
-    theBoard.push_back(temp);
+    theBoard.emplace_back(temp);
     }
 
   //initalize player's chess piece
 
   for(int i = 0; i<iRow; ++i) { 
-      theBoard[6][i] = new Pawn('W', Posn(6, i)); 
+      placePiece(new Pawn('W', Posn(6, i))); 
     }
 
-  theBoard[7][0] = placePiece(new Rook('W', Posn(7, 0)));
-  theBoard[7][1] = placePiece(new Knight('W', Posn(7, 0)));
-  theBoard[7][2] = placePiece(new Bishop('W' Posn(7, 2)));
-  theBoard[7][3] = placePiece(new Queen('W', Posn(7, 3)));
-  theBoard[7][4] = placePiece(new King('W', Posn(7, 4)));
-  theBoard[7][5] = placePiece(new Bishop('W', Posn(7, 5)));
-  theBoard[7][6] = placePiece(new Knight('W', Posn(7, 6)));
-  theBoard[7][7] = placePiece(new Rook('W', Posn(7, 7)));
+  placePiece(new Rook('W', Posn(7, 0)));
+  placePiece(new Knight('W', Posn(7, 0)));
+  placePiece(new Bishop('W', Posn(7, 2)));
+  placePiece(new Queen('W', Posn(7, 3)));
+  placePiece(new King('W', Posn(7, 4)));
+  placePiece(new Bishop('W', Posn(7, 5)));
+  placePiece(new Knight('W', Posn(7, 6)));
+  placePiece(new Rook('W', Posn(7, 7)));
 
   for(int i = 0; i<iCol; ++i) { 
-    theBoard[1][i] = new Pawn('B', Posn(1, i));
+    placePiece(new Pawn('B', Posn(1, i)));
   }
 
-  theBoard[0][0] = new Rook('B', Posn(0, 0));
-  theBoard[0][1] = new Knight('B', Posn(0, 1));
-  theBoard[0][2] = new Bishop('B', Posn(0, 2));
-  theBoard[0][3] = new Queen('B', Posn(0, 3));
-  theBoard[0][4] = new King('B', Posn(0, 4));
-  theBoard[0][5] = new Bishop('B', Posn(0, 5));
-  theBoard[0][6] = new Knight('B', Posn(0, 6));
-  theBoard[0][7] = new Rook('B', Posn(0, 7));
+  placePiece(new Rook('B', Posn(0, 0)));
+  placePiece(new Knight('B', Posn(0, 1)));
+  placePiece(new Bishop('B', Posn(0, 2)));
+  placePiece(new Queen('B', Posn(0, 3)));
+  placePiece(new King('B', Posn(0, 4)));
+  placePiece(new Bishop('B', Posn(0, 5)));
+  placePiece(new Knight('B', Posn(0, 6)));
+  placePiece(new Rook('B', Posn(0, 7)));
 }
 
 void Board::removePiece(ChessPiece *piece) {
   if (piece == nullptr) {
     return;
   }
-	posn src = piece->getLocation();
-	theBoard[src.getRow(), src.getCol()] = nullptr;
-	notifyBoard(nullptr, src);
+	Posn src = piece->getPosition();
+	theBoard[src.getRow()][src.getCol()] = nullptr;
+	notifyBoardChange(nullptr, src);
 	delete piece;
 }
 
 void Board::placePiece(ChessPiece *piece) {
-	Posn dst = piece->getLocation();
-	theBoard[dst.getRow(), dst.getCol()] = piece;
-	notifyBoard(piece, dst);
+	Posn dst = piece->getPosition();
+	theBoard[dst.getRow()][dst.getCol()] = piece;
+	notifyBoardChange(piece, dst);
 }
-
+/*
 vector<vector<ChessPiece *>> simulateMove() {
   
-}
+}*/
 
 void Board::executeMove(Move m) {
 	ChessPiece *thePiece = m.getPiece();
-	Posn src = thePiece->getLocation();
+	Posn src = thePiece->getPosition();
 	Posn dst = m.getDestination();
 	ChessPiece *otherPiece = getPieceByPosn(dst);
 	if (otherPiece) {
 		removePiece(otherPiece);
 	}
-	piece.setLocation(dst);
-	theBoard[dst.getRow(), dst.getCol()] = piece;
+	thePiece->setPosition(dst);
+	theBoard[dst.getRow()][dst.getCol()] = thePiece;
 	notifyBoardChange(nullptr, src);
 	notifyBoardChange(thePiece, dst);
 }
@@ -303,20 +311,20 @@ vector<int> Board::posntran(string xy){
 bool Board::createChessPiece(string piece, int x, int y){
 	delete theBoard[x][y];
 	theBoard[x][y] = nullptr;
-	if (piece == "r"){cout << 'B' << " Rook in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Rook('B', Posn(x, y)));}
-	else if (piece == "n"){cout << 'B' << " Knight in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Knight('B', Posn(x, y)));}
-	else if (piece == "b"){cout << 'B' << " Bishop in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Bishop('B', Posn(x, y)));}
-	else if (piece == "k"){cout << 'B' << " King in " << x << " " << y << endl; theBoard[x][y] = placePiece(new King('B', Posn(x, y)));}
-	else if (piece == "q"){cout << 'B' << " Queen in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Queen('B', Posn(x, y)));}
-	else if (piece == "R"){cout << 'W' << " Rook in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Rook('W', Posn(x, y)));}
-	else if (piece == "N"){cout << 'W' << " Knight in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Knight('W', Posn(x, y)));}
-	else if (piece == "B"){cout << 'W' << " Bishop in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Bishop('W', Posn(x, y)));}
-	else if (piece == "K"){cout << 'W' << " King in " << x << " " << y << endl; theBoard[x][y] = placePiece(new King('W', Posn(x, y)));}
-	else if (piece == "Q"){cout << 'W' << " Queen in " << x << " " << y << endl; theBoard[x][y] = placePiece(new Queen('W', Posn(x, y)));}
+	if (piece == "r"){cout << 'B' << " Rook in " << x << " " << y << endl; placePiece(new Rook('B', Posn(x, y)));}
+	else if (piece == "n"){cout << 'B' << " Knight in " << x << " " << y << endl; placePiece(new Knight('B', Posn(x, y)));}
+	else if (piece == "b"){cout << 'B' << " Bishop in " << x << " " << y << endl; placePiece(new Bishop('B', Posn(x, y)));}
+	else if (piece == "k"){cout << 'B' << " King in " << x << " " << y << endl; placePiece(new King('B', Posn(x, y)));}
+	else if (piece == "q"){cout << 'B' << " Queen in " << x << " " << y << endl; placePiece(new Queen('B', Posn(x, y)));}
+	else if (piece == "R"){cout << 'W' << " Rook in " << x << " " << y << endl; placePiece(new Rook('W', Posn(x, y)));}
+	else if (piece == "N"){cout << 'W' << " Knight in " << x << " " << y << endl; placePiece(new Knight('W', Posn(x, y)));}
+	else if (piece == "B"){cout << 'W' << " Bishop in " << x << " " << y << endl; placePiece(new Bishop('W', Posn(x, y)));}
+	else if (piece == "K"){cout << 'W' << " King in " << x << " " << y << endl; placePiece(new King('W', Posn(x, y)));}
+	else if (piece == "Q"){cout << 'W' << " Queen in " << x << " " << y << endl; placePiece(new Queen('W', Posn(x, y)));}
 	else {cout << "chess type error" << endl; return false;}
 	return true;
 }
-
+/*
 void Board::printBoard(vector<vector<char> > board){
   
   //edges
@@ -344,19 +352,19 @@ void Board::printBoard(vector<vector<char> > board){
   for (int i=0; i<xaxis.size(); i++){ cout <<xaxis[i]+1;}
   cout << endl;
 
-}
+}*/
 
 
-
+/*
 bool Board::checkLegalMove(Posn p, ChessPiece cp){
 
-}
+}*/
 
 // Sends out notifications whenever the board is changed
 // ChessPiece could be a nullptr, Position p has been set to the value of piece
 void Board::notifyBoardChange(ChessPiece *piece, Posn p) {
-	for (int i = 0; i < observerList.size(); ++i) {
-		observerList[i].notifyBoard(piece, p);
+	for (unsigned int i = 0; i < observerList.size(); ++i) {
+		observerList[i]->notifyBoard(piece, p);
 	}
 }
 

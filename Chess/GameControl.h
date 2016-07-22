@@ -12,7 +12,7 @@
 class GameControl
 {
 	public:
-
+	GameControl();
 	void switchOn();
 	void selectGameMode();
 	void getNextMove();

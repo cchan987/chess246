@@ -6,6 +6,9 @@
 
 using namespace std;
 
+Pawn::Pawn(char c, Posn p):ChessPiece{c, p} {}
+Pawn::~Pawn(){}
+
 void Pawn::setMoved() {
 	hasBeenMoved = true;
 }

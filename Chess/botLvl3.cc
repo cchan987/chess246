@@ -1,5 +1,5 @@
 #include "botLvl3.h"
-#include "Board.h"
+#include "board.h"
 #include "chesspiece.h"
 
 using namespace std;

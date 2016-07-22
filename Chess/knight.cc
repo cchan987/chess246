@@ -5,6 +5,9 @@
 
 using namespace std;
 
+Knight::Knight(char c, Posn p):ChessPiece{c, p} {}
+Knight::~Knight(){}
+
 char Knight::getPieceType() {
 	return 'N';
 }

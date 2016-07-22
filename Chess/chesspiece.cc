@@ -10,10 +10,10 @@ char ChessPiece::getColour() const {
 	return colour;
 }
 
-Posn getPosition() const {
+Posn ChessPiece::getPosition() const {
 	return location;
 }
 
-void setPosition(Posn p) {
+void ChessPiece::setPosition(Posn p) {
 	location = p;
 }

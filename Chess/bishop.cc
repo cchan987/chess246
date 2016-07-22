@@ -6,6 +6,10 @@
 
 using namespace std;
 
+Bishop::Bishop(char c, Posn p):ChessPiece{c, p}{}
+
+Bishop::~Bishop(){}
+
 char Bishop::getPieceType() {
 	return 'B';
 }

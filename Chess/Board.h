@@ -13,7 +13,8 @@
 class Board
 {
 	public:
-	Board();	
+	Board();
+	~Board();
 	void placePiece(ChessPiece *piece);
 	void removePiece(ChessPiece *piece);
 
@@ -46,7 +47,7 @@ class Board
 	bool staleMate();
 
 	void notifyBoardChange(ChessPiece *piece, Posn p);
-	void notifyInfoMsg(std::string s);
+	void notifyInfoMsgChange(std::string s);
 	
 };
 

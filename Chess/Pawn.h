@@ -9,6 +9,8 @@ class Board;
 class Pawn:public ChessPiece{
 	bool hasBeenMoved = false;
 public:
+	Pawn(char c, Posn p);
+	~Pawn();
 	void setMoved();
 	bool getHasBeenMoved() const;
 	char getPieceType() override;

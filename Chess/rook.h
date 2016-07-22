@@ -6,9 +6,11 @@ class Move;
 class Posn;
 class Board;
 
-class Rook :public ChessPiece {
+class Rook: public ChessPiece {
 	bool hasBeenMoved = false;
 public:
+	Rook(char c, Posn p);
+	~Rook();
 	void setMoved();
 	bool getHasBeenMoved() const;
 	char getPieceType() override;

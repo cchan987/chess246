@@ -7,6 +7,8 @@ class Board;
 
 class Queen :public ChessPiece {
 public:
+	Queen(char c, Posn p);
+	~Queen();
 	char getPieceType() override;
 	std::vector<Move> getPossibleMoves(Board &b) override;
 };

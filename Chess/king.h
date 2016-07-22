@@ -9,6 +9,8 @@ class Board;
 class King :public ChessPiece {
 	bool hasBeenMoved = false;
 public:
+	King(char c, Posn p);
+	~King();
 	void setMoved();
 	bool getHasBeenMoved() const;
 	char getPieceType() override;

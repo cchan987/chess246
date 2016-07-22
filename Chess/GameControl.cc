@@ -20,7 +20,7 @@ GameControl::GameControl()
 
 
 //==========================================================================
-GameControl::switchOn(){
+void GameControl::switchOn(){
   
   Board defaultBoard;
   Board currentBoard;

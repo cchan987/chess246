@@ -1,5 +1,5 @@
-#ifndef ROOK_H
-#define ROOK_H
+#ifndef CHESSPIECE_H
+#define CHESSPIECE_H
 
 #include "posn.h"
 #include "move.h"
@@ -12,6 +12,7 @@ protected:
 	Posn location;
 public:
 	ChessPiece(char c, Posn p);
+	virtual ~ChessPiece();
 	char getColour() const;
 	void setColour(char col);
 	Posn getPosition() const;

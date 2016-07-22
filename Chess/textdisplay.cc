@@ -5,7 +5,12 @@
 #include "chesspiece.h"
 using namespace std;
 
-TextDisplay::TextDisplay(int n = 8): gridSize{n} {
+TextDisplay::TextDisplay() {
+
+}
+
+void TextDisplay::setDimensions(int n) {
+	gridSize = n;
 	for (int i = 0; i < n; i++) {
 		vector<char> v;
 		for (int j = 0; j < n; j++) {
@@ -13,7 +18,7 @@ TextDisplay::TextDisplay(int n = 8): gridSize{n} {
 			v.emplace_back(colour);
 		}
 		theDisplay.emplace_back(v);
-	}
+	}	
 }
 
 void TextDisplay::notifyBoard(ChessPiece *cp, Posn dst) {

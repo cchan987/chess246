@@ -4,6 +4,9 @@
 #include "chesspiece.h"
 using namespace std;
 
+Queen::Queen(char c, Posn p):ChessPiece{c, p} {}
+Queen::~Queen(){}
+
 char Queen::getPieceType() {
 	return 'Q';
 }

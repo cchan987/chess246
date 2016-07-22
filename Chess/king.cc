@@ -5,6 +5,10 @@
 
 using namespace std;
 
+King::King(char c, Posn p):ChessPiece{c, p}{}
+
+King::~King(){}
+
 void King::setMoved() {
 	hasBeenMoved = true;
 }

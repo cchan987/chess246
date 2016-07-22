@@ -5,6 +5,9 @@
 
 using namespace std;
 
+Rook::Rook(char c, Posn p):ChessPiece{c, p} {}
+Rook::~Rook(){}
+
 void Rook::setMoved() {
 	hasBeenMoved = true;
 }
