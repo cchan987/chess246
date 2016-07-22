@@ -3,6 +3,7 @@
 
 #include "posn.h"
 #include "move.h"
+#include <vector>
 
 class ChessPiece {
 	char colour;
@@ -13,7 +14,7 @@ public:
 	void setColour(char col);
 	Posn getPosition();
 	virtual void setPosition(Posn p);
-	virtual vector<Move> getPossibleMoves() = 0;
+	virtual std::vector<Move> getPossibleMoves() = 0;
 	virtual char getPieceType() = 0;
 };
 #endif

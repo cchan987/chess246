@@ -1,7 +1,7 @@
 
-#include <chesspiece.h>
-#include <Move.h>
-#include <Pawn.h>
+#include "chesspiece.h"
+#include "move.h"
+#include "pawn.h"
 
 void Pawn::setMoved() {
 	hasBeenMoved = true;

@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 
-#include <Board.h>
+#include "board.h"
 
 using namespace std;
 
@@ -317,12 +317,6 @@ bool Board::createChessPiece(string piece, int x, int y){
 	return true;
 }
 
-
-
-
-Bool Board::isInCheck(char colour){
-}
-
 void Board::printBoard(vector<vector<char> > board){
   
   //edges
@@ -366,6 +360,6 @@ void Board::notifyBoardChange(ChessPiece *piece, Posn p) {
 	}
 }
 
-void Board::notifyInfoMsgChange(String s){
+void Board::notifyInfoMsgChange(string s){
 
 }

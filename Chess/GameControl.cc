@@ -4,7 +4,7 @@
 #include <sstream>
 #include <string>
 
-#include <GameControl.h>
+#include "gamecontrol.h"
 
 using namespace std;
 

@@ -1,5 +1,5 @@
 #include "window.h"
-#include "graphicsDisplay.h"
+#include "graphicsdisplay.h"
 
 using namespace std;
 

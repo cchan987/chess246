@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include "textdisplay.h"
-#include "cell.h"
+#include "posn.h"
 using namespace std;
 
 TextDisplay::TextDisplay(int n = 8): gridSize{n} {
@@ -16,21 +16,23 @@ TextDisplay::TextDisplay(int n = 8): gridSize{n} {
 }
 
 void TextDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
-	if (cp) {
-		char piece = cp.getPieceType();
-		if (cp.getColour() == 'W') {
+	if (cp) { // passed an actual piece
+		int srcR = cp->getLocation().getRow();
+		int srcC = cp->getLocation().getCol();
+		char piece = cp->getPieceType();
+		if (cp->getColour() == 'W') {
 			piece = tolower(piece);
 		}
 		theDisplay[srcR][srcC] = piece;		
 	}
-	else {
+	else { // passed a nullptr
 		int dstR = dst.getRow();
 		int dstC = dst.getCol();
 		theDisplay[dstR][dstC] = getCellColour(dstR, dstC);		
 	}
 }
 
-void notifyInfoMsg(String msg) {
+void notifyInfoMsg(string msg) {
 	infoMsg = msg;
 }
 
@@ -43,6 +45,6 @@ ostream &operator<<(ostream &out, const TextDisplay &td) {
 		}
 		cout << endl;
 	}
-	cout << infoMsg << endl;
+	cout << td.infoMsg << endl;
 	return out;
 }

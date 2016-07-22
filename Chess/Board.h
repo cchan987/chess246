@@ -5,9 +5,9 @@
 #include <iostream>
 #include <sstream>
 
-#include "ChessPiece.h"
-#include "TextDisplay.h"
-#include "GraphDisplay.h"
+#include "chesspiece.h"
+#include "textdisplay.h"
+
 
 
 class Board
@@ -17,19 +17,19 @@ class Board
 	void placePiece(ChessPiece *piece);
 	void removePiece(ChessPiece *piece);
 
-	vector<vector<ChessPiece *>> theBoard;
+	std::vector<std::vector<ChessPiece *>> theBoard;
 	void setupBoard();
-	vector<int> posntran(std::string s1);
+	std::vector<int> posntran(std::string s1);
 	bool createChessPiece(std::string s1,int x,int y);
 
 	void printBoard();
 	ChessPiece *getPieceByPosn(Posn p);
-	vector<Observer *> observerList;
+	std::vector<Observer *> observerList;
 	TextDisplay *td;
-	GraphDisplay *graphDisplay;
-	//vector<Move> getAllLegalMovesByColour(char colour);
-	vector<Move> getAllPossibleMovesByColour(char colour);
-	vector<ChessPiece *> getAllPiecesByColour(char colour);
+	//GraphDisplay *graphDisplay;
+	//std::vector<Move> getAllLegalMovesByColour(char colour);
+	std::vector<Move> getAllPossibleMovesByColour(char colour);
+	std::vector<ChessPiece *> getAllPiecesByColour(char colour);
 	bool isACapturingMove(Move m);
 	bool isACheckingMove(Move m);
 
@@ -39,13 +39,13 @@ class Board
 	// -doesn't capture your own piece
 	bool checkLegalMove(Move m); 
 	void executeMove(Move m); // Will be handed a legal move and execute it
-	bool isInCheck(ChessPiece cp);
+	//bool isInCheck(ChessPiece *cp);
 	
 	bool isGameOver();
 	bool checkMate();
 	bool staleMate();
 
-	void notifyBoard(Posn p, ChessPiece cp);
+	void notifyBoardChange(ChessPiece *piece, Posn p);
 	void notifyInfoMsg(std::string s);
 	
 };

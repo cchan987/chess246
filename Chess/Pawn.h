@@ -1,7 +1,7 @@
 #ifndef PAWN_H
 #define PAWN_H
 
-#include <ChessPiece.h>
+#include "chesspiece.h"
 class Move;
 class Posn;
 
