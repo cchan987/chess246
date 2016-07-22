@@ -102,7 +102,7 @@ bool GameControl::executeMove(Move m) {
     removePiece(otherPiece);
     cout << "remove good" << endl;
     theBoard.theBoard[dst.getRow()][dst.getCol()] = thePiece;
-    thePiece.setPosition(dst);
+    thePiece->setPosition(dst);
     notifyBoardChange(nullptr, src);
     notifyBoardChange(thePiece, dst);
     return true;    
@@ -583,6 +583,7 @@ void GameControl::getHumanMove(char whoseTurn){
   	Posn posn2 = Posn (vtor2[0], vtor2[1]);
 
   	ChessPiece* cp = theBoard.getPieceByPosn(posn1);
+    if (cp == nullptr) {continue;}
     cout << "got piece by posn" << endl;
 
   	vector<Move> vofm = cp->getPossibleMoves(theBoard);	
