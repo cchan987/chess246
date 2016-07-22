@@ -292,7 +292,7 @@ void GameControl::switchOn(){
     */
   bool exitGame = false;
   
-  while (exitGame != true){
+  while (exitGame != true) {
 
   cout << "command: game/ setup / quit" << endl;
   
@@ -356,20 +356,20 @@ void GameControl::switchOn(){
      }
      else if (listOfCommand[0] == "setup"){       
        if (listOfCommand.size() != 1){
-	 cout << "Invalid Setup Command input" << endl;
+	       cout << "Invalid Setup Command input" << endl;
        }
        else{
-	 cout << "enter setup mode" << endl;
-	 setupBoard();      
+      	 cout << "enter setup mode" << endl;
+      	 setupBoard();      
        }
      }
      else if (listOfCommand[0] == "quit"){
        if (listOfCommand.size() != 1){
-	 cout << "Invalid Quit Command input" << endl;
+	       cout << "Invalid Quit Command input" << endl;
        }    
        else{
-	 cout << "Exit game; Thank you for playing" << endl;
-	 exitGame = true;
+      	 cout << "Exit game; Thank you for playing" << endl;
+      	 exitGame = true;
        }
      }
      else{
@@ -377,8 +377,6 @@ void GameControl::switchOn(){
      }   
    }
   }
-
-
 }
 
 

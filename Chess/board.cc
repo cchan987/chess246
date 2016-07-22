@@ -124,6 +124,7 @@ Board::Board()
 
 
 Board::~Board() {
+  cout << "brd deconstructor start";
   int iRow = 8;
   int iCol = 8;
   for (int i = 0; i < iRow; ++i){
@@ -132,6 +133,7 @@ Board::~Board() {
       //theBoard[i][j] = nullptr;
     }
   }
+  cout << "deconstructor end";
 }
   
 

@@ -46,12 +46,15 @@ void TextDisplay::notifyInfoMsg(string msg) {
 TextDisplay::~TextDisplay() {}
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
-	for (auto v: td.theDisplay) {
-		for (auto c: v) {
-			cout << c;
+	for (unsigned int i = 0; i < td.theDisplay.size(); i++) {
+		cout << i + 1 << ' ';
+		for (unsigned int j = 0; j <td.theDisplay[i].size(); ++j) {
+			cout << td.theDisplay[i][j];
 		}
 		cout << endl;
 	}
+	cout << endl;
+	cout << "  abcdefgh" << endl;
 	cout << td.infoMsg << endl;
 	return out;
 }
