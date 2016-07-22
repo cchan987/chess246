@@ -1,12 +1,14 @@
 #include "bishop.h"
 #include "move.h"
 #include "chesspiece.h"
+#include <vector>
+#include "board.h"
+
+using namespace std;
 
 char Bishop::getPieceType() {
 	return 'B';
 }
-
-
 
 vector<Move> Bishop::getPossibleMoves(Board &b) {
 	vector<Move> PossibleMoves;
@@ -22,7 +24,7 @@ vector<Move> Bishop::getPossibleMoves(Board &b) {
 			break;
 		}
 		if (pieceAtPosn) { //Ran into a piece
-			if (!(pieceAtPosn.getColour() == colour)) { // ran into opponents piece
+			if (!(pieceAtPosn->getColour() == colour)) { // ran into opponents piece
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 			break;
@@ -43,7 +45,7 @@ vector<Move> Bishop::getPossibleMoves(Board &b) {
 			break;
 		}
 		if (pieceAtPosn) { //Ran into a piece
-			if (!(pieceAtPosn.getColour() == colour)) { // ran into opponents piece
+			if (!(pieceAtPosn->getColour() == colour)) { // ran into opponents piece
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 			break;
@@ -64,7 +66,7 @@ vector<Move> Bishop::getPossibleMoves(Board &b) {
 			break;
 		}
 		if (pieceAtPosn) { //Ran into a piece
-			if (!(pieceAtPosn.getColour() == colour)) { // ran into opponents piece
+			if (!(pieceAtPosn->getColour() == colour)) { // ran into opponents piece
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 			break;
@@ -85,7 +87,7 @@ vector<Move> Bishop::getPossibleMoves(Board &b) {
 			break;
 		}
 		if (pieceAtPosn) { //Ran into a piece
-			if (!(pieceAtPosn.getColour() == colour)) { // ran into opponents piece
+			if (!(pieceAtPosn->getColour() == colour)) { // ran into opponents piece
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 			break;

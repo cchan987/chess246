@@ -1,6 +1,9 @@
 #include "king.h"
 #include "move.h"
+#include "board.h"
 #include "chesspiece.h"
+
+using namespace std;
 
 void King::setMoved() {
 	hasBeenMoved = true;

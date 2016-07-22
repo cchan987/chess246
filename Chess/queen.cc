@@ -1,6 +1,8 @@
 #include "queen.h"
 #include "move.h"
+#include "board.h"
 #include "chesspiece.h"
+using namespace std;
 
 char Queen::getPieceType() {
 	return 'Q';

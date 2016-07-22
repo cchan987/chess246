@@ -1,6 +1,9 @@
 #include "knight.h"
 #include "move.h"
 #include "chesspiece.h"
+#include "board.h"
+
+using namespace std;
 
 char Knight::getPieceType() {
 	return 'N';

@@ -2,6 +2,7 @@
 #include <vector>
 #include "textdisplay.h"
 #include "posn.h"
+#include "chesspiece.h"
 using namespace std;
 
 TextDisplay::TextDisplay(int n = 8): gridSize{n} {
@@ -17,8 +18,8 @@ TextDisplay::TextDisplay(int n = 8): gridSize{n} {
 
 void TextDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
 	if (cp) { // passed an actual piece
-		int srcR = cp->getLocation().getRow();
-		int srcC = cp->getLocation().getCol();
+		int srcR = cp->getPosition().getRow();
+		int srcC = cp->getPosition().getCol();
 		char piece = cp->getPieceType();
 		if (cp->getColour() == 'W') {
 			piece = tolower(piece);
@@ -32,7 +33,7 @@ void TextDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
 	}
 }
 
-void notifyInfoMsg(string msg) {
+void TextDisplay::notifyInfoMsg(string msg) {
 	infoMsg = msg;
 }
 

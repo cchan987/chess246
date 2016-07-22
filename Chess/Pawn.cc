@@ -2,6 +2,9 @@
 #include "chesspiece.h"
 #include "move.h"
 #include "pawn.h"
+#include "board.h"
+
+using namespace std;
 
 void Pawn::setMoved() {
 	hasBeenMoved = true;

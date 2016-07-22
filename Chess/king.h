@@ -4,6 +4,7 @@
 
 class Move;
 class Posn;
+class Board;
 
 class King :public ChessPiece {
 	bool hasBeenMoved = false;
@@ -11,7 +12,7 @@ public:
 	void setMoved();
 	bool getHasBeenMoved();
 	char getPieceType() override;
-	vector<Move> getPossibleMoves() override;
+	std::vector<Move> getPossibleMoves(Board &b) override;
 	void setPosition(Posn p) override;
 };
 

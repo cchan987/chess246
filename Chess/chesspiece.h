@@ -4,8 +4,10 @@
 #include "posn.h"
 #include "move.h"
 #include <vector>
+class Board;
 
 class ChessPiece {
+protected:
 	char colour;
 	Posn location;
 public:
@@ -14,7 +16,7 @@ public:
 	void setColour(char col);
 	Posn getPosition();
 	virtual void setPosition(Posn p);
-	virtual std::vector<Move> getPossibleMoves() = 0;
+	virtual std::vector<Move> getPossibleMoves(Board &b) = 0;
 	virtual char getPieceType() = 0;
 };
 #endif

@@ -1,6 +1,9 @@
 #include "rook.h"
+#include "board.h"
 #include "move.h"
 #include "chesspiece.h"
+
+using namespace std;
 
 void Rook::setMoved() {
 	hasBeenMoved = true;

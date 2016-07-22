@@ -3,11 +3,12 @@
 #include "chesspiece.h"
 
 class Move;
+class Board;
 
 class Knight :public ChessPiece {
 public:
 	char getPieceType() override;
-	vector<Move> getPossibleMoves() override;
+	std::vector<Move> getPossibleMoves(Board &b) override;
 };
 
 #endif
