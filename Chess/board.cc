@@ -124,16 +124,11 @@ Board::Board()
 
 
 Board::~Board() {
-  cout << "brd deconstructor start";
-  int iRow = 8;
-  int iCol = 8;
-  for (int i = 0; i < iRow; ++i){
-    for(int j = 0; i < iCol; ++j){
+  for (unsigned int i = 0; i < theBoard.size() ; ++i){
+    for(unsigned int j = 0; j < theBoard[i].size(); ++j){
       delete theBoard[i][j];
-      //theBoard[i][j] = nullptr;
     }
   }
-  cout << "deconstructor end";
 }
   
 

@@ -19,6 +19,7 @@ class GameControl
 	std::vector<Observer *> observerList;
 	public:
 	GameControl();
+	~GameControl();
 	void notifyBoardChange(ChessPiece *piece, Posn p);
 	void notifyInfoMsgChange(std::string s);
 	void removePiece(ChessPiece *piece);

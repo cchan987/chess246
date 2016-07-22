@@ -26,6 +26,10 @@ GameControl::GameControl()
   
 }
 
+GameControl::~GameControl() {
+  delete td;
+}
+
 
 // Sends out notifications whenever the board is changed
 // ChessPiece could be a nullptr, Position p has been set to the value of piece

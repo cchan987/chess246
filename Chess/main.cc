@@ -4,7 +4,7 @@
 int main(){
   GameControl game1;
   game1.switchOn();
-  std::cout << "finished switchon";
+  //std::cout << "finished switchon";
   return 0;
 
 }
