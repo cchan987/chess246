@@ -5,11 +5,11 @@ class Posn
 {	
 
 public: 
-	Posn(int x, int y);
-	int getCol() const;
-	int getRow() const;
-	void setCol(int x);
-	void setRow(int y);
+	Posn(int, int);
+	int getCol();
+	int getRow();
+	void setCol(int );
+	void setRow(int );
 
 private:
 	int col;

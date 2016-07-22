@@ -10,7 +10,7 @@ class Rook :public ChessPiece {
 	bool hasBeenMoved = false;
 public:
 	void setMoved();
-	bool getHasBeenMoved() const;
+	bool getHasBeenMoved();
 	char getPieceType() override;
 	std::vector<Move> getPossibleMoves(Board &b) override;
 	void setPosition(Posn p) override;

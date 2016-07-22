@@ -9,7 +9,7 @@ void Rook::setMoved() {
 	hasBeenMoved = true;
 }
 
-bool Rook::hasBeenMoved() const {
+bool Rook::hasBeenMoved() {
 	return hasBeenMoved;
 }
 
@@ -22,7 +22,7 @@ void Rook::setPosition(Posn p){
 	location = p;
 }
 
-vector<Move> Rook::getPossibleMoves(Board &b) {
+vector<Move> Rook::getPossibleMoves() {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
 	int col = location.getCol();
