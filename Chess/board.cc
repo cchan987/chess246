@@ -25,21 +25,24 @@ bool Board::isLegalMove(Move m) {
   ChessPiece *thePiece = m.getPiece();
   Posn src = thePiece->getPosition();
   Posn dst = m.getDestination();
-  ChessPiece *otherPiece = theBoard.getPieceByPosn(dst);
+  ChessPiece *otherPiece = getPieceByPosn(dst);
 
   theBoard[src.getRow()][src.getCol()] = nullptr;
   theBoard[dst.getRow()][dst.getCol()] = thePiece;
-
-  bool goodMove = theBoard.isInCheck(thePiece->getColour());
+  cout << "b4 is in check" << endl;
+  bool goodMove = isInCheck(thePiece->getColour());
+  cout << "after is in check" << endl;
   theBoard[src.getRow()][src.getCol()] = thePiece;
   theBoard[dst.getRow()][dst.getCol()] = otherPiece;
-  return goodMove;
+  return !(goodMove) ;
 }
 
 
 // Checks if the given coloured player is in check
 bool Board::isInCheck(char colour) {
+  cout << "b4 all possible" << endl;
   vector<Move> opponentMoves = getAllPossibleMovesByColour(colour == 'W'? 'B': 'W');
+  cout << "after all possible" << endl;
   Posn myKingPosn(0,0);
   for (unsigned int i = 0; i < theBoard.size(); i++) {
     for (unsigned int j = 0; j < theBoard[i].size(); j++) {
@@ -52,8 +55,9 @@ bool Board::isInCheck(char colour) {
         }
       }
     }
+
   for (unsigned int i = 0; i < opponentMoves.size(); i++) {
-    if (opponentMoves[i].getDestination().getRow() == myKingPosn.getRow() && opponentMoves[i].getDestination().getCol() == myKingPosn.getCol()) {
+    if (opponentMoves[i].getDestination() == myKingPosn) {
       return true;
     }
   }

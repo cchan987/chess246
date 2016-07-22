@@ -13,6 +13,7 @@ class Observer;
 
 class GameControl
 {	
+	char whoseTurn = 'W';
 	Board theBoard;
 	TextDisplay *td;
 	//GraphicsDisplay *gd;
@@ -20,7 +21,8 @@ class GameControl
 	public:
 	GameControl();
 	~GameControl();
-	void getHumanMove(char whoseTurn)
+	void getHumanMove(char whoseTurn);
+	void getNextMove(int player);
 	void notifyBoardChange(ChessPiece *piece, Posn p);
 	void notifyInfoMsgChange(std::string s);
 	void removePiece(ChessPiece *piece);
@@ -35,7 +37,7 @@ class GameControl
 	void alternateTurn();
 	void printScore();
 	void startGame(int player1, int player2);
-	void isGameOver();
+	bool isGameOver();
 	void checkMate();
 	void staleMate();
 	void resign();

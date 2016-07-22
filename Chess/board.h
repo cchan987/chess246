@@ -21,7 +21,7 @@ class Board
 
 	std::vector<std::vector<ChessPiece *>> theBoard;
 	std::vector<int> posntran(std::string s1);
-	bool createChessPiece(std::string s1,int x,int y);
+	//bool createChessPiece(std::string s1,int x,int y);
 
 	void printBoard();
 	ChessPiece *getPieceByPosn(Posn p);
@@ -31,7 +31,7 @@ class Board
 	std::vector<ChessPiece *> getAllPiecesByColour(char colour);
 	bool isACapturingMove(Move m);
 	bool isACheckingMove(Move m);
-
+	bool isLegalMove(Move m);
 	bool isInCheck(char colour); // Will determine if player of 'colour' is in check
 	
 	bool isGameOver();

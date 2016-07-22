@@ -24,10 +24,10 @@ vector<Move> Bishop::getPossibleMoves(Board &b) {
 	row--;
 	while (true) { // check up right
 		Posn currentPosn(row, col);
-		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (col == 8 || row == -1) {
 			break;
 		}
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) { //Ran into a piece
 			if (!(pieceAtPosn->getColour() == colour)) { // ran into opponents piece
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -45,10 +45,10 @@ vector<Move> Bishop::getPossibleMoves(Board &b) {
 	row--;
 	while (true) { // check up left
 		Posn currentPosn(row, col);
-		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (col == -1 || row == -1) {
 			break;
 		}
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) { //Ran into a piece
 			if (!(pieceAtPosn->getColour() == colour)) { // ran into opponents piece
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -66,10 +66,10 @@ vector<Move> Bishop::getPossibleMoves(Board &b) {
 	row++;
 	while (true) { // check down right
 		Posn currentPosn(row, col);
-		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (col == 8 || row == 8) {
 			break;
 		}
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) { //Ran into a piece
 			if (!(pieceAtPosn->getColour() == colour)) { // ran into opponents piece
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -87,10 +87,10 @@ vector<Move> Bishop::getPossibleMoves(Board &b) {
 	row++;
 	while (true) { // check down left
 		Posn currentPosn(row, col);
-		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (col == -1 || row == 8) {
 			break;
 		}
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) { //Ran into a piece
 			if (!(pieceAtPosn->getColour() == colour)) { // ran into opponents piece
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));

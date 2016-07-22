@@ -34,7 +34,9 @@ GameControl::~GameControl() {
 // Sends out notifications whenever the board is changed
 // ChessPiece could be a nullptr, Position p has been set to the value of piece
 void GameControl::notifyBoardChange(ChessPiece *piece, Posn p) {
+  cout <<"notifyign board" << endl;
   for (unsigned int i = 0; i < observerList.size(); ++i) {
+    cout << " observer: " << i << endl;
     observerList[i]->notifyBoard(piece, p);
   }
 }
@@ -94,9 +96,13 @@ bool GameControl::executeMove(Move m) {
   Posn src = thePiece->getPosition();
   Posn dst = m.getDestination();
   ChessPiece *otherPiece = theBoard.getPieceByPosn(dst);
+  cout << "b4 is legal" << endl;
   if (theBoard.isLegalMove(m)) {
+    cout << "is legal is good" << endl;
     removePiece(otherPiece);
-    theBoard.theBoard[dst.getRow(), dst.getCol()];
+    cout << "remove good" << endl;
+    theBoard.theBoard[dst.getRow()][dst.getCol()] = thePiece;
+    thePiece.setPosition(dst);
     notifyBoardChange(nullptr, src);
     notifyBoardChange(thePiece, dst);
     return true;    
@@ -176,7 +182,7 @@ void GameControl::setupBoard(){
 
     
     while(setup_iss >> setup_command){
-      listOfCommand.push_back(setup_command);
+      listOfCommand.emplace_back(setup_command);
       ++count;
     }
 
@@ -401,18 +407,18 @@ void GameControl::getNextMove(Board aBoard){
 }*/
 
 //==========================================================================
-/*
+
 void GameControl::alternateTurn(){
   //This function is used to alternate player turn
   if(whoseTurn == 'W')
     {
-      whoseTurn == 'B';
+      whoseTurn = 'B';
     }
   else
     {
-      whoseTurn == 'W';
+      whoseTurn = 'W';
     }
-}*/
+}
 //==========================================================================
 
 int GameControl::playerAI(string aComputer){
@@ -450,19 +456,6 @@ void GameControl::printScore(){
 
 //Main Flow functions
 //==========================================================================
-/*
-void GameControl::startGame2(Board aBoard){
-  //This function pass the current board to playboard
-  //to start the game
-  do{
-    getNextMove(aBoard);
-    alternateTurn();
-  }
-  while(! isGameOver());
-  aBoard.printBoard();
-  }
-}
-*/
 
 //==========================================================================
 
@@ -522,34 +515,26 @@ void GameControl::resign(){
 //==========================================================================
 
 void GameControl::startGame(int player1, int player2){
-  cout << "player1: " << player1 << " vs " << "player2: " <<player2 << endl;
- cout << "game end" << endl;
+  do{
+    cout<<*td;
+    cout << "whose turn: " << whoseTurn << endl; 
+  	if (whoseTurn == 'W'){
+
+  	  getNextMove(player1);
+  	}
+  	else if (whoseTurn == 'B'){
+  	  getNextMove(player2);
+    }
+  } while (!(isGameOver()));
 }
 
-
-void GameControl::startGame(int player1, int player2){
-do{
-	if (whoseTurn == ‘W’){
-	getNextMove(player1);
-	}
-	else if (whoseTurn == ‘B’){
-	getNextMove(player2);
-	]
-	else{  //impossible  }
-
-	alternateTurn();
-
+bool GameControl::isGameOver() {
+  return false;
 }
-while (! isGameOver());
-
-cout<<*td;
-
-}
-
 
 void GameControl::getNextMove(int player){
 
-  if(player == 0){ getHumanMove(char whoseTurn); }
+  if(player == 0){ getHumanMove(whoseTurn); }
 /*
   else if(player == 1){ getAI1Move(); }
 
@@ -562,45 +547,61 @@ void GameControl::getNextMove(int player){
   else { // impossible }
   }
 */
+  alternateTurn();
 }
 
 
 void GameControl::getHumanMove(char whoseTurn){
-	cout << "move/resign" << endl;
+  //cout << "get human move" << endl:
     
-	bool done = false;
-	
-	do {
+  bool done = false;
 
-    	string move_string;
-   	 getline(cin,move_string);
+
+  while(done!= true){
+
+      cout << "move/resign" << endl;
+    	
+      string move_string;
+   	  getline(cin,move_string);
     	istringstream move_iss(move_string);
    	 string move_command;
    	 int count = 0;
    	 vector<string> listOfCommand;
-	//loc[0] = move/resign, loc[1]=start ,loc[2] = dst 
+     //loc[0] = move/resign, loc[1]=start ,loc[2] = dst
 
-	if(listOfCommand[0] == "move"){
-		vector<int> vtor = posntran(start);
-		vector<int> vtor2 = posntran(dst);
-		Posn posn1 = Posn(vtor[0], vtor[1]);
-		Posn posn2 = Posn (vtor2[0], vtor2[1]);
+    while (move_iss >> move_command){
+      listOfCommand.push_back(move_command);
+      ++count;
+    }
 
-		ChessPiece* cp = theBoard.getPieceByPosn(posn1);
 
-		Vector<Move> vofm = cp->getPossibleMoves();	
-		for(int i = 0 ; i < vofm.size(); ++i){
-			if( vofm[i].getDestination() == posn2 ){
-				done = executeMove(vofm[i]);
-				break;
-			}
-		}	
-	}
-	else{
-		done = false;
-	}
-	while (done != true);
 
+  if(listOfCommand[0] == "move"){
+  	vector<int> vtor = posntran(listOfCommand[1]);
+  	vector<int> vtor2 = posntran(listOfCommand[2]);
+  	Posn posn1 = Posn(vtor[0], vtor[1]);
+  	Posn posn2 = Posn (vtor2[0], vtor2[1]);
+
+  	ChessPiece* cp = theBoard.getPieceByPosn(posn1);
+    cout << "got piece by posn" << endl;
+
+  	vector<Move> vofm = cp->getPossibleMoves(theBoard);	
+    cout << "got possible moves" << endl;
+  	for(unsigned int i = 0 ; i < vofm.size(); ++i){
+  		if( vofm[i].getDestination() == posn2 ){
+        cout << "b4 execute" << endl;
+  			done = executeMove(vofm[i]);
+
+        cout << "after execute: "<< done << endl;
+  			break;
+  		}
+  	}	
+  }
+  else{
+  	done = false;
+  }
+
+  }
 }
 
 
@@ -610,7 +611,7 @@ void GameControl::getHumanMove(char whoseTurn){
 
 
 
-void::GameControl::endGame(){
+void GameControl::endGame(){
   //This function is used to end Game
   //call destructor , delete the board
 }

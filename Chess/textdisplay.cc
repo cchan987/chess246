@@ -24,13 +24,13 @@ void TextDisplay::setDimensions(int n) {
 
 void TextDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
 	if (cp) { // passed an actual piece
-		int srcR = cp->getPosition().getRow();
-		int srcC = cp->getPosition().getCol();
+		int dstR = dst.getRow();
+		int dstC = dst.getCol();
 		char piece = cp->getPieceType();
 		if (cp->getColour() == 'B') {
 			piece = tolower(piece);
 		}
-		theDisplay[srcR][srcC] = piece;		
+		theDisplay[dstR][dstC] = piece;		
 	}
 	else { // passed a nullptr
 		int dstR = dst.getRow();
