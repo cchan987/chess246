@@ -23,6 +23,7 @@ class GameControl
 	void notifyInfoMsgChange(std::string s);
 	void removePiece(ChessPiece *piece);
 	void placePiece(ChessPiece *piece);
+	bool executeMove(Move m);
 	std::vector<int> posntran(std::string xy);
 	bool createChessPiece(std::string piece, int x, int y);
 	void initBoard();

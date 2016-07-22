@@ -20,27 +20,6 @@ ChessPiece *Board::getPieceByPosn(Posn p) {
 	return theBoard[dstRow][dstCol];
 }
 
-// m must be a legal move, therefore m will not have a destination
-// that is occupied by a friendly piece, Will return true if an 
-// opposing piece is in the destination square (including king)
-bool Board::isACapturingMove(Move m) {
-	Posn moveDst = m.getDestination();
-	ChessPiece *dst = getPieceByPosn(moveDst);
-	if (dst) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-
-/*
-bool Board::checkLegalMove(Posn p, ChessPiece cp){
-
-}*/
-
-
 // Checks if the given coloured player is in check
 bool Board::isInCheck(char colour) {
   vector<Move> opponentMoves = getAllPossibleMovesByColour(colour == 'W'? 'B': 'W');
@@ -143,25 +122,6 @@ Board::Board()
 }
 
 
-/*
-vector<vector<ChessPiece *>> simulateMove() {
-  
-}*/
-
-/*
-void Board::executeMove(Move m) {
-	ChessPiece *thePiece = m.getPiece();
-	Posn src = thePiece->getPosition();
-	Posn dst = m.getDestination();
-	ChessPiece *otherPiece = getPieceByPosn(dst);
-	if (otherPiece) {
-		removePiece(otherPiece);
-	}
-	thePiece->setPosition(dst);
-	theBoard[dst.getRow()][dst.getCol()] = thePiece;
-	notifyBoardChange(nullptr, src);
-	notifyBoardChange(thePiece, dst);
-}*/
 
 Board::~Board() {
   int iRow = 8;
@@ -169,7 +129,7 @@ Board::~Board() {
   for (int i = 0; i < iRow; ++i){
     for(int j = 0; i < iCol; ++j){
       delete theBoard[i][j];
-      theBoard[i][j] = nullptr;
+      //theBoard[i][j] = nullptr;
     }
   }
 }

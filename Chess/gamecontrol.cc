@@ -81,6 +81,60 @@ bool GameControl::createChessPiece(string piece, int x, int y){
   return true;
 }
 
+// Makes the move happen if legal move, otherwise nothing
+// Returns true if move was good, false otherwise
+// TODO: special case for en Passant capture
+bool GameControl::executeMove(Move m) {
+
+  //Check if it's a possible move
+  vector<Move> possibleMoves = m.getPiece()->getPossibleMoves(theBoard);
+  bool movePossibility = false;
+  for (unsigned int i = 0; i < possibleMoves.size(); ++i) {
+    if (possibleMoves[i].getDestination() == m.getDestination()){
+      movePossibility = true;
+      break;
+    }
+  }
+  if (movePossibility == false) {
+    return false;
+  }
+  
+  ChessPiece *thePiece = m.getPiece();
+  Posn src = thePiece->getPosition();
+  Posn dst = m.getDestination();
+  ChessPiece *otherPiece = theBoard.getPieceByPosn(dst);
+  char otherColour = otherPiece->getColour();
+  char otherType = otherPiece->getPieceType();
+  if (otherColour == 'B') {
+    otherType = tolower(otherType);
+  }
+  if (otherPiece) {
+    removePiece(otherPiece);
+  }
+  thePiece->setPosition(dst);
+  theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
+  theBoard.theBoard[dst.getRow()][dst.getCol()] = thePiece;
+
+  if (theBoard.isInCheck(thePiece->getColour())) { // Illegal move, reverse it
+    thePiece->setPosition(src);
+    theBoard.theBoard[src.getRow()][src.getCol()] = thePiece;
+    if (m.getIsCapturingMove()) {
+      stringstream ss;
+      string s;
+      ss << otherType;
+      ss >> s;
+      createChessPiece(s, dst.getRow(), dst.getCol());
+    }
+    return false;
+  }
+
+  else {
+    notifyBoardChange(nullptr, src);
+    notifyBoardChange(thePiece, dst);
+    return true;
+  }
+}
+
 void GameControl::removePiece(ChessPiece *piece) {
   if (piece == nullptr) {
     return;

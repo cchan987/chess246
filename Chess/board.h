@@ -9,8 +9,9 @@
 #include "textdisplay.h"
 
 
-
 class Board
+	
+
 {
 	public:
 	Board();
@@ -31,12 +32,6 @@ class Board
 	bool isACapturingMove(Move m);
 	bool isACheckingMove(Move m);
 
-	// Will be passed a possible move and return true if legal
-	// A legal move is a possible move that:
-	// -doesn't put your own king in check,
-	// -doesn't capture your own piece
-	bool checkLegalMove(Move m); 
-	void executeMove(Move m); // Will be handed a legal move and execute it
 	bool isInCheck(char colour); // Will determine if player of 'colour' is in check
 	
 	bool isGameOver();

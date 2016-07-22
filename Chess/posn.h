@@ -10,6 +10,7 @@ public:
 	int getRow() const;
 	void setCol(int x);
 	void setRow(int y);
+	bool operator==(const Posn& other);
 
 private:
 	int col;

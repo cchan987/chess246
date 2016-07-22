@@ -33,3 +33,7 @@ void Posn::setRow(int x){
 void Posn::setCol(int y){
 	col = y;
 }
+
+bool Posn::operator==(const Posn& other) {
+	return getRow() == other.getRow() && getCol() == other.getCol();
+}
