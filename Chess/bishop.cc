@@ -10,6 +10,7 @@ char Bishop::getPieceType() {
 	return 'B';
 }
 
+
 vector<Move> Bishop::getPossibleMoves(Board &b) {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();

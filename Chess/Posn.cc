@@ -15,12 +15,12 @@ Posn::Posn(int x, int y)
   col = y;
 }
 
-int Posn::getRow(){
+int Posn::getRow() const{
 	return row;
 }
 
 
-int Posn::getCol(){
+int Posn::getCol() const{
 	return col;
 }
 

@@ -12,9 +12,9 @@ protected:
 	Posn location;
 public:
 	ChessPiece(char c, Posn p);
-	char getColour();
+	char getColour() const;
 	void setColour(char col);
-	Posn getPosition();
+	Posn getPosition() const;
 	virtual void setPosition(Posn p);
 	virtual std::vector<Move> getPossibleMoves(Board &b) = 0;
 	virtual char getPieceType() = 0;

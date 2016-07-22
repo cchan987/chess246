@@ -9,7 +9,7 @@ void King::setMoved() {
 	hasBeenMoved = true;
 }
 
-bool King::hasBeenMoved() {
+bool King::getHasBeenMoved() const {
 	return hasBeenMoved;
 }
 
@@ -21,6 +21,7 @@ void King::setPosition(Posn p){
 	setMoved();
 	location = p;
 }
+
 
 vector<Move> King::getPossibleMoves(Board &b) {
 	vector<Move> PossibleMoves;

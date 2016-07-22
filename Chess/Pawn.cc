@@ -10,7 +10,7 @@ void Pawn::setMoved() {
 	hasBeenMoved = true;
 }
 
-bool Pawn::hasBeenMoved() {
+bool Pawn::getHasBeenMoved() const {
 	return hasBeenMoved;
 }
 
@@ -23,7 +23,6 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
 	int col = location.getCol();	
-
 	if (colour == 'W'){
 
 		if (col - 1 > -1) { // capture diagonal left
@@ -83,7 +82,6 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 	}
 
 	if (colour == 'B'){
-
 		if (col - 1 > -1) { // capture diagonal left
 			Posn currentPosn = Posn(row + 1, col - 1);
 			ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);

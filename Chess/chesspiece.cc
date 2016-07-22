@@ -1,19 +1,16 @@
 #include "chesspiece.h"
 
-ChessPiece::ChessPiece(char c, Posn p) {
-	colour = c;
-	location = p;
-}
+ChessPiece::ChessPiece(char c, Posn p) : colour{c}, location{p} {}
 
 void ChessPiece::setColour(char col) {
 	colour = col;
 }
 
-char ChessPiece::getColour() {
+char ChessPiece::getColour() const {
 	return colour;
 }
 
-Posn getPosition() {
+Posn getPosition() const {
 	return location;
 }
 

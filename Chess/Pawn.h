@@ -10,8 +10,8 @@ class Pawn:public ChessPiece{
 	bool hasBeenMoved = false;
 public:
 	void setMoved();
-	bool getHasBeenMoved();
-	char getPieceType() override;	
+	bool getHasBeenMoved() const;
+	char getPieceType() override;
 	std::vector<Move> getPossibleMoves(Board &b) override;
 
 };
