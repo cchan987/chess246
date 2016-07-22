@@ -148,6 +148,7 @@ vector<vector<ChessPiece *>> simulateMove() {
   
 }*/
 
+/*
 void Board::executeMove(Move m) {
 	ChessPiece *thePiece = m.getPiece();
 	Posn src = thePiece->getPosition();
@@ -160,7 +161,7 @@ void Board::executeMove(Move m) {
 	theBoard[dst.getRow()][dst.getCol()] = thePiece;
 	notifyBoardChange(nullptr, src);
 	notifyBoardChange(thePiece, dst);
-}
+}*/
 
 Board::~Board() {
   int iRow = 8;

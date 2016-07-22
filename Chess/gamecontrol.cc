@@ -5,6 +5,12 @@
 #include <string>
 #include "textdisplay.h"
 #include "gamecontrol.h"
+#include "rook.h"
+#include "knight.h"
+#include "bishop.h"
+#include "queen.h"
+#include "king.h"
+#include "pawn.h"
 
 using namespace std;
 
@@ -190,7 +196,7 @@ void GameControl::setupBoard(){
                  cout << "position error" <<endl;
                 }
                 else{
-          removePiece(theBoard.getPieceByPosn(posntran(position)[0], posntran(position)[1]));
+          removePiece(theBoard.getPieceByPosn(Posn(posntran(position)[0], posntran(position)[1])));
           cout << "remove piece in " << posntran(position)[0]  << " " << posntran(position)[1] << endl;
           cout << *td;
           }
