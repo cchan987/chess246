@@ -556,6 +556,87 @@ void GameControl::startGame(int player1, int player2){
 }
 
 
+void GameControl::startGame(int player1, int player2){
+do{
+	if (whoseTurn == ‘W’){
+	getNextMove(player1);
+	}
+	else if (whoseTurn == ‘B’){
+	getNextMove(player2);
+	]
+	else{  //impossible  }
+
+	alternateTurn();
+
+}
+while (! isGameOver());
+
+cout<<*td;
+
+}
+
+
+void GameControl::getNextMove(int player){
+
+if(player == 0){ getHumanMove(char whoseTurn); }
+
+else if(player == 1){ getAI1Move(); }
+
+else if(player == 2){ getAI2Move();}
+
+else if(player == 3){ getAI3Move(); }
+
+else if (player == 4){ getAI4Move(); }
+
+else { // impossible }
+
+}
+
+
+void getHumanMove(char whoseTurn){
+	cout << “move/resign” << endl;
+    
+	bool done = false;
+	
+	do {
+
+    	string move_string;
+   	 getline(cin,move_string);
+    	istringstream move_iss(move_string);
+   	 string move_command;
+   	 int count = 0;
+   	 vector<string> listOfCommand;
+	//loc[0] = move/resign, loc[1]=start ,loc[2] = dst 
+
+	if(listOfCommand[0] == “move”){
+		vector<int> vtor = posntran(start);
+		vector<int> vtor2 = posntran(dst);
+		Posn posn1 = Posn(vtor[0], vtor[1]);
+		Posn posn2 = Posn (vtor2[0], vtor2[1]);
+
+		ChessPiece* cp = theBoard.getPieceByPosn(posn1);
+
+		Vector<Move> vofm = cp->getPossibleMoves();	
+		for(int i = 0 ; i < vofm.size(); ++i){
+			if( vofm[i].getDestination() == posn2 ){
+				done = executeMove(vofm[i]);
+				break;
+			}
+		
+		}	
+	}
+	else{
+		done = false;
+	}
+	while (done != true);
+
+}
+
+
+
+
+
+
 
 
 void::GameControl::endGame(){
