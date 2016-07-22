@@ -19,15 +19,12 @@ class Board
 	void removePiece(ChessPiece *piece);
 
 	std::vector<std::vector<ChessPiece *>> theBoard;
-	void setupBoard();
 	std::vector<int> posntran(std::string s1);
 	bool createChessPiece(std::string s1,int x,int y);
 
 	void printBoard();
 	ChessPiece *getPieceByPosn(Posn p);
-	std::vector<Observer *> observerList;
-	TextDisplay *td;
-	//GraphDisplay *graphDisplay;
+	
 	//std::vector<Move> getAllLegalMovesByColour(char colour);
 	std::vector<Move> getAllPossibleMovesByColour(char colour);
 	std::vector<ChessPiece *> getAllPiecesByColour(char colour);
