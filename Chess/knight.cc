@@ -22,9 +22,9 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 	col--;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
-		ChessPiece pieceAtPosn = b.getPieceByPosn(currentPosn);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn){
-			if (pieceAtPosn.getColour() != colour) {
+			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -41,9 +41,9 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 	col++;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
-		ChessPiece pieceAtPosn = b.getPieceByPosn(currentPosn);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn){
-			if (pieceAtPosn.getColour() != colour) {
+			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -60,9 +60,9 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 	col = col + 2;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
-		ChessPiece pieceAtPosn = b.getPieceByPosn(currentPosn);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn){
-			if (pieceAtPosn.getColour() != colour) {
+			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -79,9 +79,9 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 	col = col + 2;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
-		ChessPiece pieceAtPosn = b.getPieceByPosn(currentPosn);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn){
-			if (pieceAtPosn.getColour() != colour) {
+			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -98,9 +98,9 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 	col--;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
-		ChessPiece pieceAtPosn = b.getPieceByPosn(currentPosn);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn){
-			if (pieceAtPosn.getColour() != colour) {
+			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -116,9 +116,9 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 	col++;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
-		ChessPiece pieceAtPosn = b.getPieceByPosn(currentPosn);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn){
-			if (pieceAtPosn.getColour() != colour) {
+			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -134,9 +134,9 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 	col = col + 2;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
-		ChessPiece pieceAtPosn = b.getPieceByPosn(currentPosn);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn){
-			if (pieceAtPosn.getColour() != colour) {
+			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -152,9 +152,9 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 	col = col + 2;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
-		ChessPiece pieceAtPosn = b.getPieceByPosn(currentPosn);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn){
-			if (pieceAtPosn.getColour() != colour) {
+			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}

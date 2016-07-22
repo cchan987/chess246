@@ -24,17 +24,13 @@ void GameControl::switchOn(){
   
   Board defaultBoard;
   Board currentBoard;
-  
+  /*
   char whoseTurn;
   whoseTurn = 'W';
-
+    */
+  bool exitGame = false;
   
-  printBoard(currentBoard);
-    
-  
-  bool exit = false;
-  
-  while (exit != true){
+  while (exitGame != true){
 
   cout << "command: game/ setup / quit" << endl;
   
@@ -111,7 +107,7 @@ void GameControl::switchOn(){
        }    
        else{
 	 cout << "Exit game; Thank you for playing" << endl;
-	 exit = true;
+	 exitGame = true;
        }
      }
      else{
@@ -132,7 +128,7 @@ void GameControl::switchOn(){
 
 //In-Game Flow
 //==========================================================================
-
+/*
 void GameControl::selectGameMode(){
   //This function is used to select game mode
   string firstPlayer,secondPlayer;
@@ -149,8 +145,9 @@ void GameControl::selectGameMode(){
     gameMode == "pvc";
   }
   
-}
+}*/
 //==========================================================================
+  /*
 void GameControl::getNextMove(Board aBoard){
   //prompt the user to type in next move and move the chess
 
@@ -170,10 +167,10 @@ void GameControl::getNextMove(Board aBoard){
 
   }
 
-}
+}*/
 
 //==========================================================================
-
+/*
 void GameControl::alternateTurn(){
   //This function is used to alternate player turn
   if(whoseTurn == 'W')
@@ -184,7 +181,7 @@ void GameControl::alternateTurn(){
     {
       whoseTurn == 'W';
     }
-}
+}*/
 //==========================================================================
 
 int GameControl::playerAI(string aComputer){
@@ -222,7 +219,7 @@ void GameControl::printScore(){
 
 //Main Flow functions
 //==========================================================================
-
+/*
 void GameControl::startGame2(Board aBoard){
   //This function pass the current board to playboard
   //to start the game
@@ -234,18 +231,19 @@ void GameControl::startGame2(Board aBoard){
   aBoard.printBoard();
   }
 }
+*/
 
 //==========================================================================
 
 
 //////FLAG//////////
-
+/*
 void GameControl::isGameOver(){
   //This function is used to determinate is it gmaevoer
   bool bCanMove(false);
   bCanMove = currentBoard.canMove(whoseTurn);
   if(! bCanMove){
-    if(currentBoard.isInCheck(whoseTurn){
+    if(currentBoard.isInCheck(whoseTurn)) {
 	alternateTurn();
 	checkMate();
       }
@@ -255,10 +253,10 @@ void GameControl::isGameOver(){
       }
   }
 }
-
+*/
 
 //==========================================================================
-
+/*
 void GameControl::checkMate(){
   //This function is used to consume a player, declare him to be winner, and update score count, print msg, ask for new game or quit to menu
   cout << "checkMate" << whoseTurn << "wins"<<endl;
@@ -269,7 +267,7 @@ void GameControl::checkMate(){
     blackScoreCount++;
   }
 }
-
+*/
 //==========================================================================
 
 void GameControl::staleMate(){
@@ -278,7 +276,7 @@ void GameControl::staleMate(){
 }
 
 //==========================================================================
-
+/*
 void GameControl::resign(){
   //This function is used when resign
   if(whoseTurn == 'W'){
@@ -288,7 +286,7 @@ void GameControl::resign(){
     blackScoreCount++;
   }
   
-}
+}*/
 
 //==========================================================================
 

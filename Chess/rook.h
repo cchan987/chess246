@@ -12,7 +12,7 @@ public:
 	Rook(char c, Posn p);
 	~Rook();
 	void setMoved();
-	bool getHasBeenMoved() const;
+	bool getHasBeenMoved() const override;
 	char getPieceType() override;
 	std::vector<Move> getPossibleMoves(Board &b) override;
 	void setPosition(Posn p) override;

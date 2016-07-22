@@ -3,6 +3,7 @@
 #include "textdisplay.h"
 #include "posn.h"
 #include "chesspiece.h"
+#include "observer.h"
 using namespace std;
 
 TextDisplay::TextDisplay() {
@@ -14,7 +15,7 @@ void TextDisplay::setDimensions(int n) {
 	for (int i = 0; i < n; i++) {
 		vector<char> v;
 		for (int j = 0; j < n; j++) {
-			char colour = getCellColour(i, j);
+			char colour = getCellColour(i, j) == 'W' ? ' ' : '_';
 			v.emplace_back(colour);
 		}
 		theDisplay.emplace_back(v);
@@ -26,7 +27,7 @@ void TextDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
 		int srcR = cp->getPosition().getRow();
 		int srcC = cp->getPosition().getCol();
 		char piece = cp->getPieceType();
-		if (cp->getColour() == 'W') {
+		if (cp->getColour() == 'B') {
 			piece = tolower(piece);
 		}
 		theDisplay[srcR][srcC] = piece;		
@@ -34,7 +35,7 @@ void TextDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
 	else { // passed a nullptr
 		int dstR = dst.getRow();
 		int dstC = dst.getCol();
-		theDisplay[dstR][dstC] = getCellColour(dstR, dstC);		
+		theDisplay[dstR][dstC] = getCellColour(dstR, dstC) == 'W' ? ' ' : '_';		
 	}
 }
 

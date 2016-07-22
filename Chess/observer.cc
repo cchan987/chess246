@@ -1,6 +1,6 @@
 #include "observer.h"
 
-char getCellColour(int r, int c) {
+char Observer::getCellColour(int r, int c) {
 	if (r % 2 == 0) {
 		if (c % 2 == 0) {
 			return 'W';

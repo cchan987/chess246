@@ -2,12 +2,15 @@
 #include "chesspiece.h"
 #include "posn.h"
 
-Move::Move(ChessPiece *Piece, Posn dst, bool isCapturingMove = false, bool isCastlingMove = false, bool isEnPassantCaptureMove = false) : Piece{Piece}, dst{dst}, isCapturingMove{isCapturingMove}, isCastlingMove{isCastlingMove}, isEnPassantCaptureMove{isEnPassantCaptureMove} {}
+Move::Move(ChessPiece *Piece, Posn dst, 
+	bool isCapturingMove, bool isCastlingMove, bool isEnPassantCaptureMove): 
+	Piece{Piece}, dst{dst}, isCapturingMove{isCapturingMove}, 
+	isCastlingMove{isCastlingMove}, isEnPassantCaptureMove{isEnPassantCaptureMove} {}
 
-ChessPiece *Move::getPiece() {
+ChessPiece * Move::getPiece() const{
 	return Piece;
 }
-Posn Move::getDestination() {
+Posn Move::getDestination() const{
 	return dst;
 }
 

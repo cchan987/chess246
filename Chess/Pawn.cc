@@ -33,7 +33,7 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 			ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 			if (pieceAtPosn) {
 				if (pieceAtPosn->getColour() == 'B') {
-					PossibleMoves.emplace_back(Move(this, currentPosn), true);
+					PossibleMoves.emplace_back(Move(this, currentPosn, true));
 				}
 			}
 		}
@@ -43,7 +43,7 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 			ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 			if (pieceAtPosn) {
 				if (pieceAtPosn->getColour() == 'B') {
-					PossibleMoves.emplace_back(Move(this, currentPosn), true);
+					PossibleMoves.emplace_back(Move(this, currentPosn, true));
 				}
 			}
 		}
@@ -57,13 +57,13 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 
 		// Moving double fwd
 		if (hasBeenMoved == false) {
-			ChessPiece *oneFwd = Posn(row - 1, col);
-			ChessPiece *twoFwd = Posn(row - 2, col);
+			ChessPiece *oneFwd = b.getPieceByPosn(Posn(row - 1, col));
+			ChessPiece *twoFwd = b.getPieceByPosn(Posn(row - 2, col));
 			if (oneFwd == nullptr && twoFwd == nullptr){
 				PossibleMoves.emplace_back(Move(this, Posn(row - 2, col)));			
 			}
 		}
-
+/*
 		if (row == 3) { // en passant possibility
 			if (col > 0) { // we are not in the A column, therefore we check left for vulnerable pawn
 				ChessPiece *pieceLeft = b.getPieceByPosn(Posn(row, col - 1));
@@ -81,7 +81,7 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 					}				
 				}
 			}
-		}
+		}*/
 	}
 
 	if (colour == 'B'){
@@ -90,7 +90,7 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 			ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 			if (pieceAtPosn) {
 				if (pieceAtPosn->getColour() == 'W') {
-					PossibleMoves.emplace_back(Move(this, currentPosn), true);
+					PossibleMoves.emplace_back(Move(this, currentPosn, true));
 				}
 			}
 		}
@@ -100,7 +100,7 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 			ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 			if (pieceAtPosn) {
 				if (pieceAtPosn->getColour() == 'W') {
-					PossibleMoves.emplace_back(Move(this, currentPosn), true);
+					PossibleMoves.emplace_back(Move(this, currentPosn, true));
 				}
 			}
 		}
@@ -114,13 +114,13 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 
 		// Moving double fwd
 		if (hasBeenMoved == false) {
-			ChessPiece *oneFwd = Posn(row + 1, col);
-			ChessPiece *twoFwd = Posn(row + 2, col);
+			ChessPiece *oneFwd = b.getPieceByPosn(Posn(row + 1, col));
+			ChessPiece *twoFwd = b.getPieceByPosn(Posn(row + 2, col));
 			if (oneFwd == nullptr && twoFwd == nullptr){
 				PossibleMoves.emplace_back(Move(this, Posn(row + 2, col)));			
 			}
 		}
-
+/*
 		if (row == 4) { // en passant possibility
 			if (col > 0) { // we are not in the A column, therefore we check left for vulnerable pawn
 				ChessPiece *pieceLeft = b.getPieceByPosn(Posn(row, col - 1));
@@ -138,6 +138,8 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 					}				
 				}
 			}
-		}
+		}*/
 	}
+	
+	return PossibleMoves;
 }

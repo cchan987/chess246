@@ -116,7 +116,7 @@ Board::Board()
     }
 
   placePiece(new Rook('W', Posn(7, 0)));
-  placePiece(new Knight('W', Posn(7, 0)));
+  placePiece(new Knight('W', Posn(7, 1)));
   placePiece(new Bishop('W', Posn(7, 2)));
   placePiece(new Queen('W', Posn(7, 3)));
   placePiece(new King('W', Posn(7, 4)));
@@ -233,6 +233,7 @@ void Board::setupBoard(){
         	  success = createChessPiece(piece,posntran(position)[0],posntran(position)[1]);
     	      if (success != false) { 
               cout << "Set piece " << piece << " to " << position  << endl;
+              cout<< *td;
             }
     	    }
     	  }
@@ -255,6 +256,7 @@ void Board::setupBoard(){
       	  delete theBoard[posntran(position)[0]][posntran(position)[1]];
       	  theBoard[posntran(position)[0]][posntran(position)[1]] = nullptr;
       	  cout << "remove piece in " << posntran(position)[0]  << " " << posntran(position)[1] << endl;
+          cout << *td;
       	  }
       	}
       }
@@ -267,7 +269,7 @@ void Board::setupBoard(){
       	int condition = 1;
 
       	if (condition == 1){
-
+          cout << *td;
       	  done = true;
       	}
       	else{
@@ -312,11 +314,13 @@ bool Board::createChessPiece(string piece, int x, int y){
 	delete theBoard[x][y];
 	theBoard[x][y] = nullptr;
 	if (piece == "r"){cout << 'B' << " Rook in " << x << " " << y << endl; placePiece(new Rook('B', Posn(x, y)));}
+  else if (piece == "p"){cout << 'B' << " Pawn in " << x << " " << y << endl; placePiece(new Pawn('B', Posn(x, y)));}
 	else if (piece == "n"){cout << 'B' << " Knight in " << x << " " << y << endl; placePiece(new Knight('B', Posn(x, y)));}
 	else if (piece == "b"){cout << 'B' << " Bishop in " << x << " " << y << endl; placePiece(new Bishop('B', Posn(x, y)));}
 	else if (piece == "k"){cout << 'B' << " King in " << x << " " << y << endl; placePiece(new King('B', Posn(x, y)));}
 	else if (piece == "q"){cout << 'B' << " Queen in " << x << " " << y << endl; placePiece(new Queen('B', Posn(x, y)));}
 	else if (piece == "R"){cout << 'W' << " Rook in " << x << " " << y << endl; placePiece(new Rook('W', Posn(x, y)));}
+  else if (piece == "P"){cout << 'W' << " Pawn in " << x << " " << y << endl; placePiece(new Pawn('W', Posn(x, y)));}
 	else if (piece == "N"){cout << 'W' << " Knight in " << x << " " << y << endl; placePiece(new Knight('W', Posn(x, y)));}
 	else if (piece == "B"){cout << 'W' << " Bishop in " << x << " " << y << endl; placePiece(new Bishop('W', Posn(x, y)));}
 	else if (piece == "K"){cout << 'W' << " King in " << x << " " << y << endl; placePiece(new King('W', Posn(x, y)));}
@@ -359,6 +363,8 @@ void Board::printBoard(vector<vector<char> > board){
 bool Board::checkLegalMove(Posn p, ChessPiece cp){
 
 }*/
+
+//bool Board::isInCheck()
 
 // Sends out notifications whenever the board is changed
 // ChessPiece could be a nullptr, Position p has been set to the value of piece

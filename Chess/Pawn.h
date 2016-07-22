@@ -12,7 +12,7 @@ public:
 	Pawn(char c, Posn p);
 	~Pawn();
 	void setMoved();
-	bool getHasBeenMoved() const;
+	bool getHasBeenMoved() const override;
 	char getPieceType() override;
 	std::vector<Move> getPossibleMoves(Board &b) override;
 

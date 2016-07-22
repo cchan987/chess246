@@ -11,7 +11,7 @@ char Queen::getPieceType() {
 	return 'Q';
 }
 
-vector<Move> Queen::getPossibleMoves(Board &B) {
+vector<Move> Queen::getPossibleMoves(Board &b) {
 	vector<Move> PossibleMoves;
 	int row = location.getRow();
 	int col = location.getCol();
@@ -35,8 +35,8 @@ vector<Move> Queen::getPossibleMoves(Board &B) {
 
 	row++; //Doesn't move onto it's own square
 	while (row < 8) { // Find all the rows below that rook can move too
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -52,8 +52,8 @@ vector<Move> Queen::getPossibleMoves(Board &B) {
 
 	col++; //Doesn't move onto it's own square
 	while (col < 8) { // Find all the columns to the right that rook can move too
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -69,8 +69,8 @@ vector<Move> Queen::getPossibleMoves(Board &B) {
 
 	col--; //Doesn't move onto it's own square
 	while (col > -1) {
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -92,8 +92,8 @@ vector<Move> Queen::getPossibleMoves(Board &B) {
 		if (col == 8 || row == -1) {
 			break;
 		}
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -113,8 +113,8 @@ vector<Move> Queen::getPossibleMoves(Board &B) {
 		if (col == -1 || row == -1) {
 			break;
 		}
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -134,8 +134,8 @@ vector<Move> Queen::getPossibleMoves(Board &B) {
 		if (col == 8 || row == 8) {
 			break;
 		}
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -155,8 +155,8 @@ vector<Move> Queen::getPossibleMoves(Board &B) {
 		if (col == -1 || row == 8) {
 			break;
 		}
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));

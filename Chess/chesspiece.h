@@ -16,6 +16,7 @@ public:
 	char getColour() const;
 	void setColour(char col);
 	Posn getPosition() const;
+	virtual bool getHasBeenMoved() const;
 	virtual void setPosition(Posn p);
 	virtual std::vector<Move> getPossibleMoves(Board &b) = 0;
 	virtual char getPieceType() = 0;

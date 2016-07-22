@@ -2,6 +2,10 @@
 
 ChessPiece::ChessPiece(char c, Posn p) : colour{c}, location{p} {}
 
+ChessPiece::~ChessPiece(){}
+
+bool ChessPiece::getHasBeenMoved() const {return false;}
+
 void ChessPiece::setColour(char col) {
 	colour = col;
 }

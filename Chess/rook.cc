@@ -12,7 +12,7 @@ void Rook::setMoved() {
 	hasBeenMoved = true;
 }
 
-bool Rook::hasBeenMoved() const {
+bool Rook::getHasBeenMoved() const {
 	return hasBeenMoved;
 }
 
@@ -49,8 +49,8 @@ vector<Move> Rook::getPossibleMoves(Board &b) {
 
 	row++; //Doesn't move onto it's own square
 	while (row < 8) { // Find all the rows below that rook can move too
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -66,8 +66,8 @@ vector<Move> Rook::getPossibleMoves(Board &b) {
 
 	col++; //Doesn't move onto it's own square
 	while (col < 8) { // Find all the columns to the right that rook can move too
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
@@ -83,8 +83,8 @@ vector<Move> Rook::getPossibleMoves(Board &b) {
 
 	col--; //Doesn't move onto it's own square
 	while (col > -1) {
-		currentPosn = Posn(row, col);
-		pieceAtPosn = b.getPieceByPosn(currentPosn);
+		Posn currentPosn = Posn(row, col);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
 			if (pieceAtPosn->getColour() != colour) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));

@@ -40,7 +40,7 @@ class Board
 	// -doesn't capture your own piece
 	bool checkLegalMove(Move m); 
 	void executeMove(Move m); // Will be handed a legal move and execute it
-	//bool isInCheck(ChessPiece *cp);
+	bool isInCheck(char colour); // Will determine if player of 'colour' is in check
 	
 	bool isGameOver();
 	bool checkMate();

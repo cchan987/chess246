@@ -38,7 +38,7 @@ vector<Move> King::getPossibleMoves(Board &b) {
 		Posn currentPosn = Posn(row + 1, col);
 		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
-			if (!(pieceAtPosn.getColour() == colour)) {
+			if (!(pieceAtPosn->getColour() == colour)) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -51,7 +51,7 @@ vector<Move> King::getPossibleMoves(Board &b) {
 		Posn currentPosn = Posn(row - 1, col);
 		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
-			if (!(pieceAtPosn.getColour() == colour)) {
+			if (!(pieceAtPosn->getColour() == colour)) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -64,7 +64,7 @@ vector<Move> King::getPossibleMoves(Board &b) {
 		Posn currentPosn = Posn(row, col - 1);
 		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
-			if (!(pieceAtPosn.getColour() == colour)) {
+			if (!(pieceAtPosn->getColour() == colour)) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -77,7 +77,7 @@ vector<Move> King::getPossibleMoves(Board &b) {
 		Posn currentPosn = Posn(row, col + 1);
 		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
 		if (pieceAtPosn) {
-			if (!(pieceAtPosn.getColour() == colour)) {
+			if (!(pieceAtPosn->getColour() == colour)) {
 				PossibleMoves.emplace_back(Move(this, currentPosn, true));
 			}
 		}
@@ -91,10 +91,12 @@ vector<Move> King::getPossibleMoves(Board &b) {
 		ChessPiece *rightOne = b.getPieceByPosn(Posn(row, col + 1));
 		ChessPiece* rightTwo = b.getPieceByPosn(Posn(row, col + 2));
 		ChessPiece* rightThree = b.getPieceByPosn(Posn(row, col + 3));
-		if (rightOne == nullptr && rightTwo == nullptr) {
-			if (rightThree != nullptr) {
-				if (rightThree.getColour() == colour && rightThree.getPieceType() == 'R' && rightThree.getHasBeenMoved() == false) {
-					PossibleMoves.emplace_back(Move(this, Posn(row, col + 2), false, true));
+		if (rightOne == nullptr && rightTwo == nullptr) { // No pieces in the way
+			if (rightThree != nullptr) { //Piece in the rook square
+				if (rightThree->getColour() == colour && rightThree->getPieceType() == 'R'){ // piece is friendly rook
+					if (rightThree->getHasBeenMoved() == false) { // friendly rook hasn't moved
+						PossibleMoves.emplace_back(Move(this, Posn(row, col + 2), false, true));
+					}
 				}
 			}
 		}
@@ -105,11 +107,14 @@ vector<Move> King::getPossibleMoves(Board &b) {
 		ChessPiece *leftFour = b.getPieceByPosn(Posn(row, col - 4));
 		if (leftOne == nullptr && leftTwo == nullptr && leftThree == nullptr) {
 			if (leftFour != nullptr) {
-				if (leftFour.getColour() == colour && leftFour.getPieceType() == 'R' && leftFour.getHasBeenMoved() == false) {
-					PossibleMoves.emplace_back(Move(this, Posn(row, col - 2), false, true));
+				if (leftFour->getColour() == colour && leftFour->getPieceType() == 'R') {
+					if (leftFour->getHasBeenMoved() == false) {
+						PossibleMoves.emplace_back(Move(this, Posn(row, col - 2), false, true));
+					}
 				}
 			}
 		}
 	}
+	
 	return PossibleMoves;
 }

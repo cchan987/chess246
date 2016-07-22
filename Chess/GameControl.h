@@ -15,11 +15,10 @@ class GameControl
 	GameControl();
 	void switchOn();
 	void selectGameMode();
-	void getNextMove();
+	void getNextMove(Board aBoard);
 	void alternateTurn();
 	void printScore();
-	void startGame();
-	void startGame2();
+	void startGame(int player1, int player2);
 	void isGameOver();
 	void checkMate();
 	void staleMate();
