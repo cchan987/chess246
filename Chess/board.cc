@@ -20,6 +20,23 @@ ChessPiece *Board::getPieceByPosn(Posn p) {
 	return theBoard[dstRow][dstCol];
 }
 
+// TODO check enpassant
+bool Board::isLegalMove(Move m) {
+  ChessPiece *thePiece = m.getPiece();
+  Posn src = thePiece->getPosition();
+  Posn dst = m.getDestination();
+  ChessPiece *otherPiece = theBoard.getPieceByPosn(dst);
+
+  theBoard[src.getRow()][src.getCol()] = nullptr;
+  theBoard[dst.getRow()][dst.getCol()] = thePiece;
+
+  bool goodMove = theBoard.isInCheck(thePiece->getColour());
+  theBoard[src.getRow()][src.getCol()] = thePiece;
+  theBoard[dst.getRow()][dst.getCol()] = otherPiece;
+  return goodMove;
+}
+
+
 // Checks if the given coloured player is in check
 bool Board::isInCheck(char colour) {
   vector<Move> opponentMoves = getAllPossibleMovesByColour(colour == 'W'? 'B': 'W');

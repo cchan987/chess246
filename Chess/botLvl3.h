@@ -3,6 +3,7 @@
 
 #include "abstractAI.h"
 
+// Level 3: prefers avoiding capture, capturing moves, and checks
 class BotLvl3: public AbstractAI{
 	vector<ChessPiece *> getMyThreatenedPieces(Board &b);
 	bool isMoveSafe(Move m);

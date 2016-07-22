@@ -1,17 +1,24 @@
 #include "botLvl3.h"
 #include "board.h"
 #include "chesspiece.h"
+#include <map>
 
 using namespace std;
 
 vector<ChessPiece *> BotLvl3::getMyThreatenedPieces(Board &b) {
-
-}
-
-vector<Posn> BotLvl3::getSquaresThreatenedByOpponent(Board &b) {
 	char opponent = (allegiance == "W")?"B":"W";
 	vector<Move> opponentPossibleMoves = getAllPossibleMovesByColour(opponent);
-	
+	map<Posn, int> threats;
+
+	for (unsigned int i = 0; i < opponentPossibleMoves.size(); ++i) {
+		Move currentMove = opponentPossibleMoves[i];
+		if (currentMove.getIsCapturingMove()) {
+			if (!(threats.count(currentMove.getDestination()))) {
+				threats[currentMove.getDestination()];
+			}
+		}
+	}
+
 }
 
 vector<Move> BotLvl3::getCapturingandCheckingMoves(Board &b) {

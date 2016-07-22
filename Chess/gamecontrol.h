@@ -20,6 +20,7 @@ class GameControl
 	public:
 	GameControl();
 	~GameControl();
+	void getHumanMove(char whoseTurn)
 	void notifyBoardChange(ChessPiece *piece, Posn p);
 	void notifyInfoMsgChange(std::string s);
 	void removePiece(ChessPiece *piece);
