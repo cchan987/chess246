@@ -34,9 +34,9 @@ GameControl::~GameControl() {
 // Sends out notifications whenever the board is changed
 // ChessPiece could be a nullptr, Position p has been set to the value of piece
 void GameControl::notifyBoardChange(ChessPiece *piece, Posn p) {
-  cout <<"notifyign board" << endl;
+//  cout <<"notifyign board" << endl;
   for (unsigned int i = 0; i < observerList.size(); ++i) {
-    cout << " observer: " << i << endl;
+ //   cout << " observer: " << i << endl;
     observerList[i]->notifyBoard(piece, p);
   }
 }
@@ -96,11 +96,12 @@ bool GameControl::executeMove(Move m) {
   Posn src = thePiece->getPosition();
   Posn dst = m.getDestination();
   ChessPiece *otherPiece = theBoard.getPieceByPosn(dst);
-  cout << "b4 is legal" << endl;
+//  cout << "b4 is legal" << endl;
   if (theBoard.isLegalMove(m)) {
-    cout << "is legal is good" << endl;
+  //  cout << "is legal is good" << endl;
     removePiece(otherPiece);
-    cout << "remove good" << endl;
+   // cout << "remove good" << endl;
+    theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
     theBoard.theBoard[dst.getRow()][dst.getCol()] = thePiece;
     thePiece->setPosition(dst);
     notifyBoardChange(nullptr, src);
@@ -168,7 +169,7 @@ void GameControl::setupBoard() {
   
   while(done != true) {
 
-    cout << "Command: + / - / done" << endl;
+  cout << "Command: + / - / = / done" << endl;
     
     string setup_string;
     getline(cin,setup_string);
@@ -249,16 +250,16 @@ void GameControl::setupBoard() {
       else if (listOfCommand[0] == "done") {
   	    // DONE COMMAND 
   	    //check condition
-  	    bool condition = true;
-  	    condition = checkSetupCondition();
-
-        if (condition == true) {
+  	   // bool condition = false;
+  	    //condition = checkSetupCondition();
+	if ( checkSetupCondition() ){
+        //if (condition == true) {
   		    cout << *td;
   		    done = true;
   		    customBoard = true;
         }
         else {
-  		    cout << "condition not satisified" << endl;
+  	      cout << "condition not satisified" << endl;
   	      done = false;
         }
       }
@@ -407,23 +408,26 @@ void GameControl::printScore(){
   //This function prints the score
   int i1 = whiteScoreCount;
   int i2 = blackScoreCount;
-  cout << i1 << endl;
-  cout << i2 << endl;
+  cout << "white: " << i1 << endl;
+  cout << "black: "<< i2 << endl;
 }
 
 
 void GameControl::startGame(int player1, int player2){
   if(customBoard == false){
     initBoard();
+    whoseTurn = 'W';
   }
   
   resign = false;
 
   do{
     cout<<*td;
-    cout << "whose turn: " << whoseTurn << endl; 
+    cout << "whose turn: " << whoseTurn << endl;
+	if(theBoard.isInCheck(whoseTurn)){ cout<< "Player: "<< whoseTurn << "is in check!!" << endl; }
+ 
   	if (whoseTurn == 'W'){
-  	  getNextMove(player1);
+  	  getNextMove(player1);	  
   	}
   	else if (whoseTurn == 'B'){
   	  getNextMove(player2);
@@ -435,14 +439,16 @@ bool GameControl::isGameOver() {
   //objective : check all pieces that have legal move
   // no move = true, else false
   if(resign){
+    printScore();
+    resetBoard();
     return true;
   }
 
   int allLegalMove = 0;
-  vector<ChessPiece *> vcp = getAllPiecesByColour(whoseTurn);
+  vector<ChessPiece *> vcp = theBoard.getAllPiecesByColour(whoseTurn);
   for (unsigned int i = 0; i < vcp.size() ; ++i){
-    vector<Move> vofm = vcp[i]->getPossibleMoves(*theBoard);
-    for (unsigned int j = 0; j < vofm[j]; ++j){
+    vector<Move> vofm = vcp[i]->getPossibleMoves(theBoard);
+    for (unsigned int j = 0; j < vofm.size() ; ++j){
       if(theBoard.isLegalMove(vofm[j])){
 	allLegalMove++;
       }
@@ -453,7 +459,7 @@ bool GameControl::isGameOver() {
     //if yes checkmate, alt , if W? white++ else black++;
     //else stalmate ;
     if(theBoard.isInCheck(whoseTurn)){
-      alternateTurn();
+     // alternateTurn();
       cout << "CheckMate! " << whoseTurn << " Wins!" << endl;
       if(whoseTurn == 'W'){
 	++whiteScoreCount;
@@ -467,6 +473,8 @@ bool GameControl::isGameOver() {
     }
     printScore();
     resetBoard();
+    
+
     return true;
   }
   else{
@@ -530,39 +538,46 @@ void GameControl::getHumanMove(char whoseTurn) {
         continue;
       }
 
-      if (cp->getChessPiece()->getColour() == whoseTurn) {
+      if (cp->getColour() != whoseTurn) {
         cout << "invalid move, cannot move opponent's chess piece" << endl;
         continue;
       }
 	
-	cout << "got piece by posn" << endl;
+//	cout << "got piece by posn" << endl;
 
   	vector<Move> vofm = cp->getPossibleMoves(theBoard);	
-	cout << "got possible moves" << endl;
+//	cout << "got possible moves" << endl;
   	for(unsigned int i = 0 ; i < vofm.size(); ++i){
   		if( vofm[i].getDestination() == posn2 ){
-		  cout << "b4 execute" << endl;
+		  //cout << "b4 execute" << endl;
   			done = executeMove(vofm[i]);
-			cout << "after execute: "<< done << endl;
+		//	cout << "after execute: "<< done << endl;
   			break;
   		}
 		else {
-		  cout << "Not possible move" <<endl;
+		  //cout << "Not possible move" <<endl;
 		}
+//	cout << "Not a possible move" << endl;
   	}	
   }
 
 
-  else if(listOfComman[0] == "resign"){
+  else if(listOfCommand[0] == "resign"){
     //Alturn turn , score++ , boolean = true
-    alternateTurn();
+  //  cout<<"now turn: "<< whoseTurn <<endl;
+	cout << whoseTurn << endl;
+	//alternateTurn();
+ //  cout << "after resign: "<< whoseTurn << endl;
      if(whoseTurn == 'W'){
-	++whiteScoreCount;
-      }
-      else{
 	++blackScoreCount;
       }
+      else{
+	++whiteScoreCount;
+      }
+//	cout<<"b4: "<<resign<<endl;
      resign = true;
+//	cout<<"after: "<<resign<<endl;
+	break;
   }
 
 
@@ -581,55 +596,77 @@ void GameControl::resetBoard(){
   for(unsigned int i = 0; i<8; ++i){
     for(unsigned int j=0; j<8; ++j){
       Posn aposn = Posn(i,j);
-      ChessPiece* acp = getPieceByPosn(aposn);
+      ChessPiece* acp = theBoard.getPieceByPosn(aposn);
       removePiece(acp);
     }
   }
+  customBoard = false;
 }
 
 
 bool GameControl::checkSetupCondition(){
-
-  // Check that no ones is in check
-  bool cond1;
-  cond1 = (!(theBoard.isInCheck('B')) && !(theBoard.isInCheck('W')));
-
   
   // Only one king for black and white
   // No pawns on first and last row
-  bool cond2;
-  vector<ChessPiece*> vcp1 = getAllPieceByColour('W');
-  vector<ChessPiece*> vcp2 = getAllPieceByColour('B');
+  //bool cond2 = true;
+  vector<ChessPiece*> vcp1 = theBoard.getAllPiecesByColour('W');
+  vector<ChessPiece*> vcp2 = theBoard.getAllPiecesByColour('B');
   int wk = 0;
   int bk = 0;
   
+  //cout << "vcp1: " << vcp1.size()<< "vcp2: "<< vcp2.size()<<endl;
+
   for(unsigned int i = 0; i < vcp1.size(); ++i){
-    if(vcp1[i]->getPieceType() == 'k'){
+    if(vcp1[i]->getPieceType() == 'K'){
       wk++;
+	//cout << "w, K :"<<wk << endl;
     }
-    else if(vcp[i]->getPieceType == 'p'){
-      Posn aposn;
-      aposn= vcp[i]->getPosn();
-      cond2 = (aposn[0] != 0) && (aposn[0] != 7);
+    else if(vcp1[i]->getPieceType() == 'P'){
+      Posn aposn = vcp1[i]->getPosition();
+
+	/*cout << "b4 check k+p: " << cond2 <<endl;
+      cond2 = (aposn.getRow() != 0) && (aposn.getRow() != 7);
+	cout << "after check k+p: " << cond2 << endl;*/
+	if (aposn.getRow() == 0 || aposn.getRow() == 7) return false;
     }
   }
   for(unsigned int j = 0; j < vcp2.size(); ++j){
     if(vcp2[j]->getPieceType() == 'K'){
       bk++;
+	//cout << "b, k" << bk << endl;
     }
-    else if(vcp[i]->getPieceType == 'P'){
-      Posn aposn;
-      aposn= vcp[i]->getPosn();
-      cond2 = (aposn[0] != 0) && (aposn[0] != 7);
+    else if(vcp2[j]->getPieceType() == 'P'){
+      Posn aposn= vcp2[j]->getPosition();
+
+/*cout << "b4 check k+p: " << cond2 <<endl;
+      cond2 = (aposn.getRow() != 0) && (aposn.getRow() != 7);
+cout << "after check k+p: " << cond2 <<endl;*/
+	if (aposn.getRow() == 0 || aposn.getRow() == 7) return false;
+
     }
   }
-  
-  if(wk!=1 || bk!= 1){
-    cond2 = false;
+
+  if(wk != 1 || bk != 1){
+    /*cond2 = true;
+	cout << "final cond2: "<< cond2<< endl;*/
+	return false;
   }
 
-  return (cond1 && cond2);
 
+
+//cout << "check 1 king? legal pawns: " << cond2 << endl;
+
+  // Check that no ones is in check
+  /*bool cond1 = false;
+        cout << "b4 no one in check: " << cond1 << endl;
+  cond1 = (!(theBoard.isInCheck('B')) && !(theBoard.isInCheck('W')));
+        cout << "after no one is in check? : " << cond1 << endl;*/
+
+	if (theBoard.isInCheck('B') || theBoard.isInCheck('W')) return false;
+
+
+  //return (cond1 && cond2);
+	return true;
 }
 
 

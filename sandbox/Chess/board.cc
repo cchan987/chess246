@@ -29,9 +29,9 @@ bool Board::isLegalMove(Move m) {
 
   theBoard[src.getRow()][src.getCol()] = nullptr;
   theBoard[dst.getRow()][dst.getCol()] = thePiece;
-  cout << "b4 is in check" << endl;
+  cout << "b4 is in check" << isInCheck(thePiece->getColour()) << endl;
   bool goodMove = isInCheck(thePiece->getColour());
-  cout << "after is in check" << endl;
+  cout << "after is in check" << goodMove << endl;
   theBoard[src.getRow()][src.getCol()] = thePiece;
   theBoard[dst.getRow()][dst.getCol()] = otherPiece;
   return !(goodMove) ;
@@ -40,9 +40,9 @@ bool Board::isLegalMove(Move m) {
 
 // Checks if the given coloured player is in check
 bool Board::isInCheck(char colour) {
-  cout << "b4 all possible" << endl;
+//  cout << "b4 all possible" << endl;
   vector<Move> opponentMoves = getAllPossibleMovesByColour(colour == 'W'? 'B': 'W');
-  cout << "after all possible" << endl;
+//  cout << "after all possible" << endl;
   Posn myKingPosn(0,0);
   for (unsigned int i = 0; i < theBoard.size(); i++) {
     for (unsigned int j = 0; j < theBoard[i].size(); j++) {
