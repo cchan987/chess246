@@ -163,11 +163,11 @@ void GameControl::initBoard() {
 }
 
 
-void GameControl::setupBoard(){
+void GameControl::setupBoard() {
 
   bool done = false;
   
-  while(done != true){
+  while(done != true) {
 
     cout << "Command: + / - / done" << endl;
     
@@ -185,112 +185,96 @@ void GameControl::setupBoard(){
 
     
     while(setup_iss >> setup_command)
-      {
+    {
       listOfCommand.emplace_back(setup_command);
       ++count;
-      }
+    }
 
     if (listOfCommand.size() == 0)
-      {
+    {
       cout << "Please Enter Command" << endl;
-      }
+    }
+    else {
 
-    else
-      {
-	if (listOfCommand[0] == "+")
-	  { // ADD COMMAND
-	    if (listOfCommand.size() != 3)
-	      {
-		cout << "Invalid Setup Command Input; + chessPiece position" << endl;
+      if (listOfCommand[0] == "+") { // ADD COMMAND
+
+        if (listOfCommand.size() != 3) {
+		      cout << "Invalid Setup Command Input; + chessPiece position" << endl;
 	      }
-	    else {
-	      //set piece
-	      piece =  listOfCommand[1];
-	      position = listOfCommand[2];
-	      //setPiece();
-	      if (posntran(position)[1] == -1)
-		{
-		cout << "position error" <<endl;
-		}
-	      else
-		{
-		  bool success = false;
-		  success = createChessPiece(piece,posntran(position)[0],posntran(position)[1]);
-		  if (success != false) { 
-		    cout << "Set piece " << piece << " to " << position  << endl;
-		    cout<< *td;
-		  }
-		}
+        else {
+          //set piece
+	        piece =  listOfCommand[1];
+	        position = listOfCommand[2];
+	        //setPiece();
+	        if (posntran(position)[1] == -1) {
+		        cout << "position error" <<endl;
+		      }
+	        else {
+		        bool success = false;
+		        success = createChessPiece(piece,posntran(position)[0],posntran(position)[1]);
+		        if (success != false) { 
+		          cout << "Set piece " << piece << " to " << position  << endl;
+		          cout<< *td;
+		        }
+		      }
+	      }
 	    }
-	  }
-	else if (listOfCommand[0] == "-")
-	  { // REMOVE COMMAND
-	    if (listOfCommand.size() != 2)
-	      {
-	      cout << "Invalid Setup Command Input; - position" << endl;
+	    else if (listOfCommand[0] == "-") { // REMOVE COMMAND
+	      if (listOfCommand.size() != 2) {
+	        cout << "Invalid Setup Command Input; - position" << endl;
 	      }	    
-	    else
-	      {
-		//do somthing, remove piece
-		position = listOfCommand[1];
-		//
-		if (posntran(position)[1] == -1)
-		  {
-		    cout << "position error" <<endl;
-		  }
-		else
-		  {
-		    removePiece(theBoard.getPieceByPosn(Posn(posntran(position)[0], posntran(position)[1])));
-		    cout << "remove piece in " << posntran(position)[0]  << " " << posntran(position)[1] << endl;
-		    cout << *td;
-		  }
+	      else {
+		      //do somthing, remove piece
+		      position = listOfCommand[1];
+		      //
+		      if (posntran(position)[1] == -1) {
+		        cout << "position error" <<endl;
+		      }
+		      else {
+		        removePiece(theBoard.getPieceByPosn(Posn(posntran(position)[0], posntran(position)[1])));
+		        cout << "remove piece in " << posntran(position)[0]  << " " << posntran(position)[1] << endl;
+		        cout << *td;
+		      }
 	      }
-	  }
-	else if (listOfCommand[0] == "=")
-	  {
-	    if(listOfCommand.size() != 2)
-	      {
-		cout << "invalid setup command; = colour, black or white" <<endl;
+	    }
+	    else if (listOfCommand[0] == "=") {
+	      if(listOfCommand.size() != 2) {
+		      cout << "invalid setup command; = colour, black or white" <<endl;
 	      }
-	    else
-	      {
-		if(boost::iequals(listOfCommand[1], "black")){ whoseTurn = 'B';}
-		else if (boost::iequals(listOfCommand[1], "white")){whoseTurn = 'W';}
-		else {cout << "colour invalid, black or white" << endl;}
+        else {
+		      if(boost::iequals(listOfCommand[1], "black")){ whoseTurn = 'B';}
+		      else if (boost::iequals(listOfCommand[1], "white")){whoseTurn = 'W';}
+		      else {cout << "colour invalid, black or white" << endl;}
 	      }
-	  }
+	    }
 	
 	
-	// Only one king for black and white
-	// No pawns on first and last row (checked)
-	else if (listOfCommand[0] == "done")
-	  {
-	    // DONE COMMAND 
-	    //check condition
-	    bool condition = true;
+	    // Only one king for black and white
+	    // No pawns on first and last row (checked)
+	    else if (listOfCommand[0] == "done") {
+	      // DONE COMMAND 
+	      //check condition
+	      bool condition = true;
 	    
 
-	    //TODO: Check that no ones is in check
-	    condition = (!(isInCheck('B')) && !(isInCheck('W')));
+	      //TODO: Check that no ones is in check
+	      condition = (!(isInCheck('B')) && !(isInCheck('W')));
 	    
 	    
-	    if (condition == true)
-	      {
-		cout << *td;
-		done = true;
-		customBoard = true;
+	      if (condition == true) {
+		      cout << *td;
+		      done = true;
+		      customBoard = true;
 	      }
-	    else
-	      {
-		cout << "condition not satisified" << endl;
-		done = false;
+        else {
+		      cout << "condition not satisified" << endl;
+		      done = false;
 	      }
-	  }
-	else
-	  { // Bad command , try again
-	    cout << "invalid setup input" << endl;
-	  }
-      }
+	    }
+	    else { // Bad command , try again
+	      cout << "invalid setup input" << endl;
+	    }
+    }
   }
 }
 
@@ -305,88 +289,88 @@ void GameControl::switchOn(){
   
   while (exitGame != true) {
 
-  cout << "command: game/ setup / quit" << endl;
+    cout << "command: game/ setup / quit" << endl;
   
-  string menu_string;
-  getline(cin,menu_string);
-  istringstream menu_iss(menu_string);
-  string menu_command;
-  int count = 0;
-  vector<string> listOfCommand;
+    string menu_string;
+    getline(cin,menu_string);
+    istringstream menu_iss(menu_string);
+    string menu_command;
+    int count = 0;
+    vector<string> listOfCommand;
 
-  string firstPlayer;
-  string secondPlayer;
+    string firstPlayer;
+    string secondPlayer;
   
-  //one time command
-   while(menu_iss >> menu_command){
-     listOfCommand.push_back(menu_command);
-     ++count;
-   }
+    //one time command
+    while(menu_iss >> menu_command) {
+      listOfCommand.push_back(menu_command);
+      ++count;
+    }
 
-   if (listOfCommand.size() == 0){
-     cout << "Please Enter Command" << endl;
-   }
-   else{     
-     if (listOfCommand[0] == "game"){
-       if (listOfCommand.size() != 3){
-	 cout << "Invalid Game Command Input; Please try again" << endl;
-       }
-       else{
-	 firstPlayer = listOfCommand[1];
-	 secondPlayer = listOfCommand[2];
-	 if(firstPlayer == "human" && secondPlayer == "human"){
-	   startGame(0, 0);
-	 }
-	 else if(firstPlayer.substr(0,8) == "computer" && secondPlayer.substr(0,8) == "computer"){
-	   int player1level;
-	   int player2level;
-	   player1level = playerAI(firstPlayer);
-	   player2level = playerAI(secondPlayer);
-	   if(player1level!= -1 && player2level != -1){
-	     startGame(player1level, player2level);
-	   }
-	 }
-	 else if (firstPlayer == "human" && secondPlayer.substr(0,8) == "computer"){
-	   int level;
-	   level = playerAI(secondPlayer);
-	   if(level!= -1){
-	     startGame(0,level);
-	   }
-	 }
-	 else if (secondPlayer == "human" && firstPlayer.substr(0,8) == "computer"){
-	   int level;
-	   level = playerAI(firstPlayer);
-	   if(level!= -1){
-	     startGame(level, 0);
-	   }
-	 }
-	 else{
-	   cout<< "Invalid Player Input" << endl;
-	 }
-       } 	   
-     }
-     else if (listOfCommand[0] == "setup"){       
-       if (listOfCommand.size() != 1){
-	       cout << "Invalid Setup Command input" << endl;
-       }
-       else{
-      	 cout << "enter setup mode" << endl;
-      	 setupBoard();      
-       }
-     }
-     else if (listOfCommand[0] == "quit"){
-       if (listOfCommand.size() != 1){
-	       cout << "Invalid Quit Command input" << endl;
-       }    
-       else{
-      	 cout << "Exit game; Thank you for playing" << endl;
-      	 exitGame = true;
-       }
-     }
-     else{
-       cout << "Invalid Command Input Please try again" << endl;   
-     }   
-   }
+    if (listOfCommand.size() == 0) {
+      cout << "Please Enter Command" << endl;
+    }
+    else {     
+      if (listOfCommand[0] == "game") {
+        if (listOfCommand.size() != 3) {
+          cout << "Invalid Game Command Input; Please try again" << endl;
+        }
+        else {
+          firstPlayer = listOfCommand[1];
+          secondPlayer = listOfCommand[2];
+          if(firstPlayer == "human" && secondPlayer == "human") {
+            startGame(0, 0);
+          }
+          else if(firstPlayer.substr(0,8) == "computer" && secondPlayer.substr(0,8) == "computer") {
+            int player1level;
+            int player2level;
+            player1level = playerAI(firstPlayer);
+            player2level = playerAI(secondPlayer);
+            if(player1level!= -1 && player2level != -1) {
+              startGame(player1level, player2level);
+            }
+          }
+          else if (firstPlayer == "human" && secondPlayer.substr(0,8) == "computer") {
+            int level;
+            level = playerAI(secondPlayer);
+            if(level!= -1) {
+              startGame(0,level);
+            }
+          }
+          else if (secondPlayer == "human" && firstPlayer.substr(0,8) == "computer") {
+            int level;
+            level = playerAI(firstPlayer);
+            if(level!= -1) {
+              startGame(level, 0);
+            }
+          }
+          else {
+            cout<< "Invalid Player Input" << endl;
+          }
+        }
+      }
+      else if (listOfCommand[0] == "setup") {
+        if (listOfCommand.size() != 1){
+          cout << "Invalid Setup Command input" << endl;
+        }
+        else {
+          cout << "enter setup mode" << endl;
+          setupBoard();
+        }
+      }
+      else if (listOfCommand[0] == "quit")  {
+        if (listOfCommand.size() != 1){
+          cout << "Invalid Quit Command input" << endl;
+        }
+        else {
+          cout << "Exit game; Thank you for playing" << endl;
+          exitGame = true;
+        }
+      }
+      else {
+        cout << "Invalid Command Input Please try again" << endl;
+      }
+    }
   }
 }
 
@@ -534,47 +518,46 @@ void GameControl::getNextMove(int player){
 }
 
 
-void GameControl::getHumanMove(char whoseTurn){
+void GameControl::getHumanMove(char whoseTurn) {
   //cout << "get human move" << endl:
     
   bool done = false;
 
 
-  while(done!= true){
+  while(done!= true) {
 
-      cout << "move/resign" << endl;
+    cout << "move/resign" << endl;
     	
-      string move_string;
-   	  getline(cin,move_string);
-    	istringstream move_iss(move_string);
-   	 string move_command;
-   	 int count = 0;
-   	 vector<string> listOfCommand;
-     //loc[0] = move/resign, loc[1]=start ,loc[2] = dst
+    string move_string;
+    getline(cin,move_string);
+    istringstream move_iss(move_string);
+    string move_command;
+    int count = 0;
+    vector<string> listOfCommand;
+    //loc[0] = move/resign, loc[1]=start ,loc[2] = dst
 
-    while (move_iss >> move_command){
+    while (move_iss >> move_command) {
       listOfCommand.push_back(move_command);
       ++count;
     }
 
 
+    if(listOfCommand[0] == "move") {
+      vector<int> vtor = posntran(listOfCommand[1]);
+      vector<int> vtor2 = posntran(listOfCommand[2]);
+      Posn posn1 = Posn(vtor[0], vtor[1]);
+      Posn posn2 = Posn (vtor2[0], vtor2[1]);
+      ChessPiece* cp = theBoard.getPieceByPosn(posn1);
 
-  if(listOfCommand[0] == "move"){
-  	vector<int> vtor = posntran(listOfCommand[1]);
-  	vector<int> vtor2 = posntran(listOfCommand[2]);
-  	Posn posn1 = Posn(vtor[0], vtor[1]);
-  	Posn posn2 = Posn (vtor2[0], vtor2[1]);
+      if (cp == nullptr) {
+        cout<<"invalid move, piece is not found"<<endl;
+        continue;
+      }
 
-  	ChessPiece* cp = theBoard.getPieceByPosn(posn1);
-	if (cp == nullptr) {
-	  cout<<"invalid move, piece is not found"<<endl;
-	  continue;
-	}
-
-	if (cp->getChessPiece()->getColour() == whoseTurn){
-	  cout << "invalid move, cannot move opponent's chess piece" << endl;
-	  continue;
-	}
+      if (cp->getChessPiece()->getColour() == whoseTurn) {
+        cout << "invalid move, cannot move opponent's chess piece" << endl;
+        continue;
+      }
 	
 	/*
       	if (cp->getChessPiece()->getPieceType() == 'p' || cp->getChessPiece()->getPieceType() == 'P'){
@@ -585,28 +568,27 @@ void GameControl::getHumanMove(char whoseTurn){
 	}
 	*/
 	
-	cout << "got piece by posn" << endl;
+      cout << "got piece by posn" << endl;
+      vector<Move> vofm = cp->getPossibleMoves(theBoard);
+      cout << "got possible moves" << endl;
 
-  	vector<Move> vofm = cp->getPossibleMoves(theBoard);	
-	cout << "got possible moves" << endl;
-  	for(unsigned int i = 0 ; i < vofm.size(); ++i){
-  		if( vofm[i].getDestination() == posn2 ){
-		  cout << "b4 execute" << endl;
-  			done = executeMove(vofm[i]);
-			cout << "after execute: "<< done << endl;
-  			break;
-  		}
-		else {
-		  cout << "Not possible move" <<endl;
-		}
-  	}	
-  }
-  else{
-    cout << "invalid move command" << endl;
-    done = false;
-    cout << *td;
-  }
-
+      for(unsigned int i = 0 ; i < vofm.size(); ++i) {
+        if( vofm[i].getDestination() == posn2 ) {
+          cout << "b4 execute" << endl;
+          done = executeMove(vofm[i]);
+          cout << "after execute: "<< done << endl;
+          break;
+        }
+        else {
+          cout << "Not possible move" <<endl;
+        }
+      }
+    }
+    else {
+      cout << "invalid move command" << endl;
+      done = false;
+      cout << *td;
+    }
   }
 }
 
