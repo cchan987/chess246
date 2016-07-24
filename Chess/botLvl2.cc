@@ -4,6 +4,8 @@
 
 using namespace std;
 
+BotLvl2::~BotLvl2();
+
 vector<Move> BotLvl2::getCapturingandCheckingMoves(Board &b) {
 	vector<Move> availableMoves = b.getAllLegalMovesByColour(allegiance);
 	vector<Move> filteredMoves;

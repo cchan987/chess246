@@ -7,7 +7,9 @@ class Board;
 class Move;
 
 class BotLvl1: public AbstractAI{
+public:
 	Move getMove(Board &b) override;
+	~BotLvl1();
 };
 
 #endif

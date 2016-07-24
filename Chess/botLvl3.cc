@@ -5,6 +5,10 @@
 
 using namespace std;
 
+BotLvl3::~BotLvl3(){
+
+}
+
 vector<ChessPiece *> BotLvl3::getMyThreatenedPieces(Board &b) {
 	char opponent = (allegiance == "W")?"B":"W";
 	vector<Move> opponentPossibleMoves = getAllPossibleMovesByColour(opponent);
@@ -19,6 +23,7 @@ vector<ChessPiece *> BotLvl3::getMyThreatenedPieces(Board &b) {
 		}
 	}
 
+	// Iterate through the threats and getPieceByPosn and then emplace back to a vector and return vector
 }
 
 vector<Move> BotLvl3::getCapturingandCheckingMoves(Board &b) {
