@@ -525,6 +525,7 @@ void GameControl::getHumanMove(char whoseTurn) {
       ++count;
     }
 
+    if (count == 0) continue;
 
     if(listOfCommand[0] == "move") {
       vector<int> vtor = posntran(listOfCommand[1]);
