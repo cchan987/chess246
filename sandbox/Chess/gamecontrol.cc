@@ -528,6 +528,28 @@ void GameControl::getHumanMove(char whoseTurn) {
     if (count == 0) continue;
 
     if(listOfCommand[0] == "move") {
+
+      if (count != 3) {
+        cout << "Invalid move command" << endl;
+        continue;
+      }
+      if (listOfCommand[1][0] < 'A' || (listOfCommand[1][0] > 'Z' && listOfCommand[1][0] < 'a') || listOfCommand[1][0] > 'z') {
+        cout << "Invalid move command" << endl;
+        continue;
+      }
+      if (listOfCommand[1][1] < '0' || listOfCommand[1][1] > '9') {
+        cout << "Invalid move command" << endl;
+        continue;
+      }
+      if (listOfCommand[2][0] < 'A' || (listOfCommand[2][0] > 'Z' && listOfCommand[2][0] < 'a') || listOfCommand[2][0] > 'z') {
+        cout << "Invalid move command" << endl;
+        continue;
+      }
+      if (listOfCommand[2][1] < '0' || listOfCommand[2][1] > '9') {
+        cout << "Invalid move command" << endl;
+        continue;
+      }
+
       vector<int> vtor = posntran(listOfCommand[1]);
       vector<int> vtor2 = posntran(listOfCommand[2]);
       Posn posn1 = Posn(vtor[0], vtor[1]);
