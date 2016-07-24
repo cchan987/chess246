@@ -94,7 +94,7 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 
 
 	// Down 2, Left 1
-	row = row - 2;
+	row = row + 2;
 	col--;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
@@ -112,7 +112,7 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 	col = location.getCol();
 
 	// Down 2, Right 1
-	row = row - 2;
+	row = row + 2;
 	col++;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
@@ -131,7 +131,7 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 
 	// Left 2, Up 1
 	row--;
-	col = col + 2;
+	col = col - 2;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
 		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
@@ -149,7 +149,7 @@ vector<Move> Knight::getPossibleMoves(Board &b) {
 
 	// Left 2, Down 1
 	row++;
-	col = col + 2;
+	col = col - 2;
 	if (col > -1 && col < 8 && row < 8 && row > -1) {
 		Posn currentPosn = Posn(row, col);
 		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
