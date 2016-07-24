@@ -9,6 +9,9 @@ public:
 	~BotLvl3();
 	vector<ChessPiece *> getMyThreatenedPieces(Board &b);
 	bool isMoveSafe(Move m);
+	bool isSquareThreatened(Posn p)
+	vector<Move> getSalvagingMoves(Board &b);
+	vector<ChessPiece *> getMyThreatenedPieces(Board &b);
 	vector<Move> getCapturingandCheckingMoves(vector<Move> availableMoves);
 	Move getMove(Board &b) override;
 	
