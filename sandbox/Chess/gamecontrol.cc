@@ -462,10 +462,10 @@ bool GameControl::isGameOver() {
      // alternateTurn();
       cout << "CheckMate! " << whoseTurn << " Wins!" << endl;
       if(whoseTurn == 'W'){
-	++whiteScoreCount;
+	++blackScoreCount;
       }
       else{
-	++blackScoreCount;
+	++whiteScoreCount;
       }
     }
     else{
