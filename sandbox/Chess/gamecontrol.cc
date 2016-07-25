@@ -103,8 +103,7 @@ bool GameControl::createChessPiece(string piece, int x, int y){
 // Can only be passed moves that were found in a pieces getPossibleMove return vector
 // Makes the move happen if legal move, otherwise nothing
 // Returns true if move was good, false otherwise
-// TODO: special case for en Passant capture
-bool GameControl::executeMove(Move m) {
+bool GameControl::executeMove(Move m, char promotion) {
   ChessPiece *thePiece = m.getPiece();
   Posn src = thePiece->getPosition();
   Posn dst = m.getDestination();
@@ -170,6 +169,22 @@ bool GameControl::executeMove(Move m) {
       if (src.getRow() - dst.getRow() == 2 || src.getRow() - dst.getRow() == -2) {
         thePiece->setEnPassantFlag(true);
         theBoard.canBeCapturedEnPassant = thePiece;
+      }
+      else if (dst.getRow() == 0 || dst.getRow() == 7) {
+        //Promote Pawn
+        removePiece(thePiece);
+        if (promotion == 'R') {
+          placePiece(new Rook(whoseTurn, Posn(dst.getRow(), dst.getCol())));
+        }
+        if (promotion == 'N') {
+          placePiece(new Knight(whoseTurn, Posn(dst.getRow(), dst.getCol())));
+        }
+        if (promotion == 'B') {
+          placePiece(new Bishop(whoseTurn, Posn(dst.getRow(), dst.getCol())));
+        }
+        if (promotion == 'Q') {
+          placePiece(new Queen(whoseTurn, Posn(dst.getRow(), dst.getCol())));
+        }
       }
     }
 
@@ -685,24 +700,24 @@ void GameControl::getHumanMove(char whoseTurn) {
 
     if(listOfCommand[0] == "move") {
 
-      if (count != 3) {
-        cout << "Invalid move command" << endl;
+      if (count != 3 && count != 4) {
+        cout << "Invalid move command, unmatching argument count" << endl;
         continue;
       }
       if (listOfCommand[1][0] < 'A' || (listOfCommand[1][0] > 'Z' && listOfCommand[1][0] < 'a') || listOfCommand[1][0] > 'z') {
-        cout << "Invalid move command" << endl;
+        cout << "Invalid move command, source position not valid" << endl;
         continue;
       }
       if (listOfCommand[1][1] < '0' || listOfCommand[1][1] > '9') {
-        cout << "Invalid move command" << endl;
+        cout << "Invalid move command, source position not valid" << endl;
         continue;
       }
       if (listOfCommand[2][0] < 'A' || (listOfCommand[2][0] > 'Z' && listOfCommand[2][0] < 'a') || listOfCommand[2][0] > 'z') {
-        cout << "Invalid move command" << endl;
+        cout << "Invalid move command, destination position not valid" << endl;
         continue;
       }
       if (listOfCommand[2][1] < '0' || listOfCommand[2][1] > '9') {
-        cout << "Invalid move command" << endl;
+        cout << "Invalid move command, destination position not valid" << endl;
         continue;
       }
 
@@ -711,6 +726,25 @@ void GameControl::getHumanMove(char whoseTurn) {
       Posn posn1 = Posn(vtor[0], vtor[1]);
       Posn posn2 = Posn (vtor2[0], vtor2[1]);
       ChessPiece* cp = theBoard.getPieceByPosn(posn1);
+
+      if (count == 4 && cp->getPieceType() == 'P') { // Pawn trying to promote
+        if (posn2.getRow() != 0 && posn2.getRow() != 7) { // Destination not at end of board
+          cout << "Invalid Promotion" << endl;
+          continue;
+        }
+        if (listOfCommand[3] != "R" && listOfCommand[3] != "N" && listOfCommand[3] != "B" && listOfCommand[3] != "Q") { // Invalid Promotion char
+          cout << "Invalid Promotion" << endl;
+          continue;
+        }
+      }
+      else if (count == 4 && cp->getPieceType() != 'P') { // Non-Pawn trying to promote
+        cout << "Invalid Promotion" << endl;
+        continue;
+      }
+      else if (count == 3 && cp->getPieceType() == 'P' && (posn2.getRow() == 0 || posn2.getRow() == 7)) { // Pawn with a destination at the end of the board. Does not specify Promotion
+        cout << "Invalid move command, no promotion specified" << endl;
+        continue;
+      }
 
       if (cp == nullptr) {
         cout<<"invalid move, piece is not found"<<endl;
@@ -729,7 +763,10 @@ void GameControl::getHumanMove(char whoseTurn) {
   	for(unsigned int i = 0 ; i < vofm.size(); ++i){
   		if( vofm[i].getDestination() == posn2 ){
 		  //cout << "b4 execute" << endl;
-  			done = executeMove(vofm[i]);
+        if (count == 4) {
+          done = executeMove(vofm[i], listOfCommand[3][0]);
+        }
+  			else done = executeMove(vofm[i]);
 		//	cout << "after execute: "<< done << endl;
   			break;
   		}
