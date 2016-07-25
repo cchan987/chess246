@@ -14,14 +14,9 @@ void GraphicsDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
 	}
 	else {
 		Posn src = cp->getPosition();
-		cout << "gfx heard the notification of board update" << endl;
-		cout << "1" << endl;
 		drawColourSqr(src.getRow(), src.getCol());
-		cout << "2" << endl;
 		drawColourSqr(dst.getRow(), dst.getCol());
-		cout << "3" << endl;
-		drawPiece(cp, dst);
-		cout << "4" << endl;		
+		drawPiece(cp, dst);	
 	}
 }
 
@@ -37,7 +32,7 @@ void GraphicsDisplay::clearInfoBox() {
 void GraphicsDisplay::drawPiece(ChessPiece *cp, Posn location) {
 	char cpType = cp->getPieceType();
 	char cpColour = cp->getColour();
-	cout << "drawing colour, piece: " << cpColour << cpType << endl;
+	//cout << "drawing colour, piece: " << cpColour << cpType << endl;
 
 	// gets the centre of the cell that you want to draw in
 	int xCord = leftPad + location.getCol() * cellSize + cellSize/2;
