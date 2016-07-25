@@ -16,7 +16,7 @@
 #include "abstractAI.h"
 #include "botLvl1.h"
 #include "botLvl2.h"
-//#include "botLvl3.h"
+#include "botLvl3.h"
 //#include "botLvl4.h"
 
 using namespace std;
@@ -445,6 +445,7 @@ void GameControl::alternateTurn(){
 
 
 int GameControl::playerAI(string aComputer, char aicolour){
+  cout << "initializing bot lvl: " << aComputer.substr(8,1) << ", colour: " << aicolour << endl;
   if(aComputer.substr(8,1) == "1"){
      aiplayer = new BotLvl1(aicolour);
      return 1;
@@ -454,7 +455,7 @@ int GameControl::playerAI(string aComputer, char aicolour){
      return 2;
   }
   else if (aComputer.substr(8,1) == "3"){
-     //aiplayer = new BotLvl3();
+     aiplayer = new BotLvl3();
      return 3;
   }
   else if (aComputer.substr(8,1) == "4"){
@@ -492,7 +493,9 @@ void GameControl::startGame(int player1, int player2){
 	if(theBoard.isInCheck(whoseTurn)){ cout<< "Player: "<< whoseTurn << "is in check!!" << endl; }
  
   	if (whoseTurn == 'W'){
-  	  getNextMove(player1);	  
+      cout << "b4 get whites move: " <<  player1 << endl;
+  	  getNextMove(player1);
+      cout << "after get whites move" << endl;
   	}
   	else if (whoseTurn == 'B'){
   	  getNextMove(player2);
@@ -553,8 +556,9 @@ void GameControl::getNextMove(int player){
   if(player == 0){ getHumanMove(whoseTurn); }
 
   else if(player != 0){ 
-
+    cout << "b4 ai query" << endl;
     Move cpuNextMove = aiplayer->getMove(theBoard);
+    cout << "after ai query" << endl;
     cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
     executeMove(cpuNextMove); 
   }

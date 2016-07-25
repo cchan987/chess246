@@ -20,17 +20,26 @@ bool BotLvl3::isSquareThreatened(Posn p, Board &b) {
 	return false;
 }
 
+bool isPosnMember(vector<Posn> v, Posn p) {
+	for (unsigned int i = 0; i < v.size(); i++) {
+		if (v[i] == p) {
+			return true;
+		}
+	}
+	return false;
+}
+
 vector<ChessPiece *> BotLvl3::getMyThreatenedPieces(Board &b) {
 	char opponent = (allegiance == 'W')?'B':'W';
 	vector<Move> opponentPossibleMoves = b.getAllPossibleMovesByColour(opponent);
-	map<Posn, int> threats; // Need to fix this
+	vector<Posn> threats; // Need to fix this
 	vector<ChessPiece *> myThreatenedPieces;
 
 	for (unsigned int i = 0; i < opponentPossibleMoves.size(); ++i) {
 		Move currentMove = opponentPossibleMoves[i];
 		if (currentMove.getIsCapturingMove()) {
-			if (!(threats.count(currentMove.getDestination()))) {
-				threats[currentMove.getDestination()];
+			if (isPosnMember(threats, currentMove.getDestination()) == false) {
+				threats.emplace_back(currentMove.getDestination());
 				myThreatenedPieces.emplace_back(b.getPieceByPosn(currentMove.getDestination()));
 			}
 		}
@@ -65,6 +74,7 @@ vector<Move> BotLvl3::getSalvagingMoves(Board &b) {
 }
 
 Move BotLvl3::getMove(Board &b) {
+
 	vector<Move> mySalvagingMoves = getSalvagingMoves(b);
 	if (mySalvagingMoves.size() > 0){
 		int randNum = rand() % mySalvagingMoves.size();
@@ -78,6 +88,8 @@ Move BotLvl3::getMove(Board &b) {
 	}	
 
 	vector<Move> otherMoves = b.getAllPossibleMovesByColour(allegiance);
+	cout << "b4 rand moves: " << otherMoves.size() << endl;
 	int randNum = rand() % otherMoves.size();
+	cout << "after rand moves: " << randNum << endl;
 	return otherMoves[randNum];		
 }

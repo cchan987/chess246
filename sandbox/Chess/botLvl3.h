@@ -7,7 +7,6 @@
 class BotLvl3: public AbstractAI{
 public:
 	~BotLvl3();
-	//bool isMoveSafe(Move m);
 	bool isSquareThreatened(Posn p, Board &b);
 	std::vector<Move> getSalvagingMoves(Board &b);
 	std::vector<ChessPiece *> getMyThreatenedPieces(Board &b);
