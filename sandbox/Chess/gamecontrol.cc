@@ -26,7 +26,6 @@ GameControl::GameControl()
 { 
   gd = new GraphicsDisplay();
   observerList.emplace_back(gd);
-  gd->setDimensions(8);
   td = new TextDisplay();
   td->setDimensions(8);
   observerList.emplace_back(td);
@@ -702,6 +701,7 @@ void GameControl::resetBoard(){
       removePiece(acp);
     }
   }
+  gd->clearScreen();
   customBoard = false;
 }
 
