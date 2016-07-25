@@ -95,7 +95,7 @@ bool GameControl::createChessPiece(string piece, int x, int y){
   else if (piece == "K"){placePiece(new King('W', Posn(x, y)));}
   else if (piece == "Q"){placePiece(new Queen('W', Posn(x, y)));}
   else {
-	notifyInfoMsgChange("chess type error”);
+	notifyInfoMsgChange("chess type error");
 	return false;
   }
   return true;
@@ -242,7 +242,7 @@ void GameControl::setupBoard() {
   
   while(done != true) {
 
-  notifyInfoMsgChange("Command: + / - / = / done”);
+  notifyInfoMsgChange("Command: + / - / = / done");
     
     string setup_string;
     getline(cin,setup_string);
@@ -265,7 +265,7 @@ void GameControl::setupBoard() {
 
     if (listOfCommand.size() == 0)
     {
-	notifyInfoMsgChange("Please Enter Command”);
+	 notifyInfoMsgChange("Please Enter Command");
     }
     else {
 
@@ -670,12 +670,8 @@ bool GameControl::isGameOver() {
       }
     }
     else{
-<<<<<<< HEAD
-      notifyInfoMsg("StaleMate!");
-=======
-      //cout << "StaleMate!" << endl;
-	notifyInfoMsgChange("StaleMate!");
->>>>>>> origin/master
+	   notifyInfoMsgChange("StaleMate!");
+
     }
     printScore();
     resetBoard();
