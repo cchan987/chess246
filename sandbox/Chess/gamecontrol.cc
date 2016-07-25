@@ -5,6 +5,7 @@
 #include <string>
 
 #include "textdisplay.h"
+#include "graphicsdisplay.h"
 #include "gamecontrol.h"
 #include "rook.h"
 #include "knight.h"
@@ -23,6 +24,9 @@ using namespace std;
 
 GameControl::GameControl()
 { 
+  gd = new GraphicsDisplay();
+  observerList.emplace_back(gd);
+  gd->setDimensions(8);
   td = new TextDisplay();
   td->setDimensions(8);
   observerList.emplace_back(td);

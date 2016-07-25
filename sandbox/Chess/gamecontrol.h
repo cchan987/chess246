@@ -10,6 +10,7 @@
 
 #include "board.h"
 
+class GraphicsDisplay;
 class TextDisplay;
 class Observer;
 
@@ -21,7 +22,7 @@ class GameControl
 	Board theBoard;
 	AbstractAI* aiplayer;
 	TextDisplay *td;
-	//GraphicsDisplay *gd;
+	GraphicsDisplay *gd;
 	std::vector<Observer *> observerList;
 
 	public:

@@ -2,6 +2,9 @@
 #include "graphicsdisplay.h"
 #include "posn.h"
 #include "chesspiece.h"
+#include "observer.h"
+#include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -12,21 +15,22 @@ void GraphicsDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
 	drawPiece(cp, dst);
 }
 
-void GraphicsDisplay::notifyInfoMsg(String msg) {
+void GraphicsDisplay::notifyInfoMsg(string msg) {
 	clearInfoBox();
-	screen->drawString(stringXcord, stringYcord, msg);
+	//screen->drawString(stringXcord, stringYcord, msg);
 }
 
 void GraphicsDisplay::clearInfoBox() {
-	screen->fillRectangle(stringXcord, stringYcord, 100, 20, Xwindow::Blue);
+	//screen->fillRectangle(stringXcord, stringYcord, 100, 20, Xwindow::Blue);
 }
 
-void GraphicsDisplay::drawPiece(ChessPiece &cp, Posn location) {
-	char cpType = cp.getPieceType();
-	char cpColour = cp.getColour();
+void GraphicsDisplay::drawPiece(ChessPiece *cp, Posn location) {
+	char cpType = cp->getPieceType();
+	char cpColour = cp->getColour();
+	cout << "drawing colour, piece: " << cpColour << cpType << endl;
 
 	// gets the centre of the cell that you want to draw in
-	int xCord = leftpad + location.getCol() * cellSize + cellSize/2;
+	int xCord = leftPad + location.getCol() * cellSize + cellSize/2;
 	int yCord = topPad + location.getRow() * cellSize + cellSize/2;
 
 	if (cpColour == 'B') {
@@ -72,21 +76,26 @@ void GraphicsDisplay::drawPiece(ChessPiece &cp, Posn location) {
 }
 
 void GraphicsDisplay::drawColourSqr(int r, int c) {
-	char colour = getCellColor(r, c);
+	char colour = getCellColour(r, c);
+
 	if (colour == 'B') {
+		cout << "drawing sqr of colour: black. Drawing at row, col: " << r << c << endl;
 		screen->fillRectangle(leftPad + cellSize * c , topPad + c * cellSize, cellSize, cellSize, Xwindow::Black);	
 	}
 	else {
+		cout << "drawing sqr of colour: white. Drawing at row, col: " << r << c << endl;
 		screen->fillRectangle(leftPad + cellSize * r , topPad + c * cellSize, cellSize, cellSize, Xwindow::White);		
 	}
 }
 
-GraphicsDisplay::GraphicsDisplay(Xwindow &w) {
-	screen = &w;
+GraphicsDisplay::GraphicsDisplay() {
+	screen = new Xwindow();
 	screen->fillRectangle(0,0,500,500, Xwindow::Blue);
 }
 
-GraphicsDisplay::~GraphicsDisplay(){}
+GraphicsDisplay::~GraphicsDisplay(){
+	delete screen;
+}
 
 void GraphicsDisplay::clearScreen() {
 	screen->fillRectangle(0,0,500,500, Xwindow::Blue);
