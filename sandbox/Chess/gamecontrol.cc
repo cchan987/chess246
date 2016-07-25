@@ -46,15 +46,15 @@ GameControl::~GameControl() {
 void GameControl::notifyBoardChange(ChessPiece *piece, Posn p) {
 //  cout <<"notifyign board" << endl;
   for (unsigned int i = 0; i < observerList.size(); ++i) {
- //   cout << " observer: " << i << endl;
     observerList[i]->notifyBoard(piece, p);
   }
 }
 
 void GameControl::notifyInfoMsgChange(string s){
-
+  for (unsigned int i = 0; i < observerList.size(); ++i) {
+    observerList[i]->notifyInfoMsg(s);
+  }
 }
-
 
 // Translates a string a1 to a coordinate on the board 7,0
 vector<int> GameControl::posntran(string xy){
@@ -68,8 +68,6 @@ vector<int> GameControl::posntran(string xy){
 
   xp = static_cast<int>(xp) - 'a';
   yp = static_cast<int>(yp) - '0' - 1;
-
-  yp = 7 - yp;
 
   yp = 7 - yp;
   if( z!= "" || xp < 0 || xp > 7 || yp < 0 || yp > 7){
@@ -549,8 +547,10 @@ void GameControl::startAIGame(){
 	}
  
   	if (whoseTurn == 'W'){
+
 	//cout << "b4 get whites move: " <<  player1 << endl;
 	//cout << "b4 ai query" << endl;
+
     	Move cpuNextMove = aiplayer->getMove(theBoard);
     	//cout << "after ai query" << endl;
     	//cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
@@ -596,6 +596,7 @@ void GameControl::startGame(int player1, int player2){
 
   do{
     cout<<*td;
+
     
 	stringsteam ss;
 	ss << "whose turn: " << whoseTurn;
@@ -609,6 +610,17 @@ void GameControl::startGame(int player1, int player2){
      // cout << "b4 get whites move: " <<  player1 << endl;
   	  getNextMove(player1);
     //  cout << "after get whites move" << endl;
+
+	  if(theBoard.isInCheck(whoseTurn)){ 
+       notifyInfoMsgChange(whoseTurn + " is in check!!");
+    }
+    else {
+      notifyInfoMsgChange("");
+    }
+ 
+  	if (whoseTurn == 'W'){
+  	  getNextMove(player1);
+
   	}
   	else if (whoseTurn == 'B'){
   	  getNextMove(player2);
@@ -634,7 +646,7 @@ bool GameControl::isGameOver() {
     vector<Move> vofm = vcp[i]->getPossibleMoves(theBoard);
     for (unsigned int j = 0; j < vofm.size() ; ++j){
       if(theBoard.isLegalMove(vofm[j])){
-	allLegalMove++;
+	     allLegalMove++;
       }
     }    
   }
@@ -644,20 +656,18 @@ bool GameControl::isGameOver() {
     //else stalmate ;
     if(theBoard.isInCheck(whoseTurn)){
      // alternateTurn();
+
      // cout << "CheckMate! " << whoseTurn << " Wins!" << endl;
-	string winner;
+
+ 
       if(whoseTurn == 'W'){
-	++blackScoreCount;
-	winner = "Black";
+        notifyInfoMsgChange("CheckMate! Black Wins!");
+	      ++blackScoreCount;
       }
       else{
-	++whiteScoreCount;
-	winner = "White";
+        notifyInfoMsgChange("CheckMate! White Wins!");
+	      ++whiteScoreCount;
       }
-	stringsteam ss;
-	ss << "Checkmate! " << winner << " wins!" << endl;
-	string str = ss.str();
-	notifyInfoMsgChange(str);
     }
     else{
       //cout << "StaleMate!" << endl;
@@ -683,8 +693,10 @@ void GameControl::getNextMove(int player){
 
     //cout << "b4 ai query" << endl;
     Move cpuNextMove = aiplayer->getMove(theBoard);
+
    // cout << "after ai query" << endl;
    // cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
+
     executeMove(cpuNextMove); 
   }
 
@@ -793,19 +805,13 @@ void GameControl::getHumanMove(char whoseTurn) {
 
 	string winner;
      if(whoseTurn == 'W'){
-	++blackScoreCount;
-	winner = Black;
+        notifyInfoMsgChange("Black wins!");
+	      ++blackScoreCount;
       }
       else{
-	++whiteScoreCount;
-	winner = White;
-      }
-//	cout<<"b4: "<<resign<<endl;
-	stringsteam ss;
-	ss << "Opponent Resigned. " << winner << " wins!" << endl;
-	string str = ss.str();
-	notifyInfoMsgChange(str);
-
+        notifyInfoMsgChange("White wins!");
+	     ++whiteScoreCount;
+      }	
      resign = true;
 //	cout<<"after: "<<resign<<endl;
 	break;

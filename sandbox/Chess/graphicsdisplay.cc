@@ -22,11 +22,15 @@ void GraphicsDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
 
 void GraphicsDisplay::notifyInfoMsg(string msg) {
 	clearInfoBox();
-	//screen->drawString(stringXcord, stringYcord, msg);
+	screen->drawString(100, 50, msg);
+}
+
+void GraphicsDisplay::clearScreen() {
+	screen->fillRectangle(0,0,500,500, Xwindow::Green);
 }
 
 void GraphicsDisplay::clearInfoBox() {
-	//screen->fillRectangle(stringXcord, stringYcord, 100, 20, Xwindow::Blue);
+	screen->fillRectangle(100, 50, 400, 50, Xwindow::Green);
 }
 
 void GraphicsDisplay::drawPiece(ChessPiece *cp, Posn location) {
@@ -145,9 +149,7 @@ GraphicsDisplay::~GraphicsDisplay(){
 	delete screen;
 }
 
-void GraphicsDisplay::clearScreen() {
-	screen->fillRectangle(0,0,500,500, Xwindow::Green);
-}
+
 
 void GraphicsDisplay::setDimensions(int dim) {
 	dimension = dim;
@@ -158,4 +160,25 @@ void GraphicsDisplay::setDimensions(int dim) {
 			drawColourSqr(i, j);
 		}
 	}
+
+	int columnLabelOffset = leftPad - 10;
+	int rowLabelOffset = topPad + 300 + 20;
+
+	screen->drawString(columnLabelOffset, 120 , "8");
+	screen->drawString(columnLabelOffset, 120 + cellSize * 1 , "7");
+	screen->drawString(columnLabelOffset, 120 + cellSize * 2 , "6");
+	screen->drawString(columnLabelOffset, 120 + cellSize * 3 , "5");
+	screen->drawString(columnLabelOffset, 120 + cellSize * 4 , "4");
+	screen->drawString(columnLabelOffset, 120 + cellSize * 5 , "3");
+	screen->drawString(columnLabelOffset, 120 + cellSize * 6 , "2");
+	screen->drawString(columnLabelOffset, 120 + cellSize * 7 , "1");
+
+	screen->drawString(120 + cellSize * 0, rowLabelOffset, "A");
+	screen->drawString(120 + cellSize * 1, rowLabelOffset, "B");
+	screen->drawString(120 + cellSize * 2, rowLabelOffset, "C");
+	screen->drawString(120 + cellSize * 3, rowLabelOffset, "D");
+	screen->drawString(120 + cellSize * 4, rowLabelOffset, "E");
+	screen->drawString(120 + cellSize * 5, rowLabelOffset, "F");
+	screen->drawString(120 + cellSize * 6, rowLabelOffset, "G");
+	screen->drawString(120 + cellSize * 7, rowLabelOffset, "H");
 }
