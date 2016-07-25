@@ -13,6 +13,12 @@
 #include "king.h"
 #include "pawn.h"
 
+#include "abstractAI.h"
+#include "botLvl1.h"
+#include "botLvl2.h"
+//#include "botLvl3.h"
+//#include "botLvl4.h"
+
 using namespace std;
 
 GameControl::GameControl()
@@ -373,22 +379,22 @@ void GameControl::switchOn(){
           else if (firstPlayer.substr(0,8) == "computer" && secondPlayer.substr(0,8) == "computer") {
             int player1level;
             int player2level;
-            player1level = playerAI(firstPlayer);
-            player2level = playerAI(secondPlayer);
+            player1level = playerAI(firstPlayer, 'W');
+            player2level = playerAI(secondPlayer,'B');
             if (player1level!= -1 && player2level != -1) {
               startGame(player1level, player2level);
             }
           }
           else if (firstPlayer == "human" && secondPlayer.substr(0,8) == "computer"){
             int level;
-            level = playerAI(secondPlayer);
+            level = playerAI(secondPlayer,'B');
             if (level!= -1) {
               startGame(0,level);
             }
           }
           else if (secondPlayer == "human" && firstPlayer.substr(0,8) == "computer") {
             int level;
-            level = playerAI(firstPlayer);
+            level = playerAI(firstPlayer,'W');
             if (level!= -1) {
               startGame(level, 0);
             }
@@ -438,14 +444,17 @@ void GameControl::alternateTurn(){
 }
 
 
-int GameControl::playerAI(string aComputer){
+int GameControl::playerAI(string aComputer, char aicolour){
   if(aComputer.substr(8,1) == "1"){
+     aiplayer = new BotLvl1(aicolour);
      return 1;
   }
   else if(aComputer.substr(8,1) == "2"){
+     aiplayer = new BotLvl2(aicolour);
      return 2;
   }
   else if (aComputer.substr(8,1) == "3"){
+     //aiplayer = new BotLvl3();
      return 3;
   }
   else if (aComputer.substr(8,1) == "4"){
@@ -542,18 +551,20 @@ bool GameControl::isGameOver() {
 void GameControl::getNextMove(int player){
 
   if(player == 0){ getHumanMove(whoseTurn); }
+
+  else if(player != 0){ 
+
+    Move cpuNextMove = aiplayer->getMove(theBoard);
+    cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
+    executeMove(cpuNextMove); 
+  }
+
 /*
-  else if(player == 1){ getAI1Move(); }
-
-  else if(player == 2){ getAI2Move();}
-
-  else if(player == 3){ getAI3Move(); }
-
   else if (player == 4){ getAI4Move(); }
-
+*/
   else { // impossible }
   }
-*/
+
   alternateTurn();
 }
 

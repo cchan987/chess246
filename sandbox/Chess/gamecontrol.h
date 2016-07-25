@@ -6,6 +6,8 @@
 #include <sstream>
 #include <string>
 
+#include "abstractAI.h"
+
 #include "board.h"
 
 class TextDisplay;
@@ -17,6 +19,7 @@ class GameControl
 	bool customBoard = false;
 	bool resign = false;
 	Board theBoard;
+	AbstractAI* aiplayer;
 	TextDisplay *td;
 	//GraphicsDisplay *gd;
 	std::vector<Observer *> observerList;
@@ -53,7 +56,7 @@ class GameControl
 	void resetBoard();
 	//void endGame();
 
-	int playerAI(std::string s1);
+	int playerAI(std::string s1, char colour);
 
 	private:
 	int whiteScoreCount;

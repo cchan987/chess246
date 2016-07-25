@@ -31,7 +31,7 @@ class Board
 	std::vector<Move> getAllPossibleMovesByColour(char colour);
 	std::vector<ChessPiece *> getAllPiecesByColour(char colour);
 	bool isACapturingMove(Move m);
-	bool isACheckingMove(Move m);
+	bool isCheckingMove(Move m);
 	bool isLegalMove(Move m);
 	bool isInCheck(char colour); // Will determine if player of 'colour' is in check
 	
