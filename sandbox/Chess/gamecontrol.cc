@@ -69,6 +69,7 @@ vector<int> GameControl::posntran(string xy){
   xp = static_cast<int>(xp) - 'a';
   yp = static_cast<int>(yp) - '0' - 1;
 
+  yp = 7 - yp;
   if( z!= "" || xp < 0 || xp > 7 || yp < 0 || yp > 7){
   xp = -1;
   }
@@ -196,6 +197,8 @@ void GameControl::placePiece(ChessPiece *piece) {
 }
 
 void GameControl::initBoard() {
+  gd->clearScreen();
+  gd->setDimensions(8);
   //initalize player's chess piece
   int iRow = 8;
   int iCol = 8;
@@ -459,7 +462,7 @@ int GameControl::playerAI(string aComputer, char aicolour){
      return 2;
   }
   else if (aComputer.substr(8,1) == "3"){
-     aiplayer = new BotLvl3();
+     aiplayer = new BotLvl3(aicolour);
      return 3;
   }
   else if (aComputer.substr(8,1) == "4"){

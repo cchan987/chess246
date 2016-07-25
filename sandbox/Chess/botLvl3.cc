@@ -8,6 +8,7 @@ using namespace std;
 BotLvl3::~BotLvl3(){
 
 }
+BotLvl3::BotLvl3(char colour){allegiance = colour;}
 
 bool BotLvl3::isSquareThreatened(Posn p, Board &b) {
 	char opponent = (allegiance == 'W')?'B':'W';
@@ -87,6 +88,7 @@ Move BotLvl3::getMove(Board &b) {
 		return myCapturingAndCheckingMoves[randNum];		
 	}	
 
+	cout << "getting moves for ai colour: " << allegiance << endl;
 	vector<Move> otherMoves = b.getAllPossibleMovesByColour(allegiance);
 	cout << "b4 rand moves: " << otherMoves.size() << endl;
 	int randNum = rand() % otherMoves.size();
