@@ -96,6 +96,24 @@ bool GameControl::executeMove(Move m) {
   Posn src = thePiece->getPosition();
   Posn dst = m.getDestination();
   ChessPiece *otherPiece = theBoard.getPieceByPosn(dst);
+
+  ChessPiece *secondPiece = nullptr;
+  Posn secondSrc;
+  Posn secondDst;
+  if (m.getIsCastlingMove()) {
+    if (src.getCol() < dst.getCol()) { // right castling
+      secondPiece = theBoard[src.getRow()][7];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() - 1);
+    }
+    else if (src.getCol() > dst.getCol()) { // left castling
+      secondPiece = theBoard[src.getRow()][0];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() + 1);
+    }
+    else cout << "Castling Detection Error" << endl;
+  }
+
 //  cout << "b4 is legal" << endl;
   if (theBoard.isLegalMove(m)) {
   //  cout << "is legal is good" << endl;
@@ -106,6 +124,15 @@ bool GameControl::executeMove(Move m) {
     thePiece->setPosition(dst);
     notifyBoardChange(nullptr, src);
     notifyBoardChange(thePiece, dst);
+
+    if (m.getIsCastlingMove()) {
+      theBoard.theBoard[secondSrc.getRow()][secondSrc.getCol()] = nullptr;
+      theBoard.theBoard[secondDst.getRow()][secondDst.getCol()] = secondPiece;
+      secondPiece->setPosition(secondDst);
+      notifyBoardChange(nullptr, secondSrc);
+      notifyBoardChange(secondPiece, secondDst);
+    }
+
     return true;    
   }
   else {

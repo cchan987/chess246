@@ -27,13 +27,42 @@ bool Board::isLegalMove(Move m) {
   Posn dst = m.getDestination();
   ChessPiece *otherPiece = getPieceByPosn(dst);
 
+  ChessPiece *secondPiece = nullptr;
+  Posn secondSrc;
+  Posn secondDst;
+  if (m.getIsCastlingMove()) {
+    if (src.getCol() < dst.getCol()) { // right castling
+      secondPiece = theBoard[src.getRow()][7];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() - 1);
+    }
+    else if (src.getCol() > dst.getCol()) { // left castling
+      secondPiece = theBoard[src.getRow()][0];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() + 1);
+    }
+    else cout << "Castling Detection Error" << endl;
+  }
+
   theBoard[src.getRow()][src.getCol()] = nullptr;
   theBoard[dst.getRow()][dst.getCol()] = thePiece;
+
+  if (m.getIsCastlingMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = nullptr;
+    theBoard[secondDst.getRow()][secondDst.getCol()] = secondPiece;
+  }
+
   cout << "b4 is in check" << isInCheck(thePiece->getColour()) << endl;
   bool goodMove = isInCheck(thePiece->getColour());
   cout << "after is in check" << goodMove << endl;
   theBoard[src.getRow()][src.getCol()] = thePiece;
   theBoard[dst.getRow()][dst.getCol()] = otherPiece;
+
+  if (m.getIsCastlingMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = secondPiece;
+    theBoard[secondDst.getRow()][secondDst.getCol()] = nullptr;
+  }
+
   return !(goodMove) ;
 }
 
