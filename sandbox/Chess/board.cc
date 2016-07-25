@@ -74,6 +74,12 @@ bool Board::isLegalMove(Move m) {
   if (m.getIsCastlingMove()) {
     theBoard[secondSrc.getRow()][secondSrc.getCol()] = secondPiece;
     theBoard[secondDst.getRow()][secondDst.getCol()] = nullptr;
+
+    theBoard[secondDst.getRow()][secondDst.getCol()] = thePiece;
+    theBoard[src.getRow()][src.getCol()] = nullptr;
+    goodMove = isInCheck(thePiece->getColour());
+    theBoard[secondDst.getRow()][secondDst.getCol()] = nullptr;
+    theBoard[src.getRow()][src.getCol()] = thePiece;
   }
   else if (m.getIsEnPassantCaptureMove()) {
     theBoard[secondSrc.getRow()][secondSrc.getCol()] = secondPiece;
