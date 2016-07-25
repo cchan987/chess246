@@ -47,7 +47,7 @@ TextDisplay::~TextDisplay() {}
 
 ostream &operator<<(ostream &out, const TextDisplay &td) {
 	for (unsigned int i = 0; i < td.theDisplay.size(); i++) {
-		cout << i + 1 << ' ';
+		cout << 8 - i << ' ';
 		for (unsigned int j = 0; j <td.theDisplay[i].size(); ++j) {
 			cout << td.theDisplay[i][j];
 		}

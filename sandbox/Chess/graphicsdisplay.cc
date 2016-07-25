@@ -9,10 +9,20 @@
 using namespace std;
 
 void GraphicsDisplay::notifyBoard(ChessPiece *cp, Posn dst) {
-	Posn src = cp->getPosition();
-	drawColourSqr(src.getRow(), src.getCol());
-	drawColourSqr(dst.getRow(), dst.getCol());
-	drawPiece(cp, dst);
+	if (cp == nullptr) {
+		drawColourSqr(dst.getRow(), dst.getCol());
+	}
+	else {
+		Posn src = cp->getPosition();
+		cout << "gfx heard the notification of board update" << endl;
+		cout << "1" << endl;
+		drawColourSqr(src.getRow(), src.getCol());
+		cout << "2" << endl;
+		drawColourSqr(dst.getRow(), dst.getCol());
+		cout << "3" << endl;
+		drawPiece(cp, dst);
+		cout << "4" << endl;		
+	}
 }
 
 void GraphicsDisplay::notifyInfoMsg(string msg) {
@@ -79,18 +89,22 @@ void GraphicsDisplay::drawColourSqr(int r, int c) {
 	char colour = getCellColour(r, c);
 
 	if (colour == 'B') {
-		cout << "drawing sqr of colour: black. Drawing at row, col: " << r << c << endl;
-		screen->fillRectangle(leftPad + cellSize * c , topPad + c * cellSize, cellSize, cellSize, Xwindow::Black);	
+		float blackDrawPosX = leftPad + cellSize * c;
+		float blackDrawPosY = topPad + cellSize * r;
+		//cout << "drawing sqr of colour: black. Drawing at row, col: " << r << c << "cords: " << blackDrawPosX << ", " << blackDrawPosY << endl;
+		screen->fillRectangle( blackDrawPosX, blackDrawPosY, cellSize, cellSize, Xwindow::Black);	
 	}
 	else {
-		cout << "drawing sqr of colour: white. Drawing at row, col: " << r << c << endl;
-		screen->fillRectangle(leftPad + cellSize * r , topPad + c * cellSize, cellSize, cellSize, Xwindow::White);		
+		float whiteDrawPosX = leftPad + cellSize * c;
+		float whiteDrawPosY = topPad + cellSize * r;
+		//cout << "drawing sqr of colour: white. Drawing at row, col: " << r << c << "cords: " << whiteDrawPosX << ", " << blackDrawPosY << endl;
+		screen->fillRectangle(whiteDrawPosX, whiteDrawPosY, cellSize, cellSize, Xwindow::White);		
 	}
 }
 
 GraphicsDisplay::GraphicsDisplay() {
 	screen = new Xwindow();
-	screen->fillRectangle(0,0,500,500, Xwindow::Blue);
+	screen->fillRectangle(0,0,500,500, Xwindow::Green);
 }
 
 GraphicsDisplay::~GraphicsDisplay(){
@@ -98,7 +112,7 @@ GraphicsDisplay::~GraphicsDisplay(){
 }
 
 void GraphicsDisplay::clearScreen() {
-	screen->fillRectangle(0,0,500,500, Xwindow::Blue);
+	screen->fillRectangle(0,0,500,500, Xwindow::Green);
 }
 
 void GraphicsDisplay::setDimensions(int dim) {
