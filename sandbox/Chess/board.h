@@ -20,6 +20,7 @@ class Board
 	void removePiece(ChessPiece *piece);
 
 	std::vector<std::vector<ChessPiece *>> theBoard;
+	ChessPiece *canBeCapturedEnPassant = nullptr;
 	std::vector<int> posntran(std::string s1);
 	//bool createChessPiece(std::string s1,int x,int y);
 

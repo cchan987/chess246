@@ -21,3 +21,11 @@ Posn ChessPiece::getPosition() const {
 void ChessPiece::setPosition(Posn p) {
 	location = p;
 }
+
+bool ChessPiece::enPassantPossible() const {
+	return false;
+}
+
+void ChessPiece::setEnPassantFlag(bool value) {}
+
+void ChessPiece::setMoved() {}

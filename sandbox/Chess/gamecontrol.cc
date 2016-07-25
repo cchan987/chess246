@@ -98,20 +98,30 @@ bool GameControl::executeMove(Move m) {
   ChessPiece *otherPiece = theBoard.getPieceByPosn(dst);
 
   ChessPiece *secondPiece = nullptr;
-  Posn secondSrc;
-  Posn secondDst;
+  Posn secondSrc(-1, -1);
+  Posn secondDst(-1, -1);
   if (m.getIsCastlingMove()) {
     if (src.getCol() < dst.getCol()) { // right castling
-      secondPiece = theBoard[src.getRow()][7];
+      secondPiece = theBoard.theBoard[src.getRow()][7];
       secondSrc = secondPiece->getPosition();
       secondDst = Posn(dst.getRow(), dst.getCol() - 1);
     }
     else if (src.getCol() > dst.getCol()) { // left castling
-      secondPiece = theBoard[src.getRow()][0];
+      secondPiece = theBoard.theBoard[src.getRow()][0];
       secondSrc = secondPiece->getPosition();
       secondDst = Posn(dst.getRow(), dst.getCol() + 1);
     }
     else cout << "Castling Detection Error" << endl;
+  }
+  else if (m.getIsEnPassantCaptureMove()) {
+    if (dst.getRow() == 2) { //white
+      secondPiece = theBoard.theBoard[dst.getRow() + 1][dst.getCol()];
+      secondSrc = secondPiece->getPosition();
+    }
+    else if (dst.getRow() == 5) { //black
+      secondPiece = theBoard.theBoard[dst.getRow() - 1][dst.getCol()];
+      secondSrc = secondPiece->getPosition();
+    }
   }
 
 //  cout << "b4 is legal" << endl;
@@ -132,6 +142,22 @@ bool GameControl::executeMove(Move m) {
       notifyBoardChange(nullptr, secondSrc);
       notifyBoardChange(secondPiece, secondDst);
     }
+    else if (m.getIsEnPassantCaptureMove()) {
+      removePiece(secondPiece);
+    }
+
+    if (theBoard.canBeCapturedEnPassant) {
+      theBoard.canBeCapturedEnPassant->setEnPassantFlag(false);
+      theBoard.canBeCapturedEnPassant = nullptr;
+    }
+
+    if (thePiece->getPieceType() == 'P') {
+      thePiece->setMoved();
+      if (src.getRow() - dst.getRow() == 2 || src.getRow() - dst.getRow() == -2) {
+        thePiece->setEnPassantFlag(true);
+        theBoard.canBeCapturedEnPassant = thePiece;
+      }
+    }
 
     return true;    
   }
@@ -147,6 +173,9 @@ void GameControl::removePiece(ChessPiece *piece) {
   Posn src = piece->getPosition();
   theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
   notifyBoardChange(nullptr, src);
+
+  if (piece == theBoard.canBeCapturedEnPassant) theBoard.canBeCapturedEnPassant = nullptr;
+
   delete piece;
 }
 

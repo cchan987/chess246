@@ -11,7 +11,7 @@ class Rook: public ChessPiece {
 public:
 	Rook(char c, Posn p);
 	~Rook();
-	void setMoved();
+	void setMoved() override;
 	bool getHasBeenMoved() const override;
 	char getPieceType() override;
 	std::vector<Move> getPossibleMoves(Board &b) override;
