@@ -8,6 +8,8 @@
 
 #include "board.h"
 
+class Xwindow;
+class GraphicsDisplay;
 class TextDisplay;
 class Observer;
 
@@ -16,10 +18,10 @@ class GameControl
 	char whoseTurn = 'W';
 	Board theBoard;
 	TextDisplay *td;
-	//GraphicsDisplay *gd;
+	GraphicsDisplay *gd;
 	std::vector<Observer *> observerList;
 	public:
-	GameControl();
+	GameControl(Xwindow &w);
 	~GameControl();
 	void getHumanMove(char whoseTurn);
 	void getNextMove(int player);

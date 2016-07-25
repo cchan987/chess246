@@ -1,10 +1,11 @@
 #include "gamecontrol.h"
+#include "window.h"
 #include <iostream>
 
 int main(){
-  GameControl game1;
-  game1.switchOn();
-  //std::cout << "finished switchon";
-  return 0;
-
+	Xwindow w;
+	GameControl game1(w);
+	game1.switchOn();
+	//std::cout << "finished switchon";
+	return 0;
 }
