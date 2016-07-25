@@ -292,7 +292,7 @@ void GameControl::setupBoard() {
 	        else {
 		        bool success = false;
 		        success = createChessPiece(piece,posntran(position)[0],posntran(position)[1]);
-		        if (success != false) { 
+		        if (success) { 
 		          cout << "Set piece " << piece << " to " << position  << endl;
 		          cout<< *td;
 		        }
