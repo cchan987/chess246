@@ -60,7 +60,7 @@ class GameControl
 
 	int playerAI(std::string s1, char colour);
 	void startAIGame();
-	int twoPlayerAI(string aComputer, string aComputer2);
+	int twoPlayerAI(std::string aComputer, std::string aComputer2);
 
 	private:
 	int whiteScoreCount;

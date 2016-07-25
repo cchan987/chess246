@@ -141,17 +141,9 @@ bool GameControl::executeMove(Move m) {
   if (theBoard.isLegalMove(m)) {
   //  cout << "is legal is good" << endl;
     removePiece(otherPiece);
-<<<<<<< Updated upstream
    // cout << "remove good" << endl;
-    theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
-=======
-    cout << "remove good" << endl;
 
-	//set nullptr to src
-
-	theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
-
->>>>>>> Stashed changes
+	  theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
     theBoard.theBoard[dst.getRow()][dst.getCol()] = thePiece;
     thePiece->setPosition(dst);
     notifyBoardChange(nullptr, src);
