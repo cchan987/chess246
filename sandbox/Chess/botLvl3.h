@@ -8,7 +8,7 @@ class BotLvl3: public AbstractAI{
 public:
 	~BotLvl3();
 	BotLvl3(char colour);
-	bool isSquareThreatened(Posn p, Board &b);
+	bool isColourThreateningSquare(char colour, Posn p, Board &b);
 	std::vector<Move> getSalvagingMoves(Board &b);
 	std::vector<ChessPiece *> getMyThreatenedPieces(Board &b);
 	std::vector<Move> getCapturingandCheckingMoves(Board &b);

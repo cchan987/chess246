@@ -35,49 +35,88 @@ void GraphicsDisplay::drawPiece(ChessPiece *cp, Posn location) {
 	//cout << "drawing colour, piece: " << cpColour << cpType << endl;
 
 	// gets the centre of the cell that you want to draw in
-	int xCord = leftPad + location.getCol() * cellSize + cellSize/2;
-	int yCord = topPad + location.getRow() * cellSize + cellSize/2;
+	int xCord = leftPad + location.getCol() * cellSize;
+	int yCord = topPad + location.getRow() * cellSize;
 
-	if (cpColour == 'B') {
-		if (cpType == 'R'){
-			screen->fillRectangle(xCord , yCord, cellSize/ 1.5, cellSize / 2, Xwindow::Red);
-		}
-		if (cpType == 'N'){
-			screen->fillRectangle(xCord , yCord, cellSize / 2, cellSize / 2, Xwindow::Red);
-		}
-		if (cpType == 'B'){
-			screen->fillRectangle(xCord , yCord, cellSize / 2.5, cellSize / 2, Xwindow::Red);
-		}
-		if (cpType == 'Q'){
-			screen->fillRectangle(xCord , yCord, cellSize / 3, cellSize / 2, Xwindow::Red);
-		}
-		if (cpType == 'K'){
-			screen->fillRectangle(xCord , yCord, cellSize / 3.5, cellSize / 2, Xwindow::Red);
-		}
-		if (cpType == 'P'){
-			screen->fillRectangle(xCord , yCord, 1, cellSize / 2, Xwindow::Red);
-		}
+	if (cpType == 'R'){
+		drawRook(xCord, yCord, cpColour);
+		//screen->fillRectangle(xCord , yCord, cellSize/ 1.5, cellSize / 2, Xwindow::Red);
 	}
-	else {
-		if (cpType == 'R'){
-			screen->fillRectangle(xCord , yCord, cellSize/ 1.5, cellSize / 2, Xwindow::Blue);
-		}
-		if (cpType == 'N'){
-			screen->fillRectangle(xCord , yCord, cellSize / 2, cellSize / 2, Xwindow::Blue);
-		}
-		if (cpType == 'B'){
-			screen->fillRectangle(xCord , yCord, cellSize / 2.5, cellSize / 2, Xwindow::Blue);
-		}
-		if (cpType == 'Q'){
-			screen->fillRectangle(xCord , yCord, cellSize / 3, cellSize / 2, Xwindow::Blue);
-		}
-		if (cpType == 'K'){
-			screen->fillRectangle(xCord , yCord, cellSize / 3.5, cellSize / 2, Xwindow::Blue);
-		}
-		if (cpType == 'P'){
-			screen->fillRectangle(xCord , yCord, 1, cellSize / 2, Xwindow::Blue);
-		}
+	if (cpType == 'N'){
+		drawKnight(xCord, yCord, cpColour);
+		//screen->fillRectangle(xCord , yCord, cellSize / 2, cellSize / 2, Xwindow::Red);
 	}
+	if (cpType == 'B'){
+		drawBishop(xCord, yCord, cpColour);
+		//screen->fillRectangle(xCord , yCord, cellSize / 2.5, cellSize / 2, Xwindow::Red);
+	}
+	if (cpType == 'Q'){
+		drawQueen(xCord, yCord, cpColour);
+		//screen->fillRectangle(xCord , yCord, cellSize / 3, cellSize / 2, Xwindow::Red);
+	}
+	if (cpType == 'K'){
+		drawKing(xCord, yCord, cpColour);
+		//screen->fillRectangle(xCord , yCord, cellSize / 3.5, cellSize / 2, Xwindow::Red);
+	}
+	if (cpType == 'P'){
+		drawPawn(xCord, yCord, cpColour);
+		//screen->fillRectangle(xCord , yCord, 1, cellSize / 2, Xwindow::Red);
+	}
+}
+
+
+//r and c represent pixels of top right of the cell
+void GraphicsDisplay::drawRook(int r, int c, char colour) {
+	// base
+	screen->fillRectangle(r + cellSize * 0.3, c + cellSize * 0.5, cellSize * 0.4, cellSize * 0.4, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	//left tower
+	screen->fillRectangle(r + cellSize * 0.3, c + cellSize * 0.4, cellSize * 0.1, cellSize * 0.2, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	//right tower
+	screen->fillRectangle(r + cellSize * 0.6, c + cellSize * 0.4, cellSize * 0.1, cellSize * 0.2, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+}
+
+void GraphicsDisplay::drawKnight(int r, int c, char colour) {
+	// base
+	screen->fillRectangle(r + cellSize * 0.3, c + cellSize * 0.5, cellSize * 0.4, cellSize * 0.4, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// neck
+	screen->fillRectangle(r + cellSize * 0.6, c + cellSize * 0.4, cellSize * 0.1, cellSize * 0.2, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// head
+	screen->fillRectangle(r + cellSize * 0.3, c + cellSize * 0.3, cellSize * 0.4, cellSize * 0.1, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+}
+
+void GraphicsDisplay::drawBishop(int r, int c, char colour) {
+	// base
+	screen->fillRectangle(r + cellSize * 0.3, c + cellSize * 0.5, cellSize * 0.4, cellSize * 0.4, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// neck
+	screen->fillRectangle(r + cellSize * 0.4, c + cellSize * 0.3, cellSize * 0.2, cellSize * 0.2, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// head
+	screen->fillRectangle(r + cellSize * 0.45, c + cellSize * 0.2, cellSize * 0.1, cellSize * 0.2, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+}
+
+void GraphicsDisplay::drawQueen(int r, int c, char colour) {
+	// base
+	screen->fillRectangle(r + cellSize * 0.3, c + cellSize * 0.5, cellSize * 0.4, cellSize * 0.4, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// neck
+	screen->fillRectangle(r + cellSize * 0.35, c + cellSize * 0.3, cellSize * 0.3, cellSize * 0.2, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// crown left spike
+	screen->fillRectangle(r + cellSize * 0.35, c + cellSize * 0.2, cellSize * 0.1, cellSize * 0.2, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// crown right spike
+	screen->fillRectangle(r + cellSize * 0.55, c + cellSize * 0.2, cellSize * 0.1, cellSize * 0.2, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+}
+
+void GraphicsDisplay::drawKing(int r, int c, char colour) {
+	// base
+	screen->fillRectangle(r + cellSize * 0.3, c + cellSize * 0.5, cellSize * 0.4, cellSize * 0.4, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// vertical cross
+	screen->fillRectangle(r + cellSize * 0.45, c + cellSize * 0.2, cellSize * 0.1, cellSize * 0.4, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// horizontal cross
+	screen->fillRectangle(r + cellSize * 0.4, c + cellSize * 0.3, cellSize * 0.2, cellSize * 0.1, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+}
+void GraphicsDisplay::drawPawn(int r, int c, char colour) {
+	// base
+	screen->fillRectangle(r + cellSize * 0.3, c + cellSize * 0.5, cellSize * 0.4, cellSize * 0.2, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
+	// head
+	screen->fillRectangle(r + cellSize * 0.4, c + cellSize * 0.4, cellSize * 0.2, cellSize * 0.3, colour == 'B' ? Xwindow::Red : Xwindow::Blue);
 }
 
 void GraphicsDisplay::drawColourSqr(int r, int c) {

@@ -10,9 +10,8 @@ BotLvl3::~BotLvl3(){
 }
 BotLvl3::BotLvl3(char colour){allegiance = colour;}
 
-bool BotLvl3::isSquareThreatened(Posn p, Board &b) {
-	char opponent = (allegiance == 'W')?'B':'W';
-	vector<Move> opponentPossibleMoves = b.getAllPossibleMovesByColour(opponent);
+bool BotLvl3::isColourThreateningSquare(char colour, Posn p, Board &b) {
+	vector<Move> opponentPossibleMoves = b.getAllPossibleMovesByColour(colour);
 	for (unsigned int i = 0; i < opponentPossibleMoves.size(); ++i) {
 		if (opponentPossibleMoves[i].getDestination() == p) {
 			return true;
@@ -59,14 +58,25 @@ vector<Move> BotLvl3::getCapturingandCheckingMoves(Board &b) {
 	return filteredMoves;
 }
 
+
+/*
+vector<ChessPiece *> BotLvl3::hostilePieces(Board &b) {
+	char opponent = (allegiance == 'W')?'B':'W';
+	vector<ChessPiece *> opponentPieces = getAllPiecesByColour(opponent);
+	for (unsigned int i = 0; i < opponentPieces.size(); ++i) {
+
+	}
+}*/
+
 vector<Move> BotLvl3::getSalvagingMoves(Board &b) {
+	char opponent = (allegiance == 'W')?'B':'W';
+	// Move out of capture
 	vector<Move> mySalvagingMoves;
 	vector<ChessPiece *> myThreatenedPieces = getMyThreatenedPieces(b);
-	for (unsigned int i = 0; i < myThreatenedPieces.size(); ++i) {
-		//Posn location = myThreatenedPieces[i]->getPosition();
+	for (unsigned int i = 0; i < myThreatenedPieces.size(); ++i) { 
 		vector<Move> myMoves = myThreatenedPieces[i]->getPossibleMoves(b);
 		for (unsigned int i = 0; i < myMoves.size(); ++i) {
-			if (!(isSquareThreatened(myMoves[i].getDestination(), b))) {
+			if (!(isColourThreateningSquare(opponent, myMoves[i].getDestination(), b))) {
 				mySalvagingMoves.emplace_back(myMoves[i]);
 			}
 		}

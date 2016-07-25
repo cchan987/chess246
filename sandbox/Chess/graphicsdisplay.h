@@ -13,6 +13,12 @@ class GraphicsDisplay: public Observer {
 	int dimension;
 	Xwindow *screen;
 	void drawPiece(ChessPiece *cp, Posn location);
+	void drawRook(int r, int c, char colour);
+	void drawKnight(int r, int c, char colour);
+	void drawBishop(int r, int c, char colour);
+	void drawQueen(int r, int c, char colour);
+	void drawKing(int r, int c, char colour);
+	void drawPawn(int r, int c, char colour);
 	void drawColourSqr(int r, int c);
 
 public:
