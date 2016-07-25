@@ -621,7 +621,7 @@ bool GameControl::isGameOver() {
       }
     }
     else{
-      cout << "StaleMate!" << endl;
+      notifyInfoMsg("StaleMate!");
     }
     printScore();
     resetBoard();
