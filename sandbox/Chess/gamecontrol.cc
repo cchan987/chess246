@@ -38,6 +38,7 @@ GameControl::GameControl()
 
 GameControl::~GameControl() {
   delete td;
+  delete gd;
 }
 
 
