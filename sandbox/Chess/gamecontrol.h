@@ -21,6 +21,7 @@ class GameControl
 	bool resign = false;
 	Board theBoard;
 	AbstractAI* aiplayer;
+	AbstractAI* aiplayer2;
 	TextDisplay *td;
 	GraphicsDisplay *gd;
 	std::vector<Observer *> observerList;
@@ -58,6 +59,8 @@ class GameControl
 	//void endGame();
 
 	int playerAI(std::string s1, char colour);
+	void startAIGame();
+	int twoPlayerAI(string aComputer, string aComputer2);
 
 	private:
 	int whiteScoreCount;

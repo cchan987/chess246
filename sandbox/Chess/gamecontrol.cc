@@ -70,6 +70,8 @@ vector<int> GameControl::posntran(string xy){
   yp = static_cast<int>(yp) - '0' - 1;
 
   yp = 7 - yp;
+
+  yp = 7 - yp;
   if( z!= "" || xp < 0 || xp > 7 || yp < 0 || yp > 7){
   xp = -1;
   }
@@ -139,8 +141,17 @@ bool GameControl::executeMove(Move m) {
   if (theBoard.isLegalMove(m)) {
   //  cout << "is legal is good" << endl;
     removePiece(otherPiece);
+<<<<<<< Updated upstream
    // cout << "remove good" << endl;
     theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
+=======
+    cout << "remove good" << endl;
+
+	//set nullptr to src
+
+	theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
+
+>>>>>>> Stashed changes
     theBoard.theBoard[dst.getRow()][dst.getCol()] = thePiece;
     thePiece->setPosition(dst);
     notifyBoardChange(nullptr, src);
@@ -384,12 +395,10 @@ void GameControl::switchOn(){
             startGame(0, 0);
           }
           else if (firstPlayer.substr(0,8) == "computer" && secondPlayer.substr(0,8) == "computer") {
-            int player1level;
-            int player2level;
-            player1level = playerAI(firstPlayer, 'W');
-            player2level = playerAI(secondPlayer,'B');
-            if (player1level!= -1 && player2level != -1) {
-              startGame(player1level, player2level);
+	     int player;
+	     player = twoPlayerAI(firstPlayer, secondPlayer);
+            if (player != -1) {
+              startAIGame();
             }
           }
           else if (firstPlayer == "human" && secondPlayer.substr(0,8) == "computer"){
@@ -452,6 +461,7 @@ void GameControl::alternateTurn(){
 
 
 int GameControl::playerAI(string aComputer, char aicolour){
+
   cout << "initializing bot lvl: " << aComputer.substr(8,1) << ", colour: " << aicolour << endl;
   if(aComputer.substr(8,1) == "1"){
      aiplayer = new BotLvl1(aicolour);
@@ -475,6 +485,78 @@ int GameControl::playerAI(string aComputer, char aicolour){
 }
 
 
+int GameControl::twoPlayerAI(string aComputer, string aComputer2){
+  cout << "initializing bot lvl: " << aComputer.substr(8,1) << ", colour: W " << endl;
+  if(aComputer.substr(8,1) == "1"){
+     aiplayer = new BotLvl1('W');
+  }
+  else if(aComputer.substr(8,1) == "2"){
+     aiplayer = new BotLvl2('W');
+  }
+  else if (aComputer.substr(8,1) == "3"){
+     aiplayer = new BotLvl3('W');
+  }
+  else if (aComputer.substr(8,1) == "4"){
+  }
+  else {
+    cout << "invalid computer level" << endl;
+    return -1;
+  }
+  cout << "initializing bot lvl: " << aComputer2.substr(8,1) << ", colour: B " << endl;
+  if(aComputer2.substr(8,1) == "1"){
+     aiplayer2 = new BotLvl1('B');
+  }
+  else if(aComputer2.substr(8,1) == "2"){
+     aiplayer2 = new BotLvl2('B');
+  }
+  else if (aComputer2.substr(8,1) == "3"){
+     aiplayer2 = new BotLvl3('B');
+  }
+  else if (aComputer2.substr(8,1) == "4"){
+  }
+  else {
+    cout << "invalid computer level" << endl;
+    return -1;
+  }
+  return 1;
+}
+
+
+void GameControl::startAIGame(){
+
+  if(customBoard == false){
+    initBoard();
+    whoseTurn = 'W';
+  }
+  
+  resign = false;
+
+  do{
+    cout<<*td;
+    cout << "whose turn: " << whoseTurn << endl;
+	if(theBoard.isInCheck(whoseTurn)){ cout<< "Player: "<< whoseTurn << "is in check!!" << endl; }
+ 
+  	if (whoseTurn == 'W'){
+	cout << "b4 get whites move: " <<  player1 << endl;
+	cout << "b4 ai query" << endl;
+    	Move cpuNextMove = aiplayer->getMove(theBoard);
+    	cout << "after ai query" << endl;
+    	cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
+   	executeMove(cpuNextMove);
+	alternateTurn();
+	cout << "after get whites move" << endl;
+  	}
+  	else if (whoseTurn == 'B'){
+  	cout << "b4 ai query" << endl;
+   	Move cpuNextMove = aiplayer2->getMove(theBoard);
+    	cout << "after ai query" << endl;
+    	cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
+    	executeMove(cpuNextMove); 
+	alternateTurn();
+    	}
+  } while (!(isGameOver()));
+
+}
 
 
 void GameControl::printScore(){
@@ -509,6 +591,9 @@ void GameControl::startGame(int player1, int player2){
     }
   } while (!(isGameOver()));
 }
+
+
+
 
 bool GameControl::isGameOver() {
   //objective : check all pieces that have legal move
@@ -563,6 +648,7 @@ void GameControl::getNextMove(int player){
   if(player == 0){ getHumanMove(whoseTurn); }
 
   else if(player != 0){ 
+
     cout << "b4 ai query" << endl;
     Move cpuNextMove = aiplayer->getMove(theBoard);
     cout << "after ai query" << endl;
