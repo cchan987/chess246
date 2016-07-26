@@ -5,6 +5,7 @@
 #include <string>
 
 #include "textdisplay.h"
+#include "graphicsdisplay.h"
 #include "gamecontrol.h"
 #include "rook.h"
 #include "knight.h"
@@ -13,10 +14,18 @@
 #include "king.h"
 #include "pawn.h"
 
+#include "abstractAI.h"
+#include "botLvl1.h"
+#include "botLvl2.h"
+#include "botLvl3.h"
+//#include "botLvl4.h"
+
 using namespace std;
 
 GameControl::GameControl()
 { 
+  gd = new GraphicsDisplay();
+  observerList.emplace_back(gd);
   td = new TextDisplay();
   td->setDimensions(8);
   observerList.emplace_back(td);
@@ -28,6 +37,7 @@ GameControl::GameControl()
 
 GameControl::~GameControl() {
   delete td;
+  delete gd;
 }
 
 
@@ -42,7 +52,9 @@ void GameControl::notifyBoardChange(ChessPiece *piece, Posn p) {
 }
 
 void GameControl::notifyInfoMsgChange(string s){
-
+  for (unsigned int i = 0; i < observerList.size(); ++i) {
+    observerList[i]->notifyInfoMsg(s);
+  }
 }
 
 
@@ -58,6 +70,7 @@ vector<int> GameControl::posntran(string xy){
 
   xp = static_cast<int>(xp) - 'a';
   yp = static_cast<int>(yp) - '0' - 1;
+  yp = 7 - yp;
 
   if( z!= "" || xp < 0 || xp > 7 || yp < 0 || yp > 7){
   xp = -1;
@@ -90,22 +103,91 @@ bool GameControl::createChessPiece(string piece, int x, int y){
 // Can only be passed moves that were found in a pieces getPossibleMove return vector
 // Makes the move happen if legal move, otherwise nothing
 // Returns true if move was good, false otherwise
-// TODO: special case for en Passant capture
-bool GameControl::executeMove(Move m) {
+bool GameControl::executeMove(Move m, char promotion) {
   ChessPiece *thePiece = m.getPiece();
   Posn src = thePiece->getPosition();
   Posn dst = m.getDestination();
   ChessPiece *otherPiece = theBoard.getPieceByPosn(dst);
+
+  ChessPiece *secondPiece = nullptr;
+  Posn secondSrc(-1, -1);
+  Posn secondDst(-1, -1);
+  if (m.getIsCastlingMove()) {
+    if (src.getCol() < dst.getCol()) { // right castling
+      secondPiece = theBoard.theBoard[src.getRow()][7];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() - 1);
+    }
+    else if (src.getCol() > dst.getCol()) { // left castling
+      secondPiece = theBoard.theBoard[src.getRow()][0];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() + 1);
+    }
+    else cout << "Castling Detection Error" << endl;
+  }
+  else if (m.getIsEnPassantCaptureMove()) {
+    if (dst.getRow() == 2) { //white
+      secondPiece = theBoard.theBoard[dst.getRow() + 1][dst.getCol()];
+      secondSrc = secondPiece->getPosition();
+    }
+    else if (dst.getRow() == 5) { //black
+      secondPiece = theBoard.theBoard[dst.getRow() - 1][dst.getCol()];
+      secondSrc = secondPiece->getPosition();
+    }
+  }
+
 //  cout << "b4 is legal" << endl;
   if (theBoard.isLegalMove(m)) {
   //  cout << "is legal is good" << endl;
     removePiece(otherPiece);
    // cout << "remove good" << endl;
-    theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
+
+	  theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
     theBoard.theBoard[dst.getRow()][dst.getCol()] = thePiece;
     thePiece->setPosition(dst);
     notifyBoardChange(nullptr, src);
     notifyBoardChange(thePiece, dst);
+
+    if (m.getIsCastlingMove()) {
+      theBoard.theBoard[secondSrc.getRow()][secondSrc.getCol()] = nullptr;
+      theBoard.theBoard[secondDst.getRow()][secondDst.getCol()] = secondPiece;
+      secondPiece->setPosition(secondDst);
+      notifyBoardChange(nullptr, secondSrc);
+      notifyBoardChange(secondPiece, secondDst);
+    }
+    else if (m.getIsEnPassantCaptureMove()) {
+      removePiece(secondPiece);
+    }
+
+    if (theBoard.canBeCapturedEnPassant) {
+      theBoard.canBeCapturedEnPassant->setEnPassantFlag(false);
+      theBoard.canBeCapturedEnPassant = nullptr;
+    }
+
+    if (thePiece->getPieceType() == 'P') {
+      thePiece->setMoved();
+      if (src.getRow() - dst.getRow() == 2 || src.getRow() - dst.getRow() == -2) {
+        thePiece->setEnPassantFlag(true);
+        theBoard.canBeCapturedEnPassant = thePiece;
+      }
+      else if (dst.getRow() == 0 || dst.getRow() == 7) {
+        //Promote Pawn
+        removePiece(thePiece);
+        if (promotion == 'R') {
+          placePiece(new Rook(whoseTurn, Posn(dst.getRow(), dst.getCol())));
+        }
+        if (promotion == 'N') {
+          placePiece(new Knight(whoseTurn, Posn(dst.getRow(), dst.getCol())));
+        }
+        if (promotion == 'B') {
+          placePiece(new Bishop(whoseTurn, Posn(dst.getRow(), dst.getCol())));
+        }
+        if (promotion == 'Q') {
+          placePiece(new Queen(whoseTurn, Posn(dst.getRow(), dst.getCol())));
+        }
+      }
+    }
+
     return true;    
   }
   else {
@@ -120,6 +202,9 @@ void GameControl::removePiece(ChessPiece *piece) {
   Posn src = piece->getPosition();
   theBoard.theBoard[src.getRow()][src.getCol()] = nullptr;
   notifyBoardChange(nullptr, src);
+
+  if (piece == theBoard.canBeCapturedEnPassant) theBoard.canBeCapturedEnPassant = nullptr;
+
   delete piece;
 }
 
@@ -130,6 +215,8 @@ void GameControl::placePiece(ChessPiece *piece) {
 }
 
 void GameControl::initBoard() {
+  gd->clearScreen();
+  gd->setDimensions(8);
   //initalize player's chess piece
   int iRow = 8;
   int iCol = 8;
@@ -212,8 +299,13 @@ void GameControl::setupBoard() {
 	        else {
 		        bool success = false;
 		        success = createChessPiece(piece,posntran(position)[0],posntran(position)[1]);
-		        if (success != false) { 
+		        if (success) { 
 		          cout << "Set piece " << piece << " to " << position  << endl;
+
+              /*if () {
+
+              }*/
+
 		          cout<< *td;
 		        }
 		      }
@@ -315,24 +407,22 @@ void GameControl::switchOn(){
             startGame(0, 0);
           }
           else if (firstPlayer.substr(0,8) == "computer" && secondPlayer.substr(0,8) == "computer") {
-            int player1level;
-            int player2level;
-            player1level = playerAI(firstPlayer);
-            player2level = playerAI(secondPlayer);
-            if (player1level!= -1 && player2level != -1) {
-              startGame(player1level, player2level);
+	     int player;
+	     player = twoPlayerAI(firstPlayer, secondPlayer);
+            if (player != -1) {
+              startAIGame();
             }
           }
           else if (firstPlayer == "human" && secondPlayer.substr(0,8) == "computer"){
             int level;
-            level = playerAI(secondPlayer);
+            level = playerAI(secondPlayer,'B');
             if (level!= -1) {
               startGame(0,level);
             }
           }
           else if (secondPlayer == "human" && firstPlayer.substr(0,8) == "computer") {
             int level;
-            level = playerAI(firstPlayer);
+            level = playerAI(firstPlayer,'W');
             if (level!= -1) {
               startGame(level, 0);
             }
@@ -382,14 +472,19 @@ void GameControl::alternateTurn(){
 }
 
 
-int GameControl::playerAI(string aComputer){
+int GameControl::playerAI(string aComputer, char aicolour){
+
+  cout << "initializing bot lvl: " << aComputer.substr(8,1) << ", colour: " << aicolour << endl;
   if(aComputer.substr(8,1) == "1"){
+     aiplayer = new BotLvl1(aicolour);
      return 1;
   }
   else if(aComputer.substr(8,1) == "2"){
+     aiplayer = new BotLvl2(aicolour);
      return 2;
   }
   else if (aComputer.substr(8,1) == "3"){
+     aiplayer = new BotLvl3(aicolour);
      return 3;
   }
   else if (aComputer.substr(8,1) == "4"){
@@ -402,6 +497,78 @@ int GameControl::playerAI(string aComputer){
 }
 
 
+int GameControl::twoPlayerAI(string aComputer, string aComputer2){
+  cout << "initializing bot lvl: " << aComputer.substr(8,1) << ", colour: W " << endl;
+  if(aComputer.substr(8,1) == "1"){
+     aiplayer = new BotLvl1('W');
+  }
+  else if(aComputer.substr(8,1) == "2"){
+     aiplayer = new BotLvl2('W');
+  }
+  else if (aComputer.substr(8,1) == "3"){
+     aiplayer = new BotLvl3('W');
+  }
+  else if (aComputer.substr(8,1) == "4"){
+  }
+  else {
+    cout << "invalid computer level" << endl;
+    return -1;
+  }
+  cout << "initializing bot lvl: " << aComputer2.substr(8,1) << ", colour: B " << endl;
+  if(aComputer2.substr(8,1) == "1"){
+     aiplayer2 = new BotLvl1('B');
+  }
+  else if(aComputer2.substr(8,1) == "2"){
+     aiplayer2 = new BotLvl2('B');
+  }
+  else if (aComputer2.substr(8,1) == "3"){
+     aiplayer2 = new BotLvl3('B');
+  }
+  else if (aComputer2.substr(8,1) == "4"){
+  }
+  else {
+    cout << "invalid computer level" << endl;
+    return -1;
+  }
+  return 1;
+}
+
+
+void GameControl::startAIGame(){
+
+  if(customBoard == false){
+    initBoard();
+    whoseTurn = 'W';
+  }
+  
+  resign = false;
+
+  do{
+    cout<<*td;
+    cout << "whose turn: " << whoseTurn << endl;
+	if(theBoard.isInCheck(whoseTurn)){ cout<< "Player: "<< whoseTurn << "is in check!!" << endl; }
+ 
+  	if (whoseTurn == 'W'){
+//	cout << "b4 get whites move: " <<  player1 << endl;
+//	cout << "b4 ai query" << endl;
+    	Move cpuNextMove = aiplayer->getMove(theBoard);
+    	cout << "after ai query" << endl;
+    	cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
+   	executeMove(cpuNextMove);
+	alternateTurn();
+	cout << "after get whites move" << endl;
+  	}
+  	else if (whoseTurn == 'B'){
+  	cout << "b4 ai query" << endl;
+   	Move cpuNextMove = aiplayer2->getMove(theBoard);
+    	cout << "after ai query" << endl;
+    	cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
+    	executeMove(cpuNextMove); 
+	alternateTurn();
+    	}
+  } while (!(isGameOver()));
+
+}
 
 
 void GameControl::printScore(){
@@ -427,13 +594,18 @@ void GameControl::startGame(int player1, int player2){
 	if(theBoard.isInCheck(whoseTurn)){ cout<< "Player: "<< whoseTurn << "is in check!!" << endl; }
  
   	if (whoseTurn == 'W'){
-  	  getNextMove(player1);	  
+      cout << "b4 get whites move: " <<  player1 << endl;
+  	  getNextMove(player1);
+      cout << "after get whites move" << endl;
   	}
   	else if (whoseTurn == 'B'){
   	  getNextMove(player2);
     }
   } while (!(isGameOver()));
 }
+
+
+
 
 bool GameControl::isGameOver() {
   //objective : check all pieces that have legal move
@@ -462,10 +634,10 @@ bool GameControl::isGameOver() {
      // alternateTurn();
       cout << "CheckMate! " << whoseTurn << " Wins!" << endl;
       if(whoseTurn == 'W'){
-	++whiteScoreCount;
+	++blackScoreCount;
       }
       else{
-	++blackScoreCount;
+	++whiteScoreCount;
       }
     }
     else{
@@ -486,18 +658,22 @@ bool GameControl::isGameOver() {
 void GameControl::getNextMove(int player){
 
   if(player == 0){ getHumanMove(whoseTurn); }
+
+  else if(player != 0){ 
+
+    cout << "b4 ai query" << endl;
+    Move cpuNextMove = aiplayer->getMove(theBoard);
+    cout << "after ai query" << endl;
+    cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
+    executeMove(cpuNextMove); 
+  }
+
 /*
-  else if(player == 1){ getAI1Move(); }
-
-  else if(player == 2){ getAI2Move();}
-
-  else if(player == 3){ getAI3Move(); }
-
   else if (player == 4){ getAI4Move(); }
-
+*/
   else { // impossible }
   }
-*/
+
   alternateTurn();
 }
 
@@ -525,13 +701,55 @@ void GameControl::getHumanMove(char whoseTurn) {
       ++count;
     }
 
+    if (count == 0) continue;
 
     if(listOfCommand[0] == "move") {
+
+      if (count != 3 && count != 4) {
+        cout << "Invalid move command, unmatching argument count" << endl;
+        continue;
+      }
+      if (listOfCommand[1][0] < 'A' || (listOfCommand[1][0] > 'Z' && listOfCommand[1][0] < 'a') || listOfCommand[1][0] > 'z') {
+        cout << "Invalid move command, source position not valid" << endl;
+        continue;
+      }
+      if (listOfCommand[1][1] < '0' || listOfCommand[1][1] > '9') {
+        cout << "Invalid move command, source position not valid" << endl;
+        continue;
+      }
+      if (listOfCommand[2][0] < 'A' || (listOfCommand[2][0] > 'Z' && listOfCommand[2][0] < 'a') || listOfCommand[2][0] > 'z') {
+        cout << "Invalid move command, destination position not valid" << endl;
+        continue;
+      }
+      if (listOfCommand[2][1] < '0' || listOfCommand[2][1] > '9') {
+        cout << "Invalid move command, destination position not valid" << endl;
+        continue;
+      }
+
       vector<int> vtor = posntran(listOfCommand[1]);
       vector<int> vtor2 = posntran(listOfCommand[2]);
       Posn posn1 = Posn(vtor[0], vtor[1]);
       Posn posn2 = Posn (vtor2[0], vtor2[1]);
       ChessPiece* cp = theBoard.getPieceByPosn(posn1);
+
+      if (count == 4 && cp->getPieceType() == 'P') { // Pawn trying to promote
+        if (posn2.getRow() != 0 && posn2.getRow() != 7) { // Destination not at end of board
+          cout << "Invalid Promotion" << endl;
+          continue;
+        }
+        if (listOfCommand[3] != "R" && listOfCommand[3] != "N" && listOfCommand[3] != "B" && listOfCommand[3] != "Q") { // Invalid Promotion char
+          cout << "Invalid Promotion" << endl;
+          continue;
+        }
+      }
+      else if (count == 4 && cp->getPieceType() != 'P') { // Non-Pawn trying to promote
+        cout << "Invalid Promotion" << endl;
+        continue;
+      }
+      else if (count == 3 && cp->getPieceType() == 'P' && (posn2.getRow() == 0 || posn2.getRow() == 7)) { // Pawn with a destination at the end of the board. Does not specify Promotion
+        cout << "Invalid move command, no promotion specified" << endl;
+        continue;
+      }
 
       if (cp == nullptr) {
         cout<<"invalid move, piece is not found"<<endl;
@@ -550,7 +768,10 @@ void GameControl::getHumanMove(char whoseTurn) {
   	for(unsigned int i = 0 ; i < vofm.size(); ++i){
   		if( vofm[i].getDestination() == posn2 ){
 		  //cout << "b4 execute" << endl;
-  			done = executeMove(vofm[i]);
+        if (count == 4) {
+          done = executeMove(vofm[i], listOfCommand[3][0]);
+        }
+  			else done = executeMove(vofm[i]);
 		//	cout << "after execute: "<< done << endl;
   			break;
   		}
@@ -600,6 +821,7 @@ void GameControl::resetBoard(){
       removePiece(acp);
     }
   }
+  gd->clearScreen();
   customBoard = false;
 }
 

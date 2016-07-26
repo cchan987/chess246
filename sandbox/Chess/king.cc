@@ -86,6 +86,58 @@ vector<Move> King::getPossibleMoves(Board &b) {
 		}
 	}
 
+	if (row < 7 && col > 0) { // moving down-left diagonal
+		Posn currentPosn = Posn(row + 1, col - 1);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
+		if (pieceAtPosn) {
+			if (!(pieceAtPosn->getColour() == colour)) {
+				PossibleMoves.emplace_back(Move(this, currentPosn, true));
+			}
+		}
+		else {
+			PossibleMoves.emplace_back(Move(this, currentPosn));
+		} 
+	}
+
+	if (row < 7 && col < 7) { // moving down-right diagonal
+		Posn currentPosn = Posn(row + 1, col + 1);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
+		if (pieceAtPosn) {
+			if (!(pieceAtPosn->getColour() == colour)) {
+				PossibleMoves.emplace_back(Move(this, currentPosn, true));
+			}
+		}
+		else {
+			PossibleMoves.emplace_back(Move(this, currentPosn));
+		} 
+	}
+
+	if (row > 0 && col > 0) { // moving up-left diagonal
+		Posn currentPosn = Posn(row - 1, col - 1);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
+		if (pieceAtPosn) {
+			if (!(pieceAtPosn->getColour() == colour)) {
+				PossibleMoves.emplace_back(Move(this, currentPosn, true));
+			}
+		}
+		else {
+			PossibleMoves.emplace_back(Move(this, currentPosn));
+		} 
+	}
+
+	if (row > 0 && col < 7) { // moving up-right diagonal
+		Posn currentPosn = Posn(row - 1, col + 1);
+		ChessPiece *pieceAtPosn = b.getPieceByPosn(currentPosn);
+		if (pieceAtPosn) {
+			if (!(pieceAtPosn->getColour() == colour)) {
+				PossibleMoves.emplace_back(Move(this, currentPosn, true));
+			}
+		}
+		else {
+			PossibleMoves.emplace_back(Move(this, currentPosn));
+		} 
+	}
+
 	if (hasBeenMoved == false) { // Can potentially castle
 		//Check castling right
 		ChessPiece *rightOne = b.getPieceByPosn(Posn(row, col + 1));

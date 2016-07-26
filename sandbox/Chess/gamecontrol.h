@@ -6,8 +6,11 @@
 #include <sstream>
 #include <string>
 
+#include "abstractAI.h"
+
 #include "board.h"
 
+class GraphicsDisplay;
 class TextDisplay;
 class Observer;
 
@@ -17,8 +20,10 @@ class GameControl
 	bool customBoard = false;
 	bool resign = false;
 	Board theBoard;
+	AbstractAI* aiplayer;
+	AbstractAI* aiplayer2;
 	TextDisplay *td;
-	//GraphicsDisplay *gd;
+	GraphicsDisplay *gd;
 	std::vector<Observer *> observerList;
 
 	public:
@@ -31,7 +36,7 @@ class GameControl
 	void notifyInfoMsgChange(std::string s);
 	void removePiece(ChessPiece *piece);
 	void placePiece(ChessPiece *piece);
-	bool executeMove(Move m);
+	bool executeMove(Move m, char promotion = '0');
 
 	std::vector<int> posntran(std::string xy);
 	bool createChessPiece(std::string piece, int x, int y);
@@ -53,7 +58,9 @@ class GameControl
 	void resetBoard();
 	//void endGame();
 
-	int playerAI(std::string s1);
+	int playerAI(std::string s1, char colour);
+	void startAIGame();
+	int twoPlayerAI(std::string aComputer, std::string aComputer2);
 
 	private:
 	int whiteScoreCount;

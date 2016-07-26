@@ -1,6 +1,15 @@
+#ifndef ABSTRACT_AI
+#define ABSTRACT_AI
+#include <vector>
+#include "move.h"
+
+class Board;
+
 class AbstractAI {
-	char allegiance;
-	vector getAllLegalMovesByColour(char colour);
+	std::vector<Move> getAllLegalMovesByColour(char colour);
 public:
-	virtual void getMove(Board &b) = 0;
+	char allegiance;
+	virtual ~AbstractAI();
+	virtual Move getMove(Board &b) = 0;
 };
+#endif

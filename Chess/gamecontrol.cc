@@ -4,6 +4,7 @@
 #include <sstream>
 #include <string>
 #include "textdisplay.h"
+#include "graphicsdisplay.h"
 #include "gamecontrol.h"
 #include "rook.h"
 #include "knight.h"
@@ -11,14 +12,17 @@
 #include "queen.h"
 #include "king.h"
 #include "pawn.h"
+#include "window.h"
 
 using namespace std;
 
-GameControl::GameControl()
+GameControl::GameControl(Xwindow &w)
 { 
   td = new TextDisplay();
   td->setDimensions(8);
   observerList.emplace_back(td);
+  gd = new GraphicsDisplay(w);
+  observerList.emplace_back(gd);
   initBoard();
   //ctor
   whiteScoreCount = 0;
@@ -28,6 +32,7 @@ GameControl::GameControl()
 
 GameControl::~GameControl() {
   delete td;
+  delete gd;
 }
 
 

@@ -12,16 +12,23 @@ class GraphicsDisplay: public Observer {
 	const int topPad = 100;
 	int dimension;
 	Xwindow *screen;
-	void drawPiece(ChessPiece &cp);
+	void drawPiece(ChessPiece *cp, Posn location);
+	void drawRook(int r, int c, char colour);
+	void drawKnight(int r, int c, char colour);
+	void drawBishop(int r, int c, char colour);
+	void drawQueen(int r, int c, char colour);
+	void drawKing(int r, int c, char colour);
+	void drawPawn(int r, int c, char colour);
 	void drawColourSqr(int r, int c);
 
 public:
-	GraphicsDisplay(Xwindow &w);
+	GraphicsDisplay();
 	~GraphicsDisplay();
 	void setDimensions(int dim);
 	void clearScreen();
+	void clearInfoBox();
 	void notifyBoard(ChessPiece *cp, Posn dst) override; 
-	void notifyInfoMsg(String msg) override;
+	void notifyInfoMsg(std::string msg) override;
 };
 
 #endif

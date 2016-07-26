@@ -27,13 +27,130 @@ bool Board::isLegalMove(Move m) {
   Posn dst = m.getDestination();
   ChessPiece *otherPiece = getPieceByPosn(dst);
 
+  ChessPiece *secondPiece = nullptr;
+  Posn secondSrc(-1, -1);
+  Posn secondDst(-1, -1);
+  if (m.getIsCastlingMove()) {
+    if (src.getCol() < dst.getCol()) { // right castling
+      secondPiece = theBoard[src.getRow()][7];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() - 1);
+    }
+    else if (src.getCol() > dst.getCol()) { // left castling
+      secondPiece = theBoard[src.getRow()][0];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() + 1);
+    }
+    else cout << "Castling Detection Error" << endl;
+  }
+  else if (m.getIsEnPassantCaptureMove()) {
+    if (dst.getRow() == 2) { //white
+      secondPiece = theBoard[dst.getRow() + 1][dst.getCol()];
+      secondSrc = secondPiece->getPosition();
+    }
+    else if (dst.getRow() == 5) { //black
+      secondPiece = theBoard[dst.getRow() - 1][dst.getCol()];
+      secondSrc = secondPiece->getPosition();
+    }
+  }
+
+  // Move the pieces on the board
   theBoard[src.getRow()][src.getCol()] = nullptr;
   theBoard[dst.getRow()][dst.getCol()] = thePiece;
-  cout << "b4 is in check" << isInCheck(thePiece->getColour()) << endl;
+
+  if (m.getIsCastlingMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = nullptr;
+    theBoard[secondDst.getRow()][secondDst.getCol()] = secondPiece;
+  }
+  else if (m.getIsEnPassantCaptureMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = nullptr;
+  }
+
+  // Test if I am in check
+  //cout << "b4 is in check" << isInCheck(thePiece->getColour()) << endl;
   bool goodMove = isInCheck(thePiece->getColour());
-  cout << "after is in check" << goodMove << endl;
+  //cout << "after is in check" << goodMove << endl;
   theBoard[src.getRow()][src.getCol()] = thePiece;
   theBoard[dst.getRow()][dst.getCol()] = otherPiece;
+
+  if (m.getIsCastlingMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = secondPiece;
+    theBoard[secondDst.getRow()][secondDst.getCol()] = nullptr;
+  }
+  else if (m.getIsEnPassantCaptureMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = secondPiece;
+  }
+
+  return !(goodMove) ;
+}
+
+// Does a move put the opponent in check
+bool Board::isCheckingMove(Move m) {
+  ChessPiece *thePiece = m.getPiece();
+  Posn src = thePiece->getPosition();
+  Posn dst = m.getDestination();
+  ChessPiece *otherPiece = getPieceByPosn(dst);
+
+  ChessPiece *secondPiece = nullptr;
+  Posn secondSrc(-1, -1);
+  Posn secondDst(-1, -1);
+  if (m.getIsCastlingMove()) {
+    if (src.getCol() < dst.getCol()) { // right castling
+      secondPiece = theBoard[src.getRow()][7];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() - 1);
+    }
+    else if (src.getCol() > dst.getCol()) { // left castling
+      secondPiece = theBoard[src.getRow()][0];
+      secondSrc = secondPiece->getPosition();
+      secondDst = Posn(dst.getRow(), dst.getCol() + 1);
+    }
+    else cout << "Castling Detection Error" << endl;
+  }
+  else if (m.getIsEnPassantCaptureMove()) {
+    if (dst.getRow() == 2) { //white
+      secondPiece = theBoard[dst.getRow() + 1][dst.getCol()];
+      secondSrc = secondPiece->getPosition();
+    }
+    else if (dst.getRow() == 5) { //black
+      secondPiece = theBoard[dst.getRow() - 1][dst.getCol()];
+      secondSrc = secondPiece->getPosition();
+    }
+  }
+
+  // Move the pieces on the board
+  theBoard[src.getRow()][src.getCol()] = nullptr;
+  theBoard[dst.getRow()][dst.getCol()] = thePiece;
+
+  if (m.getIsCastlingMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = nullptr;
+    theBoard[secondDst.getRow()][secondDst.getCol()] = secondPiece;
+  }
+  else if (m.getIsEnPassantCaptureMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = nullptr;
+  }
+
+  // Test if I am in check
+  //cout << "b4 is in check" << isInCheck(thePiece->getColour()) << endl;
+  bool goodMove = isInCheck(thePiece->getColour() == 'W' ? 'B' : 'W');
+  //cout << "after is in check" << goodMove << endl;
+  theBoard[src.getRow()][src.getCol()] = thePiece;
+  theBoard[dst.getRow()][dst.getCol()] = otherPiece;
+
+  if (m.getIsCastlingMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = secondPiece;
+    theBoard[secondDst.getRow()][secondDst.getCol()] = nullptr;
+
+    theBoard[secondDst.getRow()][secondDst.getCol()] = thePiece;
+    theBoard[src.getRow()][src.getCol()] = nullptr;
+    goodMove = isInCheck(thePiece->getColour());
+    theBoard[secondDst.getRow()][secondDst.getCol()] = nullptr;
+    theBoard[src.getRow()][src.getCol()] = thePiece;
+  }
+  else if (m.getIsEnPassantCaptureMove()) {
+    theBoard[secondSrc.getRow()][secondSrc.getCol()] = secondPiece;
+  }
+
   return !(goodMove) ;
 }
 
@@ -115,10 +232,12 @@ vector<Move> Board::getAllPossibleMovesByColour(char colour) {
 	for (unsigned int i = 0; i < thePieces.size(); ++i) {
 		ChessPiece *currentPiece = thePieces[i];
 		vector<Move> currentPieceMoves = currentPiece->getPossibleMoves(*this);
+    for (unsigned int i = 0; i < currentPieceMoves.size(); ++i) {
+      allPossibleMoves.emplace_back(currentPieceMoves[i]);
+    }
 	}
 	return allPossibleMoves;
 }
-
 
 
 Board::Board()

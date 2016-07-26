@@ -1,14 +1,17 @@
 #include "botLvl2.h"
 #include "move.h"
-#include "Board.h"
+#include "board.h"
 
 using namespace std;
 
+BotLvl2::~BotLvl2(){}
+BotLvl2::BotLvl2(char colour){allegiance = colour;}
+
 vector<Move> BotLvl2::getCapturingandCheckingMoves(Board &b) {
-	vector<Move> availableMoves = b.getAllLegalMovesByColour(allegiance);
+	vector<Move> availableMoves = b.getAllPossibleMovesByColour(allegiance);
 	vector<Move> filteredMoves;
-	for (int i = 0; i < availableMoves.size(); ++i) {
-		if (b.isCheckingMove(availableMoves[i]) || b.isCapturingMove(availableMoves[i])) {
+	for (unsigned int i = 0; i < availableMoves.size(); ++i) {
+		if (b.isCheckingMove(availableMoves[i]) || availableMoves[i].getIsCapturingMove()) {
 			filteredMoves.emplace_back(availableMoves[i]);
 		}
 	}
@@ -16,7 +19,7 @@ vector<Move> BotLvl2::getCapturingandCheckingMoves(Board &b) {
 }
 
 Move BotLvl2::randomLegalMove(Board &b) {
-	vector<Move> legal_moves = b.getAllLegalMovesByColour(allegiance);
+	vector<Move> legal_moves = b.getAllPossibleMovesByColour(allegiance);
 	int randNum = rand() % legal_moves.size();
 	return legal_moves[randNum];
 }

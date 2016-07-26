@@ -6,8 +6,12 @@
 class Move;
 class Board;
 
+//Level 2: prefers capturing moves and checks over other moves.
 class BotLvl2: public AbstractAI{
-	vector<Move> getCapturingandCheckingMoves(vector<Move> availableMoves);
+public:
+	BotLvl2(char colour);
+	~BotLvl2();
+	std::vector<Move> getCapturingandCheckingMoves(Board &b);
 	Move randomLegalMove(Board &b);
 	Move getMove(Board &b) override;
 

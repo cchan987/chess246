@@ -115,6 +115,10 @@ vector<Move> Board::getAllPossibleMovesByColour(char colour) {
 	for (unsigned int i = 0; i < thePieces.size(); ++i) {
 		ChessPiece *currentPiece = thePieces[i];
 		vector<Move> currentPieceMoves = currentPiece->getPossibleMoves(*this);
+    for (unsigned int i = 0; i < currentPieceMoves.size(); ++i) {
+      allPossibleMoves.push_back(currentPieceMoves[i]);
+    }
+
 	}
 	return allPossibleMoves;
 }

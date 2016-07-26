@@ -4,7 +4,8 @@
 #include "abstractAI.h"
 
 class BotLvl4: public AbstractAI{
-	
+public:
+	~BotLvl4();
 };
 
 #endif

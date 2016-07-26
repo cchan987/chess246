@@ -20,5 +20,9 @@ public:
 	virtual void setPosition(Posn p);
 	virtual std::vector<Move> getPossibleMoves(Board &b) = 0;
 	virtual char getPieceType() = 0;
+
+	virtual bool enPassantPossible() const;
+	virtual void setEnPassantFlag(bool value);
+	virtual void setMoved();
 };
 #endif

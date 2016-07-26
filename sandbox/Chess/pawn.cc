@@ -63,25 +63,25 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 				PossibleMoves.emplace_back(Move(this, Posn(row - 2, col)));			
 			}
 		}
-/*
+
 		if (row == 3) { // en passant possibility
 			if (col > 0) { // we are not in the A column, therefore we check left for vulnerable pawn
 				ChessPiece *pieceLeft = b.getPieceByPosn(Posn(row, col - 1));
-				if (pieceLeft) {
+				if (pieceLeft && pieceLeft->getPieceType() == 'P') {
 					if (pieceLeft->enPassantPossible()) {
-						PossibleMoves.emplace_back(Move(this, Posn(row - 1, col - 1)), false, false , true);
+						PossibleMoves.emplace_back(Move(this, Posn(row - 1, col - 1), false, false , true));
 					}				
 				}
 			}
 			if (col < 7) {
 				ChessPiece *pieceRight = b.getPieceByPosn(Posn(row, col + 1));
-				if (pieceRight) {
+				if (pieceRight && pieceRight->getPieceType() == 'P') {
 					if (pieceRight->enPassantPossible()) {
-						PossibleMoves.emplace_back(Move(this, Posn(row - 1, col + 1)), false, false , true);
+						PossibleMoves.emplace_back(Move(this, Posn(row - 1, col + 1), false, false , true));
 					}				
 				}
 			}
-		}*/
+		}
 	}
 
 	if (colour == 'B'){
@@ -120,26 +120,35 @@ vector<Move> Pawn::getPossibleMoves(Board &b) {
 				PossibleMoves.emplace_back(Move(this, Posn(row + 2, col)));			
 			}
 		}
-/*
+
 		if (row == 4) { // en passant possibility
-			if (col > 0) { // we are not in the A column, therefore we check left for vulnerable pawn
-				ChessPiece *pieceLeft = b.getPieceByPosn(Posn(row, col - 1));
-				if (pieceLeft) {
+			if (col < 7) { // we are not in the A column, therefore we check left for vulnerable pawn
+				ChessPiece *pieceLeft = b.getPieceByPosn(Posn(row, col + 1));
+				if (pieceLeft && pieceLeft->getPieceType() == 'P') {
 					if (pieceLeft->enPassantPossible()) {
-						PossibleMoves.emplace_back(Move(this, Posn(row + 1, col - 1)), false, false , true);
+						PossibleMoves.emplace_back(Move(this, Posn(row + 1, col + 1), false, false , true));
 					}				
 				}
 			}
-			if (col < 7) {
-				ChessPiece *pieceRight = b.getPieceByPosn(Posn(row, col + 1));
-				if (pieceRight) {
+			if (col > 0) {
+				ChessPiece *pieceRight = b.getPieceByPosn(Posn(row, col - 1));
+				if (pieceRight && pieceRight->getPieceType() == 'P') {
 					if (pieceRight->enPassantPossible()) {
-						PossibleMoves.emplace_back(Move(this, Posn(row + 1, col + 1)), false, false , true);
+						PossibleMoves.emplace_back(Move(this, Posn(row + 1, col - 1), false, false , true));
 					}				
 				}
 			}
-		}*/
+		}
 	}
 	
 	return PossibleMoves;
+}
+
+
+bool Pawn::enPassantPossible() const {
+	return canBeCapturedEnPassant;
+}
+
+void Pawn::setEnPassantFlag(bool value) {
+	canBeCapturedEnPassant = value;
 }

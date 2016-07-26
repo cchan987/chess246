@@ -4,6 +4,8 @@
 
 using namespace std;
 
+BotLvl1::~BotLvl1(){}
+
 Move BotLvl1::getMove(Board &b) {
 	vector<Move> legal_moves = b.getAllLegalMovesByColour(allegiance);
 	int randNum = rand() % legal_moves.size();

@@ -11,7 +11,7 @@ class King :public ChessPiece {
 public:
 	King(char c, Posn p);
 	~King();
-	void setMoved();
+	void setMoved() override;
 	bool getHasBeenMoved() const override;
 	char getPieceType() override;
 	std::vector<Move> getPossibleMoves(Board &b) override;
