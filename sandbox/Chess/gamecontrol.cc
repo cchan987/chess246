@@ -400,10 +400,16 @@ void GameControl::switchOn(){
   
   while (exitGame != true) {
 
-    cout << "command: game/ setup / quit" << endl;
+    cout << "command: game/ setup / load / quit" << endl;
   
     string menu_string;
     getline(cin,menu_string);
+
+    if (cin.eof()) {
+      printScore();
+      break;
+    }
+
     istringstream menu_iss(menu_string);
     string menu_command;
     int count = 0;
