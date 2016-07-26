@@ -52,7 +52,9 @@ void GameControl::notifyBoardChange(ChessPiece *piece, Posn p) {
 }
 
 void GameControl::notifyInfoMsgChange(string s){
-
+  for (unsigned int i = 0; i < observerList.size(); ++i) {
+    observerList[i]->notifyInfoMsg(s);
+  }
 }
 
 
@@ -79,7 +81,6 @@ vector<int> GameControl::posntran(string xy){
 
   yp = 7 - yp;
 
-  yp = 7 - yp;
   if( z!= "" || xp < 0 || xp > 7 || yp < 0 || yp > 7){
   xp = -1;
   }
@@ -557,8 +558,8 @@ void GameControl::startAIGame(){
 	if(theBoard.isInCheck(whoseTurn)){ cout<< "Player: "<< whoseTurn << "is in check!!" << endl; }
  
   	if (whoseTurn == 'W'){
-	cout << "b4 get whites move: " <<  player1 << endl;
-	cout << "b4 ai query" << endl;
+//	cout << "b4 get whites move: " <<  player1 << endl;
+//	cout << "b4 ai query" << endl;
     	Move cpuNextMove = aiplayer->getMove(theBoard);
     	cout << "after ai query" << endl;
     	cout << "CPU MOVE: " << cpuNextMove.getPiece()->getPieceType() << " " << cpuNextMove.getDestination().getRow() << cpuNextMove.getDestination().getCol() << endl;
