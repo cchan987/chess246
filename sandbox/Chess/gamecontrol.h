@@ -20,8 +20,8 @@ class GameControl
 	bool customBoard = false;
 	bool resign = false;
 	Board theBoard;
-	AbstractAI* aiplayer;
-	AbstractAI* aiplayer2;
+	AbstractAI* aiplayer = nullptr;
+	AbstractAI* aiplayer2 = nullptr;
 	TextDisplay *td;
 	GraphicsDisplay *gd;
 	std::vector<Observer *> observerList;

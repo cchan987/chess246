@@ -30,7 +30,7 @@ void GraphicsDisplay::clearScreen() {
 }
 
 void GraphicsDisplay::clearInfoBox() {
-	screen->fillRectangle(100, 50, 400, 50, Xwindow::Green);
+	screen->fillRectangle(0, 0, 500, 100, Xwindow::Green);
 }
 
 void GraphicsDisplay::drawPiece(ChessPiece *cp, Posn location) {

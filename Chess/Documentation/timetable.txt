@@ -1,6 +1,0 @@
-July 15 - Everyone will initiate the .cc and .h files for each class.
-July 20 - Bo will implement ChessPiece (and all inherited classes), Posn, GameControl, and game history. Chris will implement AI and TextDisplay. Chuck will implement Board, GraphicDisplay, and Observer.
-	Group members will be required to assist each other should any finish early.
-July 23 - Implementation of undoing any chess move by Bo. main() by Chris/Chuck.
-July 25 - Final Design Brief to be completed by all group members. 
-	Implementation of 4 player chess option if time allows. Each group member is responsible for adding necessary modifications to their classes they created originally.
