@@ -20,6 +20,8 @@
 #include "botLvl3.h"
 //#include "botLvl4.h"
 
+#include <fstream>
+
 using namespace std;
 
 GameControl::GameControl()
@@ -249,8 +251,32 @@ void GameControl::initBoard() {
   cout << "Board initalization completed" << endl;
 }
 
+//********************
+/*void GameControl::loadFile(){
+  string filesrc;
+  getline(cin,filesrc);
+  ifstream file(filesrc);
+  string str;
+  if(file){
+    while (getline(file,str)){
+      if(str != "setup"){
+        setupBoard(str, true);
+      }
+    }
+  }
+  else{
+    notifyInfoMsgChange("Read file error");
+  }
+}*/
 
-void GameControl::setupBoard() {
+
+
+void GameControl::setupBoard(bool load, string fileName) {
+
+  ifstream file;
+  if (load) {
+    file.open(fileName);
+  }
 
   bool done = false;
   
@@ -259,7 +285,17 @@ void GameControl::setupBoard() {
   cout << "Command: + / - / = / done" << endl;
     
     string setup_string;
-    getline(cin,setup_string);
+
+//***********************************
+    if(load == false){
+      getline(cin,setup_string);
+    }
+    else{
+      getline(file,setup_string);
+      if (file.fail()) break;
+    }
+
+//**********************************
     istringstream setup_iss(setup_string);
     string setup_command;
     int count = 0;
@@ -429,6 +465,7 @@ void GameControl::switchOn(){
         }
         else {
           cout << "enter setup mode" << endl;
+          //*****************************************************
           setupBoard();
         }
       }
@@ -440,6 +477,13 @@ void GameControl::switchOn(){
           printScore();
           exitGame = true;
         }
+      }
+      //*******************************************
+      else if (listOfCommand[0] == "load"){
+        string f;
+        cout << "Enter filename" << endl;
+        cin >> f;
+        setupBoard(true, f);
       }
       else {
         cout << "Invalid Command Input Please try again" << endl;

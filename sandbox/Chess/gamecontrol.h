@@ -54,7 +54,12 @@ class GameControl
 	//void resign();
 	
 	bool checkSetupCondition();
-	void setupBoard();
+
+//*****************************************
+	//void loadFile();
+	void setupBoard(bool load = false, string fileName = "");
+//*****************************************	
+
 	void resetBoard();
 	//void endGame();
 
