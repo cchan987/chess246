@@ -70,15 +70,6 @@ vector<int> GameControl::posntran(string xy){
 
   xp = static_cast<int>(xp) - 'a';
   yp = static_cast<int>(yp) - '0' - 1;
-  if (yp == 0) yp = 7;
-  else if (yp == 1) yp = 6;
-  else if (yp == 2) yp = 5;
-  else if (yp == 3) yp = 4;
-  else if (yp == 4) yp = 3;
-  else if (yp == 5) yp = 2;
-  else if (yp == 6) yp = 1;
-  else if (yp == 7) yp = 0;
-
   yp = 7 - yp;
 
   if( z!= "" || xp < 0 || xp > 7 || yp < 0 || yp > 7){
