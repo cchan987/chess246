@@ -57,7 +57,7 @@ class GameControl
 
 //*****************************************
 	//void loadFile();
-	void setupBoard(bool load = false, string fileName = "");
+	void setupBoard(bool load = false, std::string fileName = "");
 //*****************************************	
 
 	void resetBoard();
